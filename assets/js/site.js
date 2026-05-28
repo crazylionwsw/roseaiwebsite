@@ -31,10 +31,12 @@
     var submitBtn = document.getElementById('submitBtn');
     var errorBox = document.getElementById('formError');
 
-    // Configuration
-    var ENDPOINT = '/api/contact';
+    // EmailJS configuration — replace with your credentials after setup
+    var EMAILJS_ENDPOINT = 'https://api.emailjs.com/api/v1.0/email/send';
+    var EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
+    var EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
+    var EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
     var RECIPIENT = 'touchwant@gmail.com';
-    var FROM = 'RoseAI <noreply@roseai.ca>';
 
     var isZh = /^zh\b/i.test(document.documentElement.lang || '');
     var strings = isZh
@@ -143,14 +145,18 @@
             : '🌹 New Trial Request · ' + restaurantName;
 
         try {
-            var res = await fetch(ENDPOINT, {
+            var res = await fetch(EMAILJS_ENDPOINT, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    from: FROM,
-                    to: [RECIPIENT],
-                    subject: subject,
-                    html: buildEmailHtml(data, isZh ? 'zh' : 'en')
+                    service_id: EMAILJS_SERVICE_ID,
+                    template_id: EMAILJS_TEMPLATE_ID,
+                    user_id: EMAILJS_PUBLIC_KEY,
+                    template_params: {
+                        to_email: RECIPIENT,
+                        subject: subject,
+                        html_message: buildEmailHtml(data, isZh ? 'zh' : 'en')
+                    }
                 })
             });
 
