@@ -31,11 +31,11 @@
     var submitBtn = document.getElementById('submitBtn');
     var errorBox = document.getElementById('formError');
 
-    // EmailJS configuration — replace with your credentials after setup
+    // EmailJS configuration
     var EMAILJS_ENDPOINT = 'https://api.emailjs.com/api/v1.0/email/send';
-    var EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
-    var EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
-    var EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
+    var EMAILJS_SERVICE_ID = 'service_c6kaxeo';
+    var EMAILJS_TEMPLATE_ID = 'template_tdgr47s';
+    var EMAILJS_PUBLIC_KEY = 'PvqGIRksz71h46dbw';
     var RECIPIENT = 'touchwant@gmail.com';
 
     var isZh = /^zh\b/i.test(document.documentElement.lang || '');
