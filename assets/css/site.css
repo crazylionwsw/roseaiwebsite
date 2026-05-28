@@ -43,7 +43,7 @@
             display: inline-flex;
             align-items: center;
         }
-        .logo-img { height: 34px; display: block; }
+        .logo-img { height: 34px; display: block; mix-blend-mode: multiply; }
         .logo span { color: var(--accent-red); }
         nav { display: flex; align-items: center; }
         nav a {
