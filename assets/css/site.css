@@ -39,11 +39,11 @@
         }
         header .container { display: flex; justify-content: space-between; align-items: center; }
         .logo {
-            font-family: 'Noto Serif SC', serif;
-            font-size: 26px; font-weight: 700;
-            color: var(--primary-green-bright);
-            text-decoration: none; letter-spacing: 0.5px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
         }
+        .logo-img { height: 34px; display: block; }
         .logo span { color: var(--accent-red); }
         nav { display: flex; align-items: center; }
         nav a {
