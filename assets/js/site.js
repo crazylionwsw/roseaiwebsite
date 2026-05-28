@@ -31,9 +31,8 @@
     var submitBtn = document.getElementById('submitBtn');
     var errorBox = document.getElementById('formError');
 
-    // Resend configuration — replace with your own API key
-    var RESEND_API_KEY = 're_LoWSDsBG_FY8aSgUT5xCgyQTHcsCLGumA';
-    var RESEND_ENDPOINT = 'https://api.resend.com/emails';
+    // Configuration
+    var ENDPOINT = '/api/contact';
     var RECIPIENT = 'touchwant@gmail.com';
     var FROM = 'RoseAI <noreply@roseai.ca>';
 
@@ -144,12 +143,9 @@
             : '🌹 New Trial Request · ' + restaurantName;
 
         try {
-            var res = await fetch(RESEND_ENDPOINT, {
+            var res = await fetch(ENDPOINT, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + RESEND_API_KEY
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     from: FROM,
                     to: [RECIPIENT],
@@ -160,7 +156,7 @@
 
             if (!res.ok) {
                 var errBody = await res.text();
-                throw new Error('Resend API error ' + res.status + ': ' + errBody);
+                throw new Error('API error ' + res.status + ': ' + errBody);
             }
 
             card.classList.add('submitted');
