@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoseAI Voice Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-ink: #09251A;
+            --darker: #051a12;
+            --card-bg: #0c2e21;
+            --primary-green: #086B31;
+            --primary-green-bright: #0d9647;
+            --accent-red: #E8241B;
+            --cream: #FFFDF7;
+            --muted: rgba(255,253,247,0.65);
+            --glass: rgba(255,255,255,0.04);
+            --border: rgba(255,255,255,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--dark-ink);
+            color: var(--cream);
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 20px;
+        }
+
+        .demo-wrap {
+            width: 100%;
+            max-width: 900px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .demo-wrap { grid-template-columns: 1fr; gap: 24px; }
+        }
+
+        /* === Phone Mockup === */
+        .phone-mockup {
+            position: relative;
+            max-width: 360px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, #1a3d2c, #0c2e21);
+            border-radius: 36px;
+            padding: 18px 14px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5), 0 0 0 1px var(--border), inset 0 1px 0 rgba(255,255,255,0.08);
+        }
+        .phone-screen {
+            background: var(--darker);
+            border-radius: 22px;
+            padding: 20px 16px;
+            min-height: 520px;
+            display: flex;
+            flex-direction: column;
+        }
+        .phone-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: var(--muted);
+            padding-bottom: 12px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        .phone-header .caller {
+            color: var(--cream);
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .phone-header .live {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--primary-green-bright);
+            font-weight: 600;
+        }
+        .phone-header .live::before {
+            content: '';
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: var(--primary-green-bright);
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%,100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.5); }
+        }
+
+        .transcript {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 6px;
+            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 380px;
+        }
+        .transcript::-webkit-scrollbar { width: 3px; }
+        .transcript::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+        .bubble {
+            padding: 10px 14px;
+            border-radius: 14px;
+            font-size: 13px;
+            line-height: 1.5;
+            max-width: 82%;
+            animation: bubbleIn 0.4s ease both;
+            word-break: break-word;
+        }
+        .bubble.ai {
+            background: rgba(13,150,71,0.15);
+            border: 1px solid rgba(13,150,71,0.25);
+            color: var(--cream);
+            border-bottom-left-radius: 4px;
+            align-self: flex-start;
+        }
+        .bubble.user {
+            background: rgba(255,255,255,0.06);
+            color: var(--muted);
+            border-bottom-right-radius: 4px;
+            align-self: flex-end;
+        }
+        .bubble.system {
+            background: rgba(232,36,27,0.08);
+            border: 1px solid rgba(232,36,27,0.2);
+            color: rgba(255,140,130,0.9);
+            border-radius: 8px;
+            align-self: center;
+            font-size: 11px;
+            max-width: 90%;
+            text-align: center;
+        }
+        @keyframes bubbleIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .phone-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            padding-top: 10px;
+            border-top: 1px solid var(--border);
+        }
+        .phone-btn {
+            width: 48px; height: 48px;
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.25s ease;
+        }
+        .btn-speak {
+            background: var(--primary-green-bright);
+            color: white;
+            box-shadow: 0 6px 20px rgba(13,150,71,0.4);
+        }
+        .btn-speak:hover { background: var(--primary-green); transform: scale(1.08); }
+        .btn-speak.listening {
+            background: var(--accent-red);
+            animation: pulse 1.5s infinite;
+            box-shadow: 0 6px 20px rgba(232,36,27,0.5);
+        }
+        .btn-speak:disabled {
+            background: #555;
+            box-shadow: none;
+            cursor: not-allowed;
+            animation: none;
+        }
+        .btn-reset {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--muted);
+        }
+        .btn-reset:hover { border-color: var(--muted); color: var(--cream); }
+
+        /* === Info Panel === */
+        .info-panel h1 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        .info-panel h1 em { color: var(--accent-red); font-style: normal; }
+        .info-panel .subtitle {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 28px;
+            line-height: 1.6;
+        }
+        .info-panel .status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .status.ready { background: rgba(13,150,71,0.1); color: var(--primary-green-bright); border: 1px solid rgba(13,150,71,0.3); }
+        .status.error { background: rgba(232,36,27,0.1); color: #ff8a82; border: 1px solid rgba(232,36,27,0.3); }
+
+        .info-panel .lang-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 14px;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+        .info-panel .lang-indicator span { font-weight: 700; color: var(--primary-green-bright); }
+
+        .topic-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+        .chip {
+            font-size: 12px;
+            padding: 6px 14px;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+        .chip:hover { border-color: var(--primary-green-bright); color: var(--cream); }
+
+        .call-log {
+            margin-top: 20px;
+        }
+        .call-log h3 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--muted);
+            margin-bottom: 12px;
+        }
+        .call-log .log-item {
+            font-size: 12px;
+            color: var(--muted);
+            padding: 6px 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+        }
+        .log-item .log-lang {
+            color: var(--primary-green-bright);
+            font-weight: 600;
+            min-width: 24px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="demo-wrap">
+    <!-- Phone Mockup -->
+    <div class="phone-mockup">
+        <div class="phone-screen">
+            <div class="phone-header">
+                <div>
+                    <div class="caller">RoseAI Voice Demo</div>
+                    <div style="font-size:10px;margin-top:2px;" id="callTimer">00:00</div>
+                </div>
+                <span class="live" id="liveBadge">Ready</span>
+            </div>
+
+            <div class="transcript" id="transcript">
+                <div class="bubble ai" id="greetingBubble"></div>
+            </div>
+
+            <div class="phone-actions">
+                <button class="phone-btn btn-reset" onclick="resetDemo()" title="重新开始">
+                    <i class="fa-solid fa-rotate-right"></i>
+                </button>
+                <button class="phone-btn btn-speak" id="speakBtn" onclick="toggleListening()" title="点击说话">
+                    <i class="fa-solid fa-microphone"></i>
+                </button>
+                <button class="phone-btn btn-reset" onclick="toggleMute()" title="静音/取消静音" id="muteBtn">
+                    <i class="fa-solid fa-volume-high"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info Panel -->
+    <div class="info-panel">
+        <h1>Rose<em>AI</em> Voice Demo</h1>
+        <p class="subtitle">AI 智能语音客服 · 中英文自动切换<br>点击麦克风按钮开始对话</p>
+
+        <div class="status ready" id="statusBox">
+            <i class="fa-solid fa-circle-check"></i>
+            <span id="statusText">就绪 — 请点击麦克风</span>
+        </div>
+
+        <div class="lang-indicator">
+            <i class="fa-solid fa-language"></i> 当前语言：<span id="currentLang">—</span>
+        </div>
+
+        <p style="font-size:12px;color:var(--muted);margin-bottom:20px;">试试问这些问题：</p>
+        <div class="topic-chips">
+            <button class="chip" onclick="askText('What is RoseAI?')">What is RoseAI?</button>
+            <button class="chip" onclick="askText('RoseAI是什么？')">RoseAI是什么？</button>
+            <button class="chip" onclick="askText('多少钱一个月？')">价格多少钱？</button>
+            <button class="chip" onclick="askText('How much does it cost?')">Pricing?</button>
+            <button class="chip" onclick="askText('支持粤语吗？')">粤语可以吗？</button>
+            <button class="chip" onclick="askText('数据安全吗？')">数据安全吗？</button>
+            <button class="chip" onclick="askText('Do I need to change my phone number?')">换号吗？</button>
+            <button class="chip" onclick="askText('免费试用多久？')">免费试用？</button>
+        </div>
+
+        <div class="call-log">
+            <h3>对话记录</h3>
+            <div id="callLog"><div class="log-item" style="opacity:0.5;">暂无对话记录</div></div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+<script>
+(function() {
+    'use strict';
+
+    // ===== STATE =====
+    var isListening = false;
+    var currentLang = 'detect';
+    var detectedLang = null;
+    var isMuted = false;
+    var callActive = false;
+    var callSeconds = 0;
+    var callTimerId = null;
+    var transcriptEl = document.getElementById('transcript');
+    var speakBtn = document.getElementById('speakBtn');
+    var statusBox = document.getElementById('statusBox');
+    var statusText = document.getElementById('statusText');
+    var currentLangEl = document.getElementById('currentLang');
+    var liveBadge = document.getElementById('liveBadge');
+    var callLogEl = document.getElementById('callLog');
+    var callTimerEl = document.getElementById('callTimer');
+
+    // Multiple recognition instances for parallel language detection
+    var recogEN = null;
+    var recogZH = null;
+    var synth = window.speechSynthesis;
+    var speechQueue = [];
+    var isSpeaking = false;
+
+    // ===== KNOWLEDGE BASE =====
+    var knowledge = [
+        {
+            en: ['what is roseai', 'what does roseai do', 'tell me about roseai', 'about roseai'],
+            zh: ['roseai是什么', '什么是roseai', '介绍roseai', '讲一下roseai'],
+            answer: {
+                en: "RoseAI is an AI-powered voice receptionist built for Canadian independent restaurants. It answers phone calls 24/7, auto-detects and responds in Mandarin, Cantonese, English, and Spanish. Orders flow directly to your POS system — Toast, Square, Lightspeed, and Clover. Most restaurants go live within a day.",
+                zh: "RoseAI 是一个 AI 智能语音接待系统，专门为加拿大独立餐厅设计。它 7×24 小时接听电话，自动识别普通话、粤语、英语、西班牙语，生成的订单直接同步到你的 POS 系统——Toast、Square、Lightspeed、Clover 都支持。大多数餐厅一天内就能上线。"
+            }
+        },
+        {
+            en: ['price', 'cost', 'pricing', 'how much', 'fee', 'plan', 'subscription'],
+            zh: ['价格', '多少钱', '费用', '收费', '套餐', '定价', '月费'],
+            answer: {
+                en: "RoseAI has three plans. Lite is $99 per month for 1 line, English and Mandarin. Pro is $199 per month for 2 lines with all four languages and POS integration — this is our most popular. Elite is $299 per month for 4 lines with advanced analytics and a dedicated success manager. Enterprise plans are custom-priced. All prices are in Canadian dollars plus GST/PST. No setup fees, no hardware deposits. Save 15% with annual billing.",
+                zh: "RoseAI 有三个套餐。基础版 Lite $99/月，1 路并发，中英双语。专业版 Pro $199/月，2 路并发，中粤英西四语全支持，POS 自动对接——这是最受欢迎的。高级版 Elite $299/月，4 路并发，带高级数据分析、API 接口和专属顾问。旗舰版 Enterprise 按需定价。所有价格都是加元，不含 GST/PST。无安装费、无设备押金。年付省 15%。"
+            }
+        },
+        {
+            en: ['trial', 'free trial', 'try', 'demo', 'test'],
+            zh: ['试用', '免费试用', '体验', 'demo', '测试'],
+            answer: {
+                en: "You get a 1-month free trial — no credit card, no deposit required. Full Pro plan features: multi-language answering, POS sync, allergy and modifier capture, and human fallback routing. We'll reach out 48 hours before the trial ends. Continuing is completely your decision. Most restaurants see clear ROI within the first two weeks.",
+                zh: "免费试用 1 个月，无需押金、无需信用卡预授权。试用期内享受 Pro 版完整功能：多语接听、POS 集成、过敏备注自动识别、人工兜底转接。试用结束前 48 小时我们会联系您，是否继续完全由您决定。大多数餐厅在两周内就能看到明显效果。"
+            }
+        },
+        {
+            en: ['language', 'mandarin', 'cantonese', 'spanish', 'chinese', 'multilingual', 'what languages'],
+            zh: ['语言', '粤语', '普通话', '广东话', '英文', '中文', '西班牙语', '多语'],
+            answer: {
+                en: "RoseAI natively supports Mandarin, Cantonese, English, and Spanish. It auto-detects the customer's language and switches mid-conversation. This is a localization depth that US vendors like Toast and SoundHound can't match in Canada. It's perfect for Greater Vancouver's diverse customer base.",
+                zh: "RoseAI 原生支持普通话、粤语、英语、西班牙语四种语言。AI 会自动识别客人说的语言并切换。这一点是美国厂商 Toast、SoundHound 在加拿大做不到的本地化深度，非常适合大温地区多元化的客户群体。"
+            }
+        },
+        {
+            en: ['phone number', 'change number', 'change my number', 'keep number', 'existing number'],
+            zh: ['换号', '电话号码', '改号码', '现有号码', '保留号码'],
+            answer: {
+                en: "No, you don't need to change your phone number at all. We use call forwarding on your existing line. Your number on Google, menus, and storefront stays exactly the same. Setup takes about 10 minutes.",
+                zh: "完全不需要换号。我们通过呼叫转移接入您现有的电话线路，餐厅在 Google、菜单、招牌上的号码都不需要改动。配置大约 10 分钟。"
+            }
+        },
+        {
+            en: ['pos', 'toast', 'square', 'lightspeed', 'clover', 'integration', 'connect', 'system'],
+            zh: ['pos', '系统对接', '收银', '对接', '集成', '兼容'],
+            answer: {
+                en: "RoseAI integrates natively with Toast, Square, Clover, and Lightspeed. AI-captured orders flow directly to your kitchen display — zero double-entry by staff. For less common POS systems, we can build custom integration in 5 to 10 business days, included with Elite and Enterprise plans. You can also skip POS entirely and have orders delivered by SMS or printed directly to a kitchen ticket printer.",
+                zh: "RoseAI 已深度对接 Square、Toast、Clover、Lightspeed 等主流 POS 系统。AI 接到的订单直接出到厨房显示，员工不需要二次录入。对于小众系统，我们可以在 5 到 10 个工作日内定制对接，Elite 和 Enterprise 套餐免费。也可以选择短信推送订单或直接打印到厨房小票机，不需要 POS。"
+            }
+        },
+        {
+            en: ['data', 'privacy', 'security', 'pipeda', 'recording', 'store', 'compliance', 'safe'],
+            zh: ['数据', '隐私', '安全', '合规', '录音', '存储', 'pipeda', '个人信息'],
+            answer: {
+                en: "All call recordings and order data are stored in Canada, on AWS servers in Toronto. Fully PIPEDA-compliant and compliant with BC's Personal Information Protection Act. Recordings are kept for 90 days, exportable or deletable any time from your dashboard. We never use your customer data to train any third-party AI models.",
+                zh: "所有通话录音与订单数据存储于加拿大境内，多伦多 AWS 服务器。完全符合 PIPEDA 隐私法规和 BC 省个人信息保护条例。录音保留 90 天可调取，您可随时在后台一键导出或永久删除。我们不会将您的客户数据用于任何第三方 AI 模型训练。"
+            }
+        },
+        {
+            en: ['accuracy', 'mistake', 'error', 'wrong', 'mishear', 'misunderstand'],
+            zh: ['准确', '出错', '错误', '听错', '错单', '误听'],
+            answer: {
+                en: "RoseAI has three layers of safety. First, the AI repeats every order back for customer confirmation. Second, anything uncertain is flagged for owner review on your phone. Third, complex cases auto-route to your mobile. We guarantee under 1% error rate and reimburse confirmed mis-orders.",
+                zh: "RoseAI 有三层兜底机制。第一，AI 下单前会复述订单让客人确认。第二，不确定的内容会标记待复核推送到您手机。第三，复杂问题自动转接到您指定的手机。我们承诺错单率低于 1%，并提供错单赔付。"
+            }
+        },
+        {
+            en: ['contract', 'cancel', 'commitment', 'minimum', 'period', 'month to month'],
+            zh: ['合同', '取消', '合约', '退订', '月付', '解约'],
+            answer: {
+                en: "All Lite, Pro, and Elite plans are month-to-month with no minimum commitment. Cancel any time from your dashboard — billing stops the following month. Annual plans save 15% and we prorate refunds on unused months.",
+                zh: "Lite、Pro、Elite 三个套餐都是月付，没有最低合约期。随时可以在后台取消，下月起停止扣费。年付方案享受 15% 折扣，未使用月份按比例退款。"
+            }
+        },
+        {
+            en: ['roi', 'return', 'save money', 'worth it', 'payback', 'cost saving', '76k', '76000'],
+            zh: ['回报', 'roi', '省钱', '值不值', '回本', '收益', '76k', '7万6'],
+            answer: {
+                en: "Industry research shows 40%+ of peak-hour calls go unanswered. Each missed call costs about $32 in lost revenue. A mid-size restaurant loses about $184,000 annually. RoseAI recovers over $76,000 of that at just $199 per month for the Pro plan. That's a 30× revenue ROI. Plus, you save on staffing — one full-time host costs about $3,500 per month with benefits. RoseAI covers 70% of their phone workload at a fraction of the cost.",
+                zh: "行业研究显示高峰期 40% 以上的电话被漏接。每漏一通电话约流失 $32 客单价。中型餐厅一年约流失 $184,000。RoseAI Pro 套餐 $199/月，帮你挽回其中 $76,000 以上，营收 ROI 超过 30 倍。另外人力方面，一位全职前台月成本约 $3,500（含福利），RoseAI $199/月覆盖 70% 的接电话工作量。"
+            }
+        },
+        {
+            en: ['power outage', 'internet down', 'offline', 'disconnect', 'network down'],
+            zh: ['断网', '断电', '网络', '断线', '停电'],
+            answer: {
+                en: "RoseAI runs in the cloud, completely independent of your in-store network. Even during a power outage, calls are still answered and orders are queued. They'll sync as soon as you're back online. Elite and Enterprise plans include a 4G backup printer.",
+                zh: "RoseAI 运行在云端，与餐厅本地网络完全无关。即使店里断网断电，电话依然能被 AI 接听并记录订单，恢复营业后自动同步。Elite 和 Enterprise 套餐还包含 4G 备份打印机。"
+            }
+        },
+        {
+            en: ['setup', 'install', 'how to start', 'get started', 'deploy', 'onboarding'],
+            zh: ['安装', '部署', '上线', '怎么开始', '开通', '接入'],
+            answer: {
+                en: "Most restaurants go live within a day. No number porting, no new hardware. We configure your menu, business hours, language preferences, fallback routing, and POS or printer output. Our local team in Greater Vancouver provides on-site installation and training. We support you in English, Mandarin, and Cantonese.",
+                zh: "大多数餐厅一天内就能上线。不用换号、不用换设备。我们会协助配置菜单、营业时间、语言偏好、转人工规则和 POS 或打印方案。大温本地团队提供上门安装和培训。中文、英文、粤语都有本地客服支持。"
+            }
+        },
+        {
+            en: ['contact', 'phone', 'call', 'reach', 'email', 'whatsapp', 'wechat'],
+            zh: ['联系', '电话', '微信', '邮箱', '怎么联系', '客服'],
+            answer: {
+                en: "You can reach us by phone at 778-325-4966, by email at contactus@roseai.ca, or on WhatsApp. We have local customer support in English, Mandarin, and Cantonese — based here in Greater Vancouver. Business hours are Monday to Friday 9 AM to 9 PM, weekends 10 AM to 6 PM Pacific Time.",
+                zh: "您可以拨打 778-325-4966，发送邮件到 contactus@roseai.ca，或者通过 WhatsApp 联系我们。中文、英文、粤语都有本地客服支持，团队在大温。人工咨询时间：周一至周五 9 AM 到 9 PM，周末 10 AM 到 6 PM（太平洋时间）。"
+            }
+        },
+        {
+            en: ['restaurant', 'who is this for', 'type of restaurant', 'small restaurant', 'cafe'],
+            zh: ['适合', '什么餐厅', '小餐厅', '中餐馆', '日料', '火锅'],
+            answer: {
+                en: "RoseAI is built for independent restaurants of all sizes across Canada — from small family-run cafés and bubble tea shops to full-service Cantonese seafood restaurants, Sichuan hot pot spots, Japanese ramen shops, and multi-location chains. If customers call your restaurant to order food, book tables, or ask questions, RoseAI can help. Our customers include Chinese-Canadian restaurants, Korean BBQ spots, Italian trattorias, and Canadian diners.",
+                zh: "RoseAI 为加拿大各种规模的独立餐厅设计——从小型家庭咖啡馆、奶茶店，到粤式海鲜酒楼、川菜火锅店、日式拉面馆，再到多店连锁品牌都适用。只要您的客人会打电话来点餐、订座、咨询，RoseAI 就能帮上忙。我们的客户覆盖中餐馆、韩式烧烤、意大利餐厅、加拿大本土餐厅等各种业态。"
+            }
+        },
+        {
+            en: ['hello', 'hi', 'hey', 'good morning', 'good afternoon'],
+            zh: ['你好', '您好', '喂', '嗨', '早上好', '下午好'],
+            answer: {
+                en: "Hello! Welcome to RoseAI. I'm the AI voice assistant for Canadian restaurants. I can answer questions about our product, pricing, languages, POS integration, free trial, and more. How can I help you today?",
+                zh: "您好！欢迎致电 RoseAI。我是加拿大餐厅 AI 语音助手。我可以回答关于产品功能、价格套餐、语言支持、POS 对接、免费试用等问题。请问有什么可以帮您？"
+            }
+        },
+        {
+            en: ['thank', 'thanks', 'bye', 'goodbye'],
+            zh: ['谢谢', '多谢', '感谢', '再见', '拜拜'],
+            answer: {
+                en: "You're welcome! Feel free to visit roseai.ca for more information, or call us at 778-325-4966. Have a great day!",
+                zh: "不客气！欢迎访问 roseai.ca 了解更多，或拨打 778-325-4966 联系我们。祝您生意兴隆！"
+            }
+        }
+    ];
+
+    // Default fallback
+    var fallbackAnswer = {
+        en: "I'm not sure I understood that. You can ask me about RoseAI's pricing, languages, POS integration, free trial, data privacy, or anything about our AI voice receptionist for restaurants. Can you rephrase your question?",
+        zh: "抱歉我没有完全理解。您可以问我关于 RoseAI 的价格、语言支持、POS 对接、免费试用、数据安全，或者任何关于我们餐厅 AI 语音接待系统的问题。可以换个方式说一遍吗？"
+    };
+
+    function detectLang(text) {
+        // Check for Chinese characters
+        var chineseRegex = /[一-鿿㐀-䶿]/;
+        return chineseRegex.test(text) ? 'zh' : 'en';
+    }
+
+    function matchAnswer(userText) {
+        var lang = detectLang(userText);
+        var lower = userText.toLowerCase().trim();
+
+        var bestMatch = null;
+        var bestScore = 0;
+
+        for (var i = 0; i < knowledge.length; i++) {
+            var kb = knowledge[i];
+            var keywords = lang === 'zh' ? kb.zh : kb.en;
+
+            for (var j = 0; j < keywords.length; j++) {
+                var kw = keywords[j].toLowerCase();
+                if (lower.indexOf(kw) !== -1) {
+                    // Longer keyword match = better
+                    var score = kw.length;
+                    if (score > bestScore) {
+                        bestScore = score;
+                        bestMatch = kb;
+                    }
+                }
+            }
+        }
+
+        if (bestMatch) {
+            return { answer: bestMatch.answer[lang], lang: lang, matched: true };
+        }
+
+        // Try cross-language matching: user spoke EN but only ZH keywords match
+        if (lang === 'en') {
+            for (var i = 0; i < knowledge.length; i++) {
+                for (var j = 0; j < knowledge[i].zh.length; j++) {
+                    // Romanized/pinyin or partial match against ZH keywords
+                    if (lower.indexOf(knowledge[i].zh[j].toLowerCase()) !== -1 ||
+                        fuzzyENtoZH(lower, knowledge[i].zh[j])) {
+                        return { answer: knowledge[i].answer.en, lang: 'en', matched: true };
+                    }
+                }
+            }
+        }
+
+        return { answer: fallbackAnswer[lang], lang: lang, matched: false };
+    }
+
+    function fuzzyENtoZH(enText, zhKeyword) {
+        // Simple cross-map for common EN queries that match ZH concepts
+        var crossMap = {
+            'price': '价格', 'cost': '价格', 'how much': '价格', 'pricing': '价格',
+            'language': '语言', 'cantonese': '粤语', 'mandarin': '普通话',
+            'trial': '试用', 'demo': '试用', 'free trial': '试用',
+            'privacy': '隐私', 'data': '数据', 'security': '安全',
+            'pos': 'pos', 'toast': 'toast', 'square': 'square',
+            'phone number': '换号', 'number': '换号',
+            'roi': 'roi', 'save': '省钱', 'return': '回报',
+            'cancel': '取消', 'contract': '合同',
+            'setup': '安装', 'install': '安装', 'start': '上线',
+            'contact': '联系', 'call': '联系', 'reach': '联系',
+            'restaurant': '餐厅', 'who is this for': '适合'
+        };
+
+        for (var en in crossMap) {
+            if (zhKeyword === crossMap[en] && enText.indexOf(en) !== -1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // ===== UI HELPERS =====
+    function addBubble(text, role) {
+        var div = document.createElement('div');
+        div.className = 'bubble ' + role;
+        div.textContent = text;
+        transcriptEl.appendChild(div);
+        transcriptEl.scrollTop = transcriptEl.scrollHeight;
+        return div;
+    }
+
+    function addSystemMsg(text) {
+        var div = document.createElement('div');
+        div.className = 'bubble system';
+        div.textContent = text;
+        transcriptEl.appendChild(div);
+        transcriptEl.scrollTop = transcriptEl.scrollHeight;
+    }
+
+    function updateStatus(state, msg) {
+        statusBox.className = 'status ' + state;
+        statusText.textContent = msg;
+    }
+
+    function updateLang(lang) {
+        currentLang = lang;
+        var label = lang === 'en' ? 'English' : lang === 'zh' ? '中文' : '—';
+        currentLangEl.textContent = label;
+    }
+
+    function updateLiveBadge(text) {
+        liveBadge.textContent = text;
+    }
+
+    function addCallLog(text, lang) {
+        if (callLogEl.querySelector('.log-item[style]')) {
+            callLogEl.innerHTML = '';
+        }
+        var div = document.createElement('div');
+        div.className = 'log-item';
+        div.innerHTML = '<span>' + (text.length > 50 ? text.substring(0, 50) + '…' : text) + '</span><span class="log-lang">' + (lang === 'en' ? 'EN' : '中') + '</span>';
+        callLogEl.prepend(div);
+    }
+
+    function startCallTimer() {
+        if (callTimerId) return;
+        callActive = true;
+        callTimerId = setInterval(function() {
+            callSeconds++;
+            var m = Math.floor(callSeconds / 60);
+            var s = callSeconds % 60;
+            callTimerEl.textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+        }, 1000);
+    }
+
+    function stopCallTimer() {
+        clearInterval(callTimerId);
+        callTimerId = null;
+    }
+
+    // ===== TTS (Text to Speech) =====
+    function speakText(text, lang) {
+        var actualLang = lang || detectLang(text);
+        speechQueue.push({ text: text, lang: actualLang });
+        if (!isSpeaking) processQueue();
+    }
+
+    function processQueue() {
+        if (speechQueue.length === 0 || isMuted) {
+            isSpeaking = false;
+            if (speechQueue.length > 0 && isMuted) speechQueue = [];
+            return;
+        }
+
+        isSpeaking = true;
+        var item = speechQueue.shift();
+        var utterance = new SpeechSynthesisUtterance(item.text);
+
+        // Map language code
+        var langMap = { 'en': 'en-US', 'zh': 'zh-CN' };
+        utterance.lang = langMap[item.lang] || 'en-US';
+        utterance.rate = 1.0;
+        utterance.pitch = 1.0;
+        utterance.volume = 1.0;
+
+        // Try to pick a good voice
+        var voices = synth.getVoices();
+        if (voices.length > 0) {
+            var preferredVoice = null;
+            // Prefer a natural-sounding voice for the language
+            for (var i = 0; i < voices.length; i++) {
+                if (item.lang === 'zh' && voices[i].lang.indexOf('zh-CN') !== -1 && voices[i].name.indexOf('Tingting') !== -1) {
+                    preferredVoice = voices[i]; break;
+                }
+                if (item.lang === 'en' && voices[i].lang.indexOf('en-US') !== -1 && voices[i].name.indexOf('Samantha') !== -1) {
+                    preferredVoice = voices[i]; break;
+                }
+                if (!preferredVoice && voices[i].lang.indexOf(langMap[item.lang]) !== -1) {
+                    preferredVoice = voices[i];
+                }
+            }
+            if (preferredVoice) utterance.voice = preferredVoice;
+        }
+
+        utterance.onend = utterance.onerror = function() {
+            processQueue();
+        };
+
+        synth.speak(utterance);
+    }
+
+    function stopSpeaking() {
+        synth.cancel();
+        speechQueue = [];
+        isSpeaking = false;
+    }
+
+    function toggleMute() {
+        isMuted = !isMuted;
+        var btn = document.getElementById('muteBtn');
+        if (isMuted) {
+            stopSpeaking();
+            btn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+            btn.style.color = 'var(--accent-red)';
+        } else {
+            btn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+            btn.style.color = '';
+        }
+    }
+
+    // ===== SPEECH RECOGNITION =====
+    function initRecognition() {
+        var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) return false;
+
+        if (!recogEN) {
+            recogEN = new SpeechRecognition();
+            recogEN.lang = 'en-US';
+            recogEN.continuous = false;
+            recogEN.interimResults = false;
+            recogEN.maxAlternatives = 1;
+        }
+
+        if (!recogZH) {
+            recogZH = new SpeechRecognition();
+            recogZH.lang = 'zh-CN';
+            recogZH.continuous = false;
+            recogZH.interimResults = false;
+            recogZH.maxAlternatives = 1;
+        }
+
+        return true;
+    }
+
+    function startListening() {
+        if (isListening) return;
+        if (!initRecognition()) {
+            updateStatus('error', '浏览器不支持语音识别（请用 Chrome）');
+            return;
+        }
+
+        isListening = true;
+        speakBtn.classList.add('listening');
+        speakBtn.querySelector('i').className = 'fa-solid fa-microphone';
+        updateStatus('ready', '正在听…');
+        updateLiveBadge('Listening');
+        speakBtn.disabled = true;
+        setTimeout(function() { speakBtn.disabled = false; }, 2000);
+
+        if (!callActive) startCallTimer();
+
+        var bestResult = null;
+        var bestConfidence = 0;
+        var resolved = false;
+
+        function handleResult(event, lang) {
+            if (resolved) return;
+            var transcript = event.results[0][0].transcript.trim();
+            var confidence = event.results[0][0].confidence;
+
+            if (transcript && (!bestResult || confidence > bestConfidence)) {
+                bestResult = transcript;
+                bestConfidence = confidence;
+            }
+
+            // If we have a good result, resolve
+            if (bestResult && bestConfidence > 0.5) {
+                resolved = true;
+                stopBothRecognitions();
+                onSpeechResult(bestResult, lang);
+            }
+        }
+
+        function handleNoMatch(event, lang) {
+            if (resolved) return;
+            // If one recognizer got no match and the other hasn't resolved yet, wait longer
+            if (bestResult) {
+                resolved = true;
+                stopBothRecognitions();
+                onSpeechResult(bestResult, lang);
+            }
+        }
+
+        function handleEnd(event, lang) {
+            setTimeout(function() {
+                if (!resolved) {
+                    resolved = true;
+                    stopBothRecognitions();
+                    if (bestResult) {
+                        onSpeechResult(bestResult, lang);
+                    } else {
+                        onNoSpeech();
+                    }
+                }
+            }, 800);
+        }
+
+        recogEN.onresult = function(e) { handleResult(e, 'en'); };
+        recogEN.onnomatch = function(e) { handleNoMatch(e, 'en'); };
+        recogEN.onend = function(e) { handleEnd(e, 'en'); };
+        recogEN.onerror = function(e) {
+            if (!resolved && e.error !== 'aborted') {
+                handleEnd(e, 'en');
+            }
+        };
+
+        recogZH.onresult = function(e) { handleResult(e, 'zh'); };
+        recogZH.onnomatch = function(e) { handleNoMatch(e, 'zh'); };
+        recogZH.onend = function(e) { handleEnd(e, 'zh'); };
+        recogZH.onerror = function(e) {
+            if (!resolved && e.error !== 'aborted') {
+                handleEnd(e, 'zh');
+            }
+        };
+
+        try {
+            recogEN.start();
+            recogZH.start();
+        } catch (err) {
+            // Already started
+            stopBothRecognitions();
+            isListening = false;
+            speakBtn.classList.remove('listening');
+            updateStatus('ready', '就绪 — 请点击麦克风');
+            updateLiveBadge('Ready');
+        }
+    }
+
+    function stopBothRecognitions() {
+        try { recogEN.abort(); } catch(e) {}
+        try { recogZH.abort(); } catch(e) {}
+    }
+
+    function stopListening() {
+        stopBothRecognitions();
+        isListening = false;
+        speakBtn.classList.remove('listening');
+        speakBtn.querySelector('i').className = 'fa-solid fa-microphone';
+    }
+
+    function onSpeechResult(transcript, lang) {
+        stopListening();
+        addBubble(transcript, 'user');
+        addCallLog(transcript, lang);
+        updateLang(lang);
+        updateStatus('ready', '处理中…');
+        updateLiveBadge('Thinking');
+
+        var result = matchAnswer(transcript);
+
+        setTimeout(function() {
+            addBubble(result.answer, 'ai');
+            updateStatus('ready', '就绪 — 请点击麦克风');
+            updateLiveBadge('Ready');
+            if (!isMuted) speakText(result.answer, result.lang);
+        }, 600);
+    }
+
+    function onNoSpeech() {
+        stopListening();
+        addSystemMsg('未检测到语音，请再试一次');
+        updateStatus('ready', '未检测到语音 — 请靠近麦克风再试');
+        updateLiveBadge('Ready');
+    }
+
+    function toggleListening() {
+        if (isListening) {
+            stopListening();
+            updateStatus('ready', '就绪 — 请点击麦克风');
+        } else {
+            startListening();
+        }
+    }
+
+    // ===== TEXT INPUT (chip clicks) =====
+    function askText(text) {
+        if (isListening) stopListening();
+        if (isSpeaking) stopSpeaking();
+        speechQueue = [];
+
+        addBubble(text, 'user');
+        var lang = detectLang(text);
+        addCallLog(text, lang);
+        updateLang(lang);
+        updateStatus('ready', '处理中…');
+        updateLiveBadge('Thinking');
+
+        if (!callActive) startCallTimer();
+
+        var result = matchAnswer(text);
+        setTimeout(function() {
+            addBubble(result.answer, 'ai');
+            updateStatus('ready', '就绪 — 请点击麦克风');
+            updateLiveBadge('Ready');
+            if (!isMuted) speakText(result.answer, result.lang);
+        }, 400);
+    }
+
+    // ===== RESET =====
+    function resetDemo() {
+        stopListening();
+        stopSpeaking();
+        speechQueue = [];
+        stopCallTimer();
+        callSeconds = 0;
+        callActive = false;
+        callTimerEl.textContent = '00:00';
+        transcriptEl.innerHTML = '<div class="bubble ai" id="greetingBubble"></div>';
+        callLogEl.innerHTML = '<div class="log-item" style="opacity:0.5;">暂无对话记录</div>';
+        updateStatus('ready', '就绪 — 请点击麦克风');
+        updateLiveBadge('Ready');
+        updateLang('detect');
+        currentLang = 'detect';
+        currentLangEl.textContent = '—';
+    }
+
+    // ===== INIT =====
+    function init() {
+        // Load voices
+        synth.getVoices();
+        synth.onvoiceschanged = function() { synth.getVoices(); };
+
+        // Greeting
+        var greeting = '您好！欢迎致电 RoseAI。\n我是 AI 智能语音助手，中英文都可以回答。\n\n您想了解什么？价格、功能、POS 对接、还是免费试用？';
+        addBubble(greeting, 'ai');
+
+        // Check browser support
+        if (!(window.SpeechRecognition || window.webkitSpeechRecognition)) {
+            updateStatus('error', '您的浏览器不支持语音识别，请使用 Chrome 打开');
+        }
+    }
+
+    // Expose to global
+    window.toggleListening = toggleListening;
+    window.resetDemo = resetDemo;
+    window.toggleMute = toggleMute;
+    window.askText = askText;
+
+    init();
+})();
+</script>
+</body>
+</html>

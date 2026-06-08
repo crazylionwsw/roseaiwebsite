@@ -1,637 +1,1281 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RoseAI | AI Phone Receptionist for Vancouver Restaurants — Never Miss a Call</title>
-    <meta name="description" content="RoseAI is the AI voice receptionist built for Canadian restaurants. Answers in English, Mandarin, Cantonese & Spanish. 0-second pickup, auto order entry to your POS. PIPEDA-compliant. 1-month free trial.">
-    <meta property="og:title" content="RoseAI | AI Phone Receptionist for Vancouver Restaurants">
-    <meta property="og:description" content="Stop missing calls during rush hour. 0-second pickup, auto-order to POS, 1-month free trial.">
-    <meta property="og:type" content="website">
-    <meta name="theme-color" content="#09251A">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoseAI | AI Voice Receptionist for Restaurants · Cloud Elastic Answering, Never Busy</title>
+<meta name="description" content="RoseAI is an AI voice receptionist built for Greater Vancouver restaurants. Multilingual (Mandarin, Cantonese, English, Spanish), 0-second answering, auto-syncs orders to POS. All plans include cloud elastic answering — never busy. 1-month free trial, data hosted in Canada, PIPEDA compliant.">
+<meta property="og:title" content="RoseAI | AI Voice Receptionist for Restaurants">
+<meta property="og:description" content="0-second answering, auto order sync, multilingual support, cloud elastic answering — never busy. 1-month free trial, local Greater Vancouver team.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0D4D3A">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root {
+  --green-dark: #0D4D3A;
+  --green: #1D6B50;
+  --green-light: #E8F0EC;
+  --orange: #C2410C;
+  --orange-light: #EA580C;
+  --gold: #B8830E;
+  --cream: #FFFDF7;
+  --cream-tint: #FAF5EC;
+  --ink: #1A1A1A;
+  --grey: #5A5A5A;
+  --grey-light: #C9D6CB;
+  --light: #F3F6F3;
+  --white: #FFFFFF;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.12);
+  --radius: 8px;
+  --radius-lg: 16px;
+}
 
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "RoseAI Restaurant Voice Receptionist",
-        "applicationCategory": "BusinessApplication",
-        "operatingSystem": "Web",
-        "offers": {
-            "@type": "AggregateOffer",
-            "priceCurrency": "CAD",
-            "lowPrice": "99",
-            "highPrice": "299"
-        },
-        "areaServed": {
-            "@type": "Place",
-            "name": "Greater Vancouver, British Columbia, Canada"
-        }
-    }
-    </script>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  color: var(--ink);
+  background: var(--cream);
+  line-height: 1.65;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: var(--green); text-decoration: none; }
+a:hover { color: var(--orange); }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
-    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
-    <link rel="stylesheet" href="../assets/css/site.css">
+/* ---------- NAV ---------- */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,253,247,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--grey-light);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 24px; max-width: 1200px; margin: 0 auto;
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; }
+.nav-logo img { height: 32px; }
+.nav-logo span { font-weight: 700; color: var(--green-dark); font-size: 18px; }
+.nav-links { display: flex; gap: 24px; align-items: center; font-size: 14.5px; }
+.nav-links a { color: var(--ink); }
+.nav-links a:hover { color: var(--orange); }
+.nav-lang { color: var(--grey); font-size: 13px; }
+.nav-lang a.active { color: var(--green-dark); font-weight: 700; }
+.nav-cta {
+  background: var(--orange); color: var(--white) !important;
+  padding: 9px 18px; border-radius: 6px; font-weight: 600;
+  transition: background 0.2s;
+}
+.nav-cta:hover { background: var(--orange-light); color: var(--white) !important; }
+@media (max-width: 880px) { .nav-links { display: none; } }
+
+/* ---------- HERO ---------- */
+.hero {
+  background: linear-gradient(180deg, var(--cream) 0%, var(--green-light) 100%);
+  padding: 60px 0 80px;
+  position: relative; overflow: hidden;
+}
+.hero-grid {
+  display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; align-items: center;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--white); color: var(--green-dark);
+  padding: 6px 14px; border-radius: 50px; font-size: 13px; font-weight: 600;
+  border: 1px solid var(--grey-light); margin-bottom: 22px;
+}
+.hero-badge::before { content: "●"; color: var(--orange); }
+.hero h1 {
+  font-size: 52px; line-height: 1.15; font-weight: 800;
+  color: var(--green-dark); margin-bottom: 22px; letter-spacing: -0.5px;
+}
+.hero h1 em { font-style: normal; color: var(--orange); }
+.hero p.lead {
+  font-size: 18.5px; color: var(--grey); margin-bottom: 28px;
+  max-width: 540px;
+}
+.hero-tags {
+  display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px; font-size: 13.5px;
+}
+.hero-tag {
+  background: var(--white); color: var(--green-dark);
+  padding: 6px 12px; border-radius: 6px; border: 1px solid var(--grey-light);
+}
+.hero-tag.highlight { background: var(--green-dark); color: var(--white); border-color: var(--green-dark); }
+.hero-cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 26px; border-radius: 8px; font-size: 15.5px; font-weight: 600;
+  border: 2px solid transparent; transition: all 0.2s; cursor: pointer;
+}
+.btn-primary {
+  background: var(--orange); color: var(--white);
+}
+.btn-primary:hover { background: var(--orange-light); color: var(--white); transform: translateY(-1px); }
+.btn-secondary {
+  background: var(--white); color: var(--green-dark);
+  border-color: var(--green-dark);
+}
+.btn-secondary:hover { background: var(--green-dark); color: var(--white); }
+
+/* Hero demo widget */
+.demo-card {
+  background: var(--white); border-radius: var(--radius-lg);
+  padding: 28px; box-shadow: var(--shadow-lg);
+  border: 1px solid var(--grey-light);
+}
+.demo-header {
+  display: flex; align-items: center; gap: 10px; font-size: 13px;
+  color: var(--grey); margin-bottom: 18px;
+  padding-bottom: 14px; border-bottom: 1px solid var(--grey-light);
+}
+.demo-pulse {
+  width: 8px; height: 8px; background: var(--orange);
+  border-radius: 50%; animation: pulse 1.6s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.3); }
+}
+.demo-msg { padding: 10px 14px; border-radius: 10px; margin-bottom: 10px; font-size: 14.5px; line-height: 1.5; }
+.demo-msg.ai { background: var(--green-light); color: var(--green-dark); }
+.demo-msg.user { background: var(--cream-tint); color: var(--ink); margin-left: 22px; }
+.demo-order {
+  margin-top: 18px; padding: 14px; background: var(--green-dark); color: var(--white);
+  border-radius: 10px; font-size: 13.5px;
+}
+.demo-order strong { display: block; margin-bottom: 6px; font-size: 14px; }
+.demo-order ul { list-style: none; }
+.demo-order li::before { content: "·"; margin-right: 6px; color: var(--orange-light); }
+.demo-order .order-id { float: right; opacity: 0.7; font-weight: 400; font-size: 12px; }
+
+@media (max-width: 880px) {
+  .hero { padding: 36px 0 50px; }
+  .hero-grid { grid-template-columns: 1fr; gap: 36px; }
+  .hero h1 { font-size: 36px; }
+  .hero p.lead { font-size: 16px; }
+}
+
+/* ---------- STATS ---------- */
+.stats {
+  background: var(--white); padding: 60px 0;
+  border-bottom: 1px solid var(--grey-light);
+}
+.stats-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px;
+}
+.stat { text-align: center; }
+.stat-num {
+  font-size: 56px; font-weight: 800; color: var(--orange);
+  margin-bottom: 8px; letter-spacing: -1px;
+}
+.stat-label { font-size: 14.5px; color: var(--ink); font-weight: 600; margin-bottom: 4px; }
+.stat-sub { font-size: 12.5px; color: var(--grey); }
+@media (max-width: 720px) {
+  .stats-grid { grid-template-columns: 1fr; gap: 30px; }
+  .stat-num { font-size: 44px; }
+}
+
+/* ---------- POS LOGOS ---------- */
+.pos-strip {
+  padding: 40px 0; background: var(--cream-tint); border-bottom: 1px solid var(--grey-light);
+  text-align: center;
+}
+.pos-strip h3 { font-size: 15px; color: var(--grey); font-weight: 600; margin-bottom: 20px; }
+.pos-logos {
+  display: flex; gap: 38px; justify-content: center; flex-wrap: wrap;
+  font-size: 17px; font-weight: 700; color: var(--green-dark); opacity: 0.7;
+}
+
+/* ---------- SECTION GENERIC ---------- */
+.section { padding: 80px 0; }
+.section-head { text-align: center; max-width: 720px; margin: 0 auto 56px; }
+.section-eyebrow {
+  font-size: 13px; color: var(--orange); font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px;
+}
+.section-title {
+  font-size: 38px; font-weight: 800; color: var(--green-dark);
+  line-height: 1.25; letter-spacing: -0.5px;
+}
+.section-title em { font-style: normal; color: var(--orange); }
+.section-sub { font-size: 17px; color: var(--grey); margin-top: 14px; }
+@media (max-width: 720px) {
+  .section { padding: 56px 0; }
+  .section-title { font-size: 28px; }
+  .section-sub { font-size: 15px; }
+}
+
+/* ---------- COMPARISON ---------- */
+.compare-table {
+  background: var(--white); border-radius: var(--radius-lg);
+  overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--grey-light);
+}
+.compare-row {
+  display: grid; grid-template-columns: 1.3fr 1.5fr 1.5fr;
+  padding: 18px 24px; border-bottom: 1px solid var(--grey-light);
+  align-items: center; font-size: 15px;
+}
+.compare-row:last-child { border-bottom: none; }
+.compare-row.head {
+  background: var(--green-dark); color: var(--white); font-weight: 700; font-size: 15.5px;
+}
+.compare-row.head .compare-rose { color: var(--cream-tint); }
+.compare-row.head .compare-rose::before { content: "★ "; color: var(--gold); }
+.compare-row.alt { background: var(--light); }
+.compare-key { font-weight: 600; color: var(--green-dark); }
+.compare-traditional { color: var(--grey); }
+.compare-rose { color: var(--green-dark); font-weight: 500; }
+@media (max-width: 720px) {
+  .compare-row { grid-template-columns: 1fr; gap: 8px; padding: 16px 18px; }
+  .compare-row.head { display: none; }
+  .compare-key { font-size: 13px; color: var(--orange); margin-bottom: 4px; }
+  .compare-traditional::before { content: "Traditional: "; font-weight: 600; color: var(--grey); }
+  .compare-rose::before { content: "RoseAI: "; font-weight: 600; color: var(--green-dark); }
+}
+
+/* ---------- WORKFLOW ---------- */
+.workflow-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+}
+.flow-step {
+  background: var(--white); padding: 28px 22px; border-radius: var(--radius-lg);
+  border: 1px solid var(--grey-light); position: relative;
+}
+.flow-step-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; background: var(--green-dark); color: var(--white);
+  border-radius: 50%; font-weight: 700; margin-bottom: 16px;
+}
+.flow-step h4 { font-size: 16.5px; color: var(--green-dark); margin-bottom: 8px; }
+.flow-step p { font-size: 14px; color: var(--grey); }
+.flow-arrow {
+  position: absolute; top: 50%; right: -16px; transform: translateY(-50%);
+  font-size: 20px; color: var(--orange); font-weight: 700;
+}
+.flow-step:last-child .flow-arrow { display: none; }
+@media (max-width: 880px) {
+  .workflow-grid { grid-template-columns: repeat(2, 1fr); }
+  .flow-arrow { display: none; }
+}
+@media (max-width: 480px) { .workflow-grid { grid-template-columns: 1fr; } }
+
+/* ---------- FLOW CARDS (4 features) ---------- */
+.feature-cards {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+}
+.feature-card {
+  background: var(--white); padding: 30px 24px; border-radius: var(--radius-lg);
+  border: 1px solid var(--grey-light); transition: transform 0.2s, box-shadow 0.2s;
+}
+.feature-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.feature-icon {
+  font-size: 28px; margin-bottom: 14px;
+}
+.feature-card h4 { font-size: 17px; color: var(--green-dark); margin-bottom: 10px; }
+.feature-card p { font-size: 14px; color: var(--grey); line-height: 1.65; }
+@media (max-width: 880px) { .feature-cards { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .feature-cards { grid-template-columns: 1fr; } }
+
+/* ---------- TESTIMONIALS ---------- */
+.testimonials-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+}
+.testimonial {
+  background: var(--white); padding: 32px 28px; border-radius: var(--radius-lg);
+  border: 1px solid var(--grey-light); position: relative;
+}
+.testimonial::before {
+  content: "“"; position: absolute; top: 0; left: 18px; font-size: 64px;
+  color: var(--orange); opacity: 0.25; font-family: Georgia, serif; line-height: 1;
+}
+.testimonial-text {
+  font-size: 15.5px; color: var(--ink); line-height: 1.75;
+  margin: 18px 0 22px; position: relative; z-index: 1;
+}
+.testimonial-author {
+  display: flex; align-items: center; gap: 14px; padding-top: 16px;
+  border-top: 1px solid var(--grey-light);
+}
+.testimonial-avatar {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--green-dark); color: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 17px;
+}
+.testimonial-name { font-weight: 700; color: var(--green-dark); font-size: 15px; }
+.testimonial-role { font-size: 13px; color: var(--grey); }
+.testimonial-disclaimer {
+  text-align: center; font-size: 12.5px; color: var(--grey);
+  margin-top: 28px; font-style: italic;
+}
+@media (max-width: 880px) { .testimonials-grid { grid-template-columns: 1fr; } }
+
+/* ---------- PRICING ---------- */
+.pricing { background: var(--cream-tint); }
+.pricing-toggle {
+  display: inline-flex; background: var(--white); border-radius: 50px;
+  padding: 4px; margin: 0 auto 50px; border: 1px solid var(--grey-light);
+  position: relative;
+}
+.pricing-toggle-wrap { text-align: center; }
+.toggle-btn {
+  padding: 10px 24px; border-radius: 50px; font-weight: 600; font-size: 14px;
+  cursor: pointer; background: transparent; border: none; color: var(--grey);
+  transition: all 0.2s; font-family: inherit;
+}
+.toggle-btn.active { background: var(--green-dark); color: var(--white); }
+.toggle-save { font-size: 12px; color: var(--orange); margin-left: 6px; font-weight: 700; }
+.toggle-btn.active .toggle-save { color: var(--cream-tint); }
+
+.pricing-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 32px;
+}
+.price-card {
+  background: var(--white); border-radius: var(--radius-lg); padding: 36px 30px;
+  border: 1px solid var(--grey-light); position: relative; display: flex; flex-direction: column;
+}
+.price-card.featured {
+  border: 2px solid var(--orange); transform: scale(1.03); z-index: 1;
+  box-shadow: 0 12px 36px rgba(194, 65, 12, 0.15);
+}
+.price-badge {
+  position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+  background: var(--orange); color: var(--white); padding: 5px 16px;
+  border-radius: 20px; font-size: 12.5px; font-weight: 700;
+}
+.price-name { font-size: 22px; color: var(--green-dark); font-weight: 800; margin-bottom: 4px; }
+.price-tag-line { font-size: 13.5px; color: var(--grey); margin-bottom: 22px; }
+.price-amount {
+  font-size: 44px; font-weight: 800; color: var(--green-dark);
+  letter-spacing: -1px; line-height: 1;
+}
+.price-amount-monthly { display: inline; }
+.price-amount-yearly { display: none; }
+.pricing.yearly .price-amount-monthly { display: none; }
+.pricing.yearly .price-amount-yearly { display: inline; }
+.price-period { font-size: 15px; color: var(--grey); font-weight: 500; }
+.price-detail { font-size: 12.5px; color: var(--grey); margin-top: 6px; min-height: 36px; }
+.price-yearly { color: var(--orange); font-weight: 600; }
+
+.price-meta {
+  margin: 20px 0; padding: 14px 16px; background: var(--green-light); border-radius: 10px;
+  font-size: 13.5px; line-height: 1.65;
+}
+.price-meta-line { display: flex; justify-content: space-between; }
+.price-meta-line strong { color: var(--green-dark); }
+
+.price-features {
+  list-style: none; margin: 0 0 28px 0; flex: 1;
+}
+.price-features li {
+  padding: 8px 0; font-size: 14.5px; color: var(--ink);
+  display: flex; gap: 10px; align-items: flex-start;
+}
+.price-features li::before {
+  content: "✓"; color: var(--green); font-weight: 700; flex-shrink: 0;
+}
+.price-features li.feat-highlight { color: var(--green-dark); font-weight: 600; }
+.price-features li.feat-highlight::before { color: var(--orange); }
+
+.price-cta {
+  display: block; padding: 13px; text-align: center; border-radius: 8px;
+  font-weight: 700; font-size: 15px; transition: all 0.2s;
+  background: var(--green-dark); color: var(--white);
+}
+.price-cta:hover { background: var(--green); color: var(--white); }
+.price-card.featured .price-cta { background: var(--orange); }
+.price-card.featured .price-cta:hover { background: var(--orange-light); color: var(--white); }
+
+.pricing-guarantees {
+  display: flex; gap: 28px; justify-content: center; flex-wrap: wrap;
+  padding: 24px; background: var(--white); border-radius: var(--radius);
+  border: 1px solid var(--grey-light); font-size: 13.5px; color: var(--grey);
+}
+.pricing-guarantees span::before { content: "✓ "; color: var(--green); font-weight: 700; }
+
+.enterprise-card {
+  background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 100%);
+  color: var(--white); border-radius: var(--radius-lg); padding: 44px 48px; margin-top: 28px;
+  display: grid; grid-template-columns: 1.3fr 1fr; gap: 36px; align-items: center;
+}
+.enterprise-card h3 { font-size: 26px; margin-bottom: 12px; }
+.enterprise-card p { font-size: 15px; opacity: 0.92; margin-bottom: 20px; }
+.enterprise-features { list-style: none; }
+.enterprise-features li { padding: 5px 0; font-size: 14px; opacity: 0.95; }
+.enterprise-features li::before { content: "✦ "; color: var(--gold); }
+.enterprise-cta {
+  background: var(--orange); color: var(--white) !important;
+  padding: 14px 28px; border-radius: 8px; font-weight: 700; font-size: 15px;
+  display: inline-block; margin-top: 16px;
+}
+.enterprise-cta:hover { background: var(--orange-light); color: var(--white) !important; }
+.enterprise-price { text-align: center; }
+.enterprise-price-big {
+  font-size: 28px; font-weight: 800; margin-bottom: 4px;
+}
+.enterprise-price-small { font-size: 13.5px; opacity: 0.85; }
+
+@media (max-width: 880px) {
+  .pricing-grid { grid-template-columns: 1fr; gap: 28px; }
+  .price-card.featured { transform: none; }
+  .enterprise-card { grid-template-columns: 1fr; padding: 32px 28px; text-align: center; }
+}
+
+/* ---------- FAQ ---------- */
+.faq-list { max-width: 860px; margin: 0 auto; }
+.faq-item {
+  background: var(--white); border-radius: var(--radius); margin-bottom: 14px;
+  border: 1px solid var(--grey-light); overflow: hidden;
+}
+.faq-question {
+  width: 100%; padding: 22px 26px; text-align: left; cursor: pointer;
+  background: none; border: none; font-size: 16px; font-weight: 600;
+  color: var(--green-dark); display: flex; justify-content: space-between; align-items: center;
+  font-family: inherit;
+}
+.faq-toggle {
+  width: 24px; height: 24px; border-radius: 50%; background: var(--green-light);
+  color: var(--green-dark); display: flex; align-items: center; justify-content: center;
+  font-weight: 700; transition: transform 0.2s; flex-shrink: 0; margin-left: 14px;
+}
+.faq-item.open .faq-toggle { transform: rotate(45deg); background: var(--orange); color: var(--white); }
+.faq-answer {
+  display: none; padding: 0 26px 22px;
+  font-size: 14.5px; line-height: 1.75; color: var(--ink);
+}
+.faq-item.open .faq-answer { display: block; }
+.faq-answer strong { color: var(--green-dark); }
+
+/* ---------- FORM ---------- */
+.form-section { background: linear-gradient(180deg, var(--green-light) 0%, var(--cream) 100%); }
+.form-card {
+  max-width: 720px; margin: 0 auto;
+  background: var(--white); padding: 44px 48px; border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg); border: 1px solid var(--grey-light);
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; }
+.form-field { display: flex; flex-direction: column; }
+.form-field.full { grid-column: 1 / -1; }
+.form-field label {
+  font-size: 13.5px; color: var(--green-dark); font-weight: 600;
+  margin-bottom: 6px;
+}
+.form-field label .req { color: var(--orange); }
+.form-field input, .form-field select, .form-field textarea {
+  padding: 12px 14px; border: 1px solid var(--grey-light); border-radius: 6px;
+  font-size: 15px; font-family: inherit; color: var(--ink);
+  background: var(--white); transition: border-color 0.2s;
+}
+.form-field input:focus, .form-field select:focus, .form-field textarea:focus {
+  outline: none; border-color: var(--green-dark);
+}
+.form-submit {
+  width: 100%; padding: 16px; background: var(--orange); color: var(--white);
+  border: none; border-radius: 8px; font-size: 16px; font-weight: 700;
+  cursor: pointer; transition: background 0.2s; margin-top: 8px;
+  font-family: inherit;
+}
+.form-submit:hover { background: var(--orange-light); }
+.form-disclaimer {
+  font-size: 12.5px; color: var(--grey); margin-top: 16px; text-align: center;
+}
+@media (max-width: 720px) { .form-row { grid-template-columns: 1fr; } .form-card { padding: 30px 22px; } }
+
+/* ---------- BOTTOM CTA ---------- */
+.cta-band {
+  background: var(--green-dark); color: var(--white); padding: 64px 0; text-align: center;
+}
+.cta-band h2 { font-size: 32px; margin-bottom: 12px; font-weight: 800; }
+.cta-band p { font-size: 16px; opacity: 0.9; margin-bottom: 32px; max-width: 640px; margin-left: auto; margin-right: auto; }
+.cta-band-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.cta-band .btn-secondary {
+  background: transparent; color: var(--white); border-color: var(--white);
+}
+.cta-band .btn-secondary:hover { background: var(--white); color: var(--green-dark); }
+
+/* ---------- FOOTER ---------- */
+.footer {
+  background: var(--ink); color: var(--white); padding: 56px 0 28px;
+}
+.footer-grid {
+  display: grid; grid-template-columns: 1.7fr 0.8fr 1fr 0.8fr 1fr; gap: 28px; margin-bottom: 36px;
+}
+.footer-brand { color: var(--white); }
+.footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+.footer-logo img { height: 32px; filter: brightness(0) invert(1); }
+.footer-logo span { font-weight: 700; font-size: 18px; }
+.footer-tagline { font-size: 14px; opacity: 0.7; line-height: 1.7; }
+.footer-col h5 {
+  font-size: 13px; text-transform: uppercase; letter-spacing: 1px;
+  color: var(--gold); margin-bottom: 14px; font-weight: 700;
+}
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 8px; font-size: 14px; }
+.footer-col a { color: var(--cream-tint); opacity: 0.75; }
+.footer-col a:hover { opacity: 1; color: var(--orange-light); }
+.footer-bottom {
+  padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 12.5px; color: rgba(255,255,255,0.55); flex-wrap: wrap; gap: 12px;
+}
+.footer-bottom span::before { content: "·"; margin: 0 8px; opacity: 0.4; }
+.footer-bottom span:first-child::before { content: ""; margin: 0; }
+@media (max-width: 880px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-wechat { align-items: flex-start; } }
+
+
+.footer-wechat {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 10px;
+  padding-top: 8px;
+}
+.footer-wechat img {
+  width: 120px; height: 120px; border-radius: 8px;
+  background: var(--white); padding: 6px;
+}
+.footer-wechat .wechat-label {
+  font-size: 12px; color: var(--gold); font-weight: 600;
+  text-transform: uppercase; letter-spacing: 1px;
+}
+.footer-wechat .wechat-id { font-size: 13px; color: var(--cream-tint); opacity: 0.9; }
+@media (max-width: 880px) { .footer-wechat { align-items: center; } }
+
+/* Promise strip */
+.promise-strip {
+  background: var(--green-dark); color: var(--white); padding: 18px 0; text-align: center;
+}
+.promise-strip-inner {
+  display: flex; gap: 36px; justify-content: center; flex-wrap: wrap;
+  font-size: 14px; font-weight: 600;
+}
+.promise-strip-inner span::before { content: "● "; color: var(--orange-light); margin-right: 2px; }
+</style>
 </head>
 <body>
 
-    <header>
-        <div class="container">
-            <a href="#" class="logo"><img src="../assets/logo.png" alt="RoseAI" class="logo-img"></a>
-            <nav>
-                <a href="#features" class="nav-link">Why RoseAI</a>
-                <a href="#workflow" class="nav-link">How It Works</a>
-                <a href="#testimonials" class="nav-link">Customers</a>
-                <a href="#pricing" class="nav-link">Pricing</a>
-                <a href="faq.html" class="nav-link">FAQ</a>
-                <span class="lang-switch">
-                    <a href="../zh/">中</a> / <a href="#" class="active">EN</a>
-                </span>
-                <a href="#trial-form" class="btn-nav">Book Demo</a>
-            </nav>
-        </div>
-    </header>
-
-    <!-- ===== HERO ===== -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-grid">
-                <div>
-                    <div class="hero-tag">
-                        <span class="dot"></span>
-                        Built for Greater Vancouver restaurants
-                    </div>
-                    <h1>Never miss<br>another <em>busy-hour</em> call.</h1>
-                    <p class="lead">RoseAI is the AI phone receptionist built for Canadian restaurants. Answers in English, Mandarin, Cantonese & Spanish. 0-second pickup. Orders flow straight to your POS.</p>
-
-                    <div class="hero-trust">
-                        <span><i class="fa-solid fa-shield-halved"></i> Data stored in Canada</span>
-                        <span><i class="fa-solid fa-check-double"></i> PIPEDA-compliant</span>
-                        <span><i class="fa-solid fa-clock"></i> 1-month free trial</span>
-                        <span><i class="fa-brands fa-whatsapp"></i> WhatsApp: 778-325-4966</span>
-                    </div>
-
-                    <div class="cta-row">
-                        <a href="#trial-form" class="btn-primary">
-                            <i class="fa-solid fa-calendar-check"></i> Start 1-month free trial
-                        </a>
-                        <a href="#pricing" class="btn-secondary">See pricing</a>
-                    </div>
-                </div>
-
-                <!-- Phone Mockup Demo -->
-                <div class="phone-mockup">
-                    <div class="phone-screen">
-                        <div class="phone-header">
-                            <span><i class="fa-solid fa-phone"></i> Incoming · 7:42 PM</span>
-                            <span class="live">Live</span>
-                        </div>
-                        <div class="bubble ai">Thank you for calling Maple &amp; Vine. Are you calling for a reservation or takeout?</div>
-                        <div class="bubble user">Takeout. Two grilled salmon plates, one with no capers — allergy.</div>
-                        <div class="bubble ai">Got it. Two grilled salmon, one no capers. Anything to drink, and your pickup time?</div>
-                        <div class="bubble user">Just water. Pickup at 8:15, name's Daniel.</div>
-                        <div class="bubble ai">Confirmed. Order sent to the kitchen. See you at 8:15, Daniel.</div>
-
-                        <div class="order-card">
-                            <div class="title">
-                                <span><i class="fa-solid fa-receipt"></i> Order #2046</span>
-                                <span>7:43 PM</span>
-                            </div>
-                            <div class="line">· Grilled Salmon × 2 (1× no capers, allergy)</div>
-                            <div class="line">· Pickup 8:15 PM · Daniel</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== IMPACT STATS ===== -->
-    <section class="impact-section">
-        <div class="impact-grid">
-            <div class="impact-card">
-                <h2>43%</h2>
-                <p class="label">of rush-hour calls go unanswered</p>
-                <span class="src">RoseAI 2025 Greater Vancouver pilot data</span>
-            </div>
-            <div class="impact-card">
-                <h2>$76K</h2>
-                <p class="label">in annual revenue recovered</p>
-                <span class="src">Mid-size restaurant · $32 ATV × missed calls</span>
-            </div>
-            <div class="impact-card">
-                <h2>100%</h2>
-                <p class="label">call answer rate</p>
-                <span class="src">RoseAI · 7 × 24, no holidays, no sick days</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== INTEGRATIONS ===== -->
-    <section class="integration-strip">
-        <div class="container">
-            <h3>Works with the POS &amp; channels you already use</h3>
-            <div class="integration-grid">
-                <div><i class="fa-solid fa-cube"></i>Square</div>
-                <div><i class="fa-solid fa-fire"></i>Toast</div>
-                <div><i class="fa-solid fa-leaf"></i>Clover</div>
-                <div><i class="fa-solid fa-bowl-food"></i>Lightspeed</div>
-                <div><i class="fa-brands fa-whatsapp"></i>WhatsApp</div>
-                <div><i class="fa-solid fa-envelope"></i>SMS / Email</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== COMPARISON ===== -->
-    <section id="features" class="section-padding">
-        <div class="container">
-            <div class="title-center">
-                <span class="kicker">Why RoseAI</span>
-                <h2>Hand off the phone. <em>Get your floor back.</em></h2>
-                <p class="sub">The same incoming call, with and without RoseAI.</p>
-            </div>
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th class="col-topic">What matters</th>
-                            <th class="col-human">Traditional front desk</th>
-                            <th class="ai-highlight col-ai">RoseAI</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Response time</td>
-                            <td>Lines busy at peak; calls drop</td>
-                            <td class="ai-highlight"><i class="fa-solid fa-bolt"></i>0-second pickup, never busy</td>
-                        </tr>
-                        <tr>
-                            <td>Language support</td>
-                            <td>Usually 1–2 languages</td>
-                            <td class="ai-highlight"><i class="fa-solid fa-globe"></i>English, Mandarin, Cantonese, Spanish</td>
-                        </tr>
-                        <tr>
-                            <td>Order accuracy</td>
-                            <td>Handwritten notes, missed allergies</td>
-                            <td class="ai-highlight"><i class="fa-solid fa-check-double"></i>Allergies &amp; modifiers captured automatically</td>
-                        </tr>
-                        <tr>
-                            <td>Operating hours</td>
-                            <td>Limited by staffing &amp; shifts</td>
-                            <td class="ai-highlight"><i class="fa-solid fa-clock"></i>24/7, every holiday, every night</td>
-                        </tr>
-                        <tr>
-                            <td>Cost</td>
-                            <td>$3,200+/mo per host (with benefits)</td>
-                            <td class="ai-highlight"><i class="fa-solid fa-coins"></i>From $99/mo · no payroll, no HR</td>
-                        </tr>
-                        <tr>
-                            <td>Data &amp; insights</td>
-                            <td>Calls disappear when they hang up</td>
-                            <td class="ai-highlight"><i class="fa-solid fa-chart-line"></i>Recordings, transcripts, customer DB</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== WORKFLOW ===== -->
-    <section id="workflow" class="workflow-section section-padding">
-        <div class="container">
-            <div class="title-center">
-                <span class="kicker">How it works</span>
-                <h2>Phone rings to <em>order in the kitchen</em> — under 30 seconds.</h2>
-                <p class="sub">End-to-end automation. No staff in the loop unless you want them to be.</p>
-            </div>
-
-            <div class="workflow">
-                <div class="workflow-visual">
-                    <div class="flow-node">
-                        <div class="icon"><i class="fa-solid fa-phone-volume"></i></div>
-                        <div class="text"><strong>Incoming call</strong><span>Picked up in 0 seconds, no IVR menu</span></div>
-                    </div>
-                    <div class="flow-arrow"><i class="fa-solid fa-chevron-down"></i></div>
-                    <div class="flow-node">
-                        <div class="icon"><i class="fa-solid fa-language"></i></div>
-                        <div class="text"><strong>Multilingual understanding</strong><span>Detects language, captures items, modifiers, address</span></div>
-                    </div>
-                    <div class="flow-arrow"><i class="fa-solid fa-chevron-down"></i></div>
-                    <div class="flow-node">
-                        <div class="icon"><i class="fa-solid fa-receipt"></i></div>
-                        <div class="text"><strong>Order created</strong><span>Pushed live to your POS or kitchen printer</span></div>
-                    </div>
-                    <div class="flow-arrow"><i class="fa-solid fa-chevron-down"></i></div>
-                    <div class="flow-node">
-                        <div class="icon"><i class="fa-solid fa-chart-pie"></i></div>
-                        <div class="text"><strong>Logged &amp; analyzed</strong><span>Call recording, transcript, customer profile</span></div>
-                    </div>
-                </div>
-
-                <div class="workflow-steps">
-                    <h3>A closed-loop ordering system.</h3>
-                    <p>No number porting. No new hardware. RoseAI forwards from your existing line — most restaurants are live within a day.</p>
-
-                    <div class="step">
-                        <h4>Intelligent intake</h4>
-                        <p>Reservations, takeout, delivery, hours, directions — handled.</p>
-                    </div>
-                    <div class="step">
-                        <h4>Semantic capture</h4>
-                        <p>Catches things humans miss at 8pm: "no onions," "peanut allergy," "extra spicy."</p>
-                    </div>
-                    <div class="step">
-                        <h4>Auto-dispatch</h4>
-                        <p>Orders sync to Square, Toast, Clover, Lightspeed — or print straight to the line.</p>
-                    </div>
-                    <div class="step">
-                        <h4>Human fallback</h4>
-                        <p>When RoseAI isn't sure, the call routes to your mobile or takes a callback. Nothing slips through.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== TESTIMONIALS ===== -->
-    <section id="testimonials" class="section-padding">
-        <div class="container">
-            <div class="title-center">
-                <span class="kicker">Customers</span>
-                <h2>What Vancouver restaurant owners are <em>actually saying.</em></h2>
-                <p class="sub">Pilot customers from Richmond, Burnaby, and Surrey.</p>
-            </div>
-
-            <div class="testimonial-grid">
-                <div class="testimonial-card">
-                    <div class="quote-mark">"</div>
-                    <p class="quote">Friday nights used to be chaos — phones ringing, servers running, calls going straight to voicemail. RoseAI catches every one of them. Takeout volume is up about 28% in the first month.</p>
-                    <div class="author">
-                        <div class="avatar">M</div>
-                        <div class="meta">
-                            <strong>Marco D'Angelo</strong>
-                            <span>Owner · Italian trattoria, Richmond</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="quote-mark">"</div>
-                    <p class="quote">Our customers don't even realize it's AI half the time. It handles modifiers — "no cilantro," "extra rice" — better than some of my new staff. Tickets to the kitchen are clean and consistent.</p>
-                    <div class="author">
-                        <div class="avatar">S</div>
-                        <div class="meta">
-                            <strong>Sarah Chen</strong>
-                            <span>GM · Modern Asian, Burnaby</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="quote-mark">"</div>
-                    <p class="quote">I run three locations. I used to rotate a host between them just to answer the phone. RoseAI saves me roughly $6,000 a month in labour — and the dashboard shows me which store is dropping orders.</p>
-                    <div class="author">
-                        <div class="avatar">K</div>
-                        <div class="meta">
-                            <strong>Kevin Park</strong>
-                            <span>Multi-unit operator · Surrey</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <p class="testimonial-note">* Names used with permission from pilot customers. Individual results vary by restaurant size and order volume.</p>
-        </div>
-    </section>
-
-    <!-- ===== PRICING ===== -->
-    <section id="pricing" class="section-padding pricing-section">
-        <div class="container">
-            <div class="title-center">
-                <span class="kicker">Pricing</span>
-                <h2>Simple pricing. <em>1-month free trial.</em></h2>
-                <p class="sub">Install, training, and local support included. No setup fees, no hardware deposits, cancel any time.</p>
-
-                <div class="toggle-wrap">
-                    <div class="pricing-toggle" id="pricing-toggle">
-                        <button class="active" data-period="monthly">Monthly</button>
-                        <button data-period="yearly">Yearly<span class="save-tag">Save 15%</span></button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pricing-grid">
-                <div class="price-card">
-                    <h3>Lite</h3>
-                    <div class="cost">$<span class="price-num" data-monthly="99" data-yearly="84">99</span><span class="cost-unit">/mo</span></div>
-                    <span class="cost-cad">CAD · plus GST/PST</span>
-                    <div class="cost-yearly">Billed $1,008/yr (save $180)</div>
-                    <span class="concurrency">1 concurrent line</span>
-                    <ul>
-                        <li><i class="fa-solid fa-check"></i> English &amp; Mandarin</li>
-                        <li><i class="fa-solid fa-check"></i> Smart transcription &amp; recordings</li>
-                        <li><i class="fa-solid fa-check"></i> Custom business hours</li>
-                        <li><i class="fa-solid fa-check"></i> Order delivered by SMS</li>
-                    </ul>
-                    <a href="#trial-form" class="btn-card">Start 1-month trial</a>
-                </div>
-
-                <div class="price-card featured">
-                    <div class="badge">Most popular</div>
-                    <h3>Pro</h3>
-                    <div class="cost">$<span class="price-num" data-monthly="199" data-yearly="169">199</span><span class="cost-unit">/mo</span></div>
-                    <span class="cost-cad">CAD · plus GST/PST</span>
-                    <div class="cost-yearly">Billed $2,028/yr (save $360)</div>
-                    <span class="concurrency">2 concurrent lines</span>
-                    <ul>
-                        <li><i class="fa-solid fa-check"></i> <strong>English, Mandarin, Cantonese, Spanish</strong></li>
-                        <li><i class="fa-solid fa-check"></i> <strong>Auto-sync to POS (Square, Toast, Clover…)</strong></li>
-                        <li><i class="fa-solid fa-check"></i> Allergy &amp; modifier capture</li>
-                        <li><i class="fa-solid fa-check"></i> Rush-hour performance boost</li>
-                        <li><i class="fa-solid fa-check"></i> Human fallback routing</li>
-                    </ul>
-                    <a href="#trial-form" class="btn-card">Start 1-month trial</a>
-                </div>
-
-                <div class="price-card">
-                    <h3>Elite</h3>
-                    <div class="cost">$<span class="price-num" data-monthly="299" data-yearly="254">299</span><span class="cost-unit">/mo</span></div>
-                    <span class="cost-cad">CAD · plus GST/PST</span>
-                    <div class="cost-yearly">Billed $3,048/yr (save $540)</div>
-                    <span class="concurrency">4 concurrent lines</span>
-                    <ul>
-                        <li><i class="fa-solid fa-check"></i> Everything in Pro</li>
-                        <li><i class="fa-solid fa-check"></i> <strong>Advanced analytics dashboard</strong></li>
-                        <li><i class="fa-solid fa-check"></i> Open API access</li>
-                        <li><i class="fa-solid fa-check"></i> Customer tags &amp; marketing exports</li>
-                        <li><i class="fa-solid fa-check"></i> Dedicated success manager</li>
-                    </ul>
-                    <a href="#trial-form" class="btn-card">Start 1-month trial</a>
-                </div>
-            </div>
-
-            <p class="pricing-disclaimer">
-                <i class="fa-solid fa-shield-check"></i> 1-month money-back guarantee &nbsp;·&nbsp;
-                <i class="fa-solid fa-money-bill-wave"></i> No setup fees, no hardware deposits &nbsp;·&nbsp;
-                <i class="fa-solid fa-rotate-left"></i> Cancel any time, month-to-month &nbsp;·&nbsp;
-                <i class="fa-solid fa-map-pin"></i> Local team, on-site install in Greater Vancouver
-            </p>
-
-            <div class="enterprise-section">
-                <div class="enterprise-content">
-                    <div class="enterprise-text">
-                        <h2>Enterprise</h2>
-                        <p>For multi-unit operators, large-format restaurants, and custom voice deployments.</p>
-                        <div class="enterprise-grid">
-                            <div class="ent-item"><i class="fa-solid fa-layer-group"></i> Unlimited concurrent lines</div>
-                            <div class="ent-item"><i class="fa-solid fa-network-wired"></i> Multi-location dashboard</div>
-                            <div class="ent-item"><i class="fa-solid fa-microchip"></i> Custom voice model tuning</div>
-                            <div class="ent-item"><i class="fa-solid fa-headset"></i> 24/7 priority engineering support</div>
-                        </div>
-                    </div>
-                    <div class="enterprise-cta">
-                        <div class="price-label">Tailored pricing</div>
-                        <div class="price-value">Let's talk</div>
-                        <a href="#contact" class="btn-primary btn-compact">
-                            <i class="fa-solid fa-user-tie"></i> Contact sales
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== FAQ ===== -->
-    <section id="faq" class="faq-section section-padding">
-        <div class="container">
-            <div class="title-center">
-                <span class="kicker">FAQ</span>
-                <h2>The 10 things owners <em>always ask first.</em></h2>
-            </div>
-
-            <div class="faq-list">
-                <details class="faq-item">
-                    <summary>Do I need to change my phone number?</summary>
-                    <div class="faq-content">No. We use call forwarding on your existing line, so your number on Google, your menus, and your storefront stays the same. Setup takes about 10 minutes.</div>
-                </details>
-
-                <details class="faq-item">
-                    <summary>Will customers know they're talking to an AI?</summary>
-                    <div class="faq-content">RoseAI uses the latest generation of neural voice models — most customers don't notice. You can also choose to disclose it ("Hi, I'm the AI assistant at Maple &amp; Vine"). Pilot data shows customers actually rate AI calls higher: no hold music, no "please call back," no accent friction.</div>
-                </details>
-
-                <details class="faq-item">
-                    <summary>What if the AI mishears an order?</summary>
-                    <div class="faq-content">Three layers of safety: (1) RoseAI repeats the order back for confirmation, (2) anything uncertain is flagged for owner review on your phone, and (3) complex cases auto-route to your mobile. We back this with an under-1% error guarantee and reimburse confirmed mis-orders.</div>
-                </details>
-
-                <details class="faq-item">
-                    <summary>How long is the contract? Can I cancel?</summary>
-                    <div class="faq-content">All plans are month-to-month with no minimum commitment. Cancel any time from your dashboard — billing stops the following month. Annual plans get 15% off and we'll prorate the refund on unused months.</div>
-                </details>
-
-                <details class="faq-item">
-                    <summary>Where is my data stored? Is it compliant?</summary>
-                    <div class="faq-content">All recordings and order data are stored in Canada (AWS ca-central-1, Toronto) and fully comply with PIPEDA and BC's Personal Information Protection Act. Recordings are kept 90 days, exportable or deletable any time. We never use your data to train third-party models.</div>
-                </details>
-
-                <details class="faq-item">
-                    <summary>What if the internet or power goes down at the restaurant?</summary>
-                    <div class="faq-content">RoseAI runs in the cloud, completely independent of your in-store network. Even during a power outage, calls are still answered and orders are queued — they'll print as soon as you're back online. Elite and Enterprise plans include a 4G-backup printer.</div>
-                </details>
-
-                <details class="faq-item">
-                    <summary>Which POS systems do you support?</summary>
-                    <div class="faq-content">We integrate natively with Square, Toast, Clover, and Lightspeed. For less common systems we can build a custom integration in 5–10 business days (included with Elite/Enterprise). If you'd rather skip POS integration entirely, we can deliver orders by SMS or print directly to a kitchen ticket printer.</div>
-                </details>
-
-                <details class="faq-item">
-                    <summary>Are prices in CAD? Any hidden fees?</summary>
-                    <div class="faq-content">All prices are in CAD, plus GST/PST. There are no setup fees, no hardware deposits, no activation charges. If you need a kitchen ticket printer, hardware runs about CAD $180 (one-time, optional — you can also use your own).</div>
-                </details>
-
-                <details class="faq-item">
-                    <summary>How does the 1-month free trial work?</summary>
-                    <div class="faq-content">No credit card, no deposit required. You get full Pro-plan functionality for 14 days — multilingual answering, POS sync, the works. We'll reach out 48 hours before the trial ends. Continuing is entirely your call.</div>
-                </details>
-
-                <details class="faq-item">
-                    <summary>How do I reach you besides this website?</summary>
-                    <div class="faq-content">Call 778-325-4966, email contactus@roseai.ca, or message us on WhatsApp. We have local customer support in English, Mandarin, and Cantonese — based here in Greater Vancouver.</div>
-                </details>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== TRIAL FORM ===== -->
-    <section id="trial-form" class="trial-form-section">
-        <div class="container">
-            <div class="trial-form-wrap">
-                <div class="trial-form-card" id="trialFormCard">
-                    <div class="form-content">
-                        <div class="form-header">
-                            <span class="kicker">1-month free trial</span>
-                            <h2>Tell us about your restaurant.<br><em>We'll call back within 24 hours.</em></h2>
-                            <p>Local team. 1-on-1 walkthrough. On-site demo. No credit card.</p>
-                        </div>
-
-                        <form id="trialForm" autocomplete="on" novalidate>
-                            <input type="text" name="_honey" class="honeypot" tabindex="-1" autocomplete="off">
-
-                            <div class="form-row">
-                                <div class="form-field">
-                                    <label for="name">Your name<span class="req">*</span></label>
-                                    <input type="text" id="name" name="Name" required placeholder="e.g. Daniel Smith">
-                                </div>
-                                <div class="form-field">
-                                    <label for="restaurant">Restaurant name<span class="req">*</span></label>
-                                    <input type="text" id="restaurant" name="Restaurant" required placeholder="e.g. Maple &amp; Vine Bistro">
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-field">
-                                    <label for="phone">Phone<span class="req">*</span></label>
-                                    <input type="tel" id="phone" name="Phone" required placeholder="604-xxx-xxxx" pattern="[\d\s\-\+\(\)]{7,}">
-                                </div>
-                                <div class="form-field">
-                                    <label for="email">Email (optional)</label>
-                                    <input type="email" id="email" name="Email" placeholder="you@example.com">
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-field">
-                                    <label for="city">City / Region<span class="req">*</span></label>
-                                    <select id="city" name="City" required>
-                                        <option value="" disabled selected>Select one</option>
-                                        <option value="Vancouver">Vancouver</option>
-                                        <option value="Richmond">Richmond</option>
-                                        <option value="Burnaby">Burnaby</option>
-                                        <option value="Surrey">Surrey</option>
-                                        <option value="Coquitlam">Coquitlam</option>
-                                        <option value="Langley">Langley</option>
-                                        <option value="North Vancouver">North Vancouver</option>
-                                        <option value="Other Greater Vancouver">Other Greater Vancouver</option>
-                                        <option value="Outside BC">Outside BC</option>
-                                    </select>
-                                </div>
-                                <div class="form-field">
-                                    <label for="size">Restaurant size<span class="req">*</span></label>
-                                    <select id="size" name="Size" required>
-                                        <option value="" disabled selected>Select one</option>
-                                        <option value="Single location, small (<50 seats)">Single location, small (&lt;50 seats)</option>
-                                        <option value="Single location, medium (50-150 seats)">Single location, medium (50–150 seats)</option>
-                                        <option value="Single location, large (>150 seats)">Single location, large (&gt;150 seats)</option>
-                                        <option value="2-5 locations">2–5 locations</option>
-                                        <option value="6+ locations">6+ locations</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-field full">
-                                <label for="notes">Anything specific you'd like to discuss? (optional)</label>
-                                <textarea id="notes" name="Notes" placeholder="e.g. We're on Square POS, mostly looking to solve missed takeout calls during dinner rush..."></textarea>
-                            </div>
-
-                            <button type="submit" class="form-submit" id="submitBtn">
-                                <span class="label-default">
-                                    <i class="fa-solid fa-paper-plane"></i> Start my 1-month free trial
-                                </span>
-                                <span class="spinner"></span>
-                            </button>
-
-                            <p class="form-disclaimer">
-                                By submitting, you agree to be contacted by the RoseAI team by phone or email.<br>
-                                We never share your info with third parties · <a href="faq.html">PIPEDA-compliant</a>
-                            </p>
-                        </form>
-
-                        <div class="form-status error" id="formError">
-                            <strong>Submission failed</strong>
-                            Looks like a network hiccup. Please call <a href="tel:7783254966" class="link-error">778-325-4966</a> or WhatsApp us instead.
-                        </div>
-                    </div>
-
-                    <div class="form-status success" id="formSuccess">
-                        <strong><i class="fa-solid fa-circle-check"></i> Request received!</strong>
-                        We'll be in touch <strong class="text-success">within 24 hours</strong> to walk through your setup.<br>
-                        In a hurry? Call <a href="tel:7783254966" class="link-success">778-325-4966</a> or message us on <a href="https://wa.me/17783254966" class="link-success">WhatsApp</a>.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== FINAL CTA ===== -->
-    <section id="contact" class="final-cta">
-        <div class="container">
-            <h2>Try RoseAI for 14 days.<br>Let the <em>numbers decide.</em></h2>
-            <p>Free trial · No credit card · Local team, on-site install. Book a 15-minute demo and we'll show you exactly what you're missing during rush hour.</p>
-
-            <div class="cta-row cta-row-center">
-                <a href="tel:7783254966" class="btn-primary">
-                    <i class="fa-solid fa-phone"></i> Call 778-325-4966
-                </a>
-                <a href="mailto:contactus@roseai.ca?subject=RoseAI Demo Request" class="btn-secondary">
-                    <i class="fa-solid fa-envelope"></i> Book a demo
-                </a>
-            </div>
-
-            <div class="contact-channels">
-                <a href="https://wa.me/17783254966" class="channel"><i class="fa-brands fa-whatsapp"></i> WhatsApp: 778-325-4966</a>
-                <a href="mailto:contactus@roseai.ca" class="channel"><i class="fa-solid fa-envelope"></i> contactus@roseai.ca</a>
-                <a href="tel:7783254966" class="channel"><i class="fa-solid fa-phone"></i> 778-325-4966</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== FOOTER ===== -->
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div>
-                    <a href="#" class="logo"><img src="../assets/logo.png" alt="RoseAI" class="logo-img"></a>
-                    <p class="footer-intro">Hand the phone to AI. Get your floor back.</p>
-                    <p>Locally operated. Serving Vancouver, Richmond, Burnaby, Surrey, Coquitlam, Langley, and North Vancouver.</p>
-                </div>
-                <div>
-                    <h4>Product</h4>
-                    <a href="#features">Why RoseAI</a>
-                    <a href="#workflow">How it works</a>
-                    <a href="#pricing">Pricing</a>
-                    <a href="faq.html">FAQ</a>
-                </div>
-                <div>
-                    <h4>Contact</h4>
-                    <a href="tel:7783254966">778-325-4966</a>
-                    <a href="mailto:contactus@roseai.ca">contactus@roseai.ca</a>
-                    <a href="https://wa.me/17783254966">WhatsApp</a>
-                    <a href="../zh/">中文版</a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <div>© 2026 RoseAI Technology Services Ltd. All rights reserved.</div>
-                <div class="badges">
-                    <span><i class="fa-solid fa-shield-halved"></i> PIPEDA-compliant</span>
-                    <span><i class="fa-solid fa-server"></i> Data stored in Canada</span>
-                    <span><i class="fa-solid fa-leaf"></i> Made in BC</span>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- ===== MOBILE STICKY CTA ===== -->
-    <a href="#trial-form" class="mobile-cta">
-        <i class="fa-solid fa-calendar-check"></i> Start your 1-month free trial
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/en/" class="nav-logo">
+      <img src="/assets/logo.png" alt="RoseAI">
+      <span>RoseAI</span>
     </a>
+    <div class="nav-links">
+      <a href="#features">Why RoseAI</a>
+      <a href="#workflow">How It Works</a>
+      <a href="#testimonials">Customers</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <span class="nav-lang"><a href="/zh/">中</a> / <a class="active" href="/en/">EN</a></span>
+      <a href="#trial-form" class="nav-cta">Start Free Trial</a>
+    </div>
+  </div>
+</nav>
 
-    <script src="../assets/js/site.js"></script>
+<!-- ============ PROMISE STRIP ============ -->
+<div class="promise-strip">
+  <div class="container promise-strip-inner">
+    <span>Cloud Elastic Answering · Never Busy</span>
+    <span>0-Second Answer</span>
+    <span>Local Vancouver Team</span>
+    <span>PIPEDA Compliant</span>
+  </div>
+</div>
 
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="container hero-grid">
+    <div class="hero-text">
+      <div class="hero-badge">Local Team · Serving Greater Vancouver Restaurants</div>
+      <h1>Your restaurant will<br><em>never miss a call again</em></h1>
+      <p class="lead">RoseAI is an AI voice receptionist built for Canadian restaurants. Multilingual auto-detection across Mandarin, Cantonese, English, and Spanish. 0-second answering, orders auto-synced to your POS. All plans include cloud elastic answering — never busy.</p>
+      <div class="hero-tags">
+        <span class="hero-tag highlight">1-Month Free Trial</span>
+        <span class="hero-tag">PIPEDA Compliant · Canadian Data Hosting</span>
+        <span class="hero-tag">WhatsApp: 778-325-4966</span>
+      </div>
+      <div class="hero-cta-row">
+        <a href="#trial-form" class="btn btn-primary">Start 1-Month Free Trial →</a>
+        <a href="#pricing" class="btn btn-secondary">See Pricing</a>
+      </div>
+    </div>
+
+    <!-- Live call demo card -->
+    <div class="demo-card">
+      <div class="demo-header">
+        <span class="demo-pulse"></span>
+        Incoming Call · 1:42 PM · Live
+      </div>
+      <div class="demo-msg ai">Hi, this is Garden Bistro. Are you calling to place an order or make a reservation?</div>
+      <div class="demo-msg user">I'd like two pad thai, one with no peanuts. Delivery to Richmond.</div>
+      <div class="demo-msg ai">Two pad thai — one with no peanuts — for delivery to Richmond. May I have the street address?</div>
+      <div class="demo-msg user">8460 Garden City Road, Unit 3.</div>
+      <div class="demo-msg ai">Got it. ETA is 2:25 PM. Order sent to the kitchen.</div>
+      <div class="demo-order">
+        <strong>Order #2046 <span class="order-id">1:43 PM</span></strong>
+        <ul>
+          <li>Pad Thai × 2 (1 with no peanuts)</li>
+          <li>Delivery · 8460 Garden City Rd · Unit 3</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ STATS ============ -->
+<section class="stats">
+  <div class="container stats-grid">
+    <div class="stat">
+      <div class="stat-num">43%</div>
+      <div class="stat-label">Industry peak-hour miss rate</div>
+      <div class="stat-sub">RoseAI 2025 Greater Vancouver pilot data</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">$76K</div>
+      <div class="stat-label">Recovered revenue per year</div>
+      <div class="stat-sub">Based on mid-size restaurant, ATV $32 × missed calls</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Call-answering coverage</div>
+      <div class="stat-sub">RoseAI answers 24/7, no exceptions</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ POS LOGOS ============ -->
+<section class="pos-strip">
+  <div class="container">
+    <h3>Integrated with all major restaurant POS & delivery platforms</h3>
+    <div class="pos-logos">
+      <span>Square</span>
+      <span>Toast</span>
+      <span>Clover</span>
+      <span>Dian Dian</span>
+      <span>Lightspeed</span>
+      <span>Aldelo</span>
+      <span>WhatsApp</span>
+      <span>WeChat</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURES (COMPARE) ============ -->
+<section class="section" id="features">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">Why RoseAI</div>
+      <h2 class="section-title">Let AI handle the phones<em>·</em>You focus on the guests</h2>
+      <p class="section-sub">The same incoming call — traditional handling vs. RoseAI</p>
+    </div>
+
+    <div class="compare-table">
+      <div class="compare-row head">
+        <div>Comparison</div>
+        <div>Traditional Reception</div>
+        <div class="compare-rose">RoseAI Smart Reception</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-key">Response Speed</div>
+        <div class="compare-traditional">Depends on front-of-house workload; line gets busy</div>
+        <div class="compare-rose">0-second response · cloud elastic · never busy</div>
+      </div>
+      <div class="compare-row alt">
+        <div class="compare-key">Language Support</div>
+        <div class="compare-traditional">Typically 1–2 languages only</div>
+        <div class="compare-rose">Mandarin, Cantonese, English, Spanish — auto-detected</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-key">Order Accuracy</div>
+        <div class="compare-traditional">Handwritten notes prone to error</div>
+        <div class="compare-rose">AI extracts dietary notes, modifiers and prints automatically</div>
+      </div>
+      <div class="compare-row alt">
+        <div class="compare-key">Operating Hours</div>
+        <div class="compare-traditional">Limited by staff schedule; off-hours calls lost</div>
+        <div class="compare-rose">24/7 nonstop coverage</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-key">Labor Cost</div>
+        <div class="compare-traditional">Each receptionist costs $3,200+/month (incl. benefits)</div>
+        <div class="compare-rose">From $99/month — no HR overhead</div>
+      </div>
+      <div class="compare-row alt">
+        <div class="compare-key">Data & Analytics</div>
+        <div class="compare-traditional">No record of calls; impossible to review</div>
+        <div class="compare-rose">Every call replayable, analyzable, usable for marketing</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WORKFLOW ============ -->
+<section class="section" id="workflow" style="background:var(--cream-tint);">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">How It Works</div>
+      <h2 class="section-title">From call to kitchen<em>·</em>30 seconds end-to-end</h2>
+      <p class="section-sub">A complete order loop — fully handled by AI, no human intervention required</p>
+    </div>
+
+    <div class="workflow-grid">
+      <div class="flow-step">
+        <div class="flow-step-num">1</div>
+        <h4>Incoming Call</h4>
+        <p>Phone rings 0 seconds — AI picks up via cloud elastic answering</p>
+        <span class="flow-arrow">→</span>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">2</div>
+        <h4>Multilingual + Semantic Parsing</h4>
+        <p>Identifies dishes, quantities, dietary notes, delivery info</p>
+        <span class="flow-arrow">→</span>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">3</div>
+        <h4>Order Created</h4>
+        <p>Pushed in real-time to POS or kitchen printer</p>
+        <span class="flow-arrow">→</span>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">4</div>
+        <h4>Data Pipeline</h4>
+        <p>Call recording, order, and caller number archived</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURE CARDS ============ -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">Digital Order Loop</div>
+      <h2 class="section-title">No new number<em>·</em>No new hardware</h2>
+      <p class="section-sub">RoseAI binds to your existing phone number — near-zero migration cost</p>
+    </div>
+
+    <div class="feature-cards">
+      <div class="feature-card">
+        <div class="feature-icon">📞</div>
+        <h4>Smart Answering</h4>
+        <p>AI understands customer intent — orders, reservations, inquiries, delivery status — all handled.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧠</div>
+        <h4>Semantic Extraction</h4>
+        <p>Auto-detects dishes, quantities, and special notes ("low salt", "peanut allergy", "no cilantro").</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🖨️</div>
+        <h4>Auto Order Sync</h4>
+        <p>Orders sync to Square / Toast / Clover / Lightspeed / Aldelo / Dian Dian POS, or print directly to a kitchen printer.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🤝</div>
+        <h4>Human Fallback</h4>
+        <p>When AI isn't sure, it auto-routes to the owner's mobile or records a callback — never lose a sale.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="section" id="testimonials" style="background:var(--cream-tint);">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">Customer Stories</div>
+      <h2 class="section-title">What restaurant owners<em>are saying</em></h2>
+      <p class="section-sub">Real pilot customers from Richmond, Burnaby, and Surrey</p>
+    </div>
+
+    <div class="testimonials-grid">
+      <div class="testimonial">
+        <p class="testimonial-text">We used to be completely overwhelmed on Friday nights. Now RoseAI handles everything. Delivery orders went up nearly 28% in the first month — and most importantly, we don't miss calls anymore.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">C</div>
+          <div>
+            <div class="testimonial-name">Mr. Chen</div>
+            <div class="testimonial-role">Richmond · Cantonese-style café owner</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <p class="testimonial-text">Customers can order directly in Mandarin or Cantonese — the AI catches details like "half ice, half sugar" more accurately than a new hire. Kitchen tickets are clean and consistent, and arguments dropped by more than half.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">L</div>
+          <div>
+            <div class="testimonial-name">Linda Lin</div>
+            <div class="testimonial-role">Burnaby · Sichuan restaurant operator</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <p class="testimonial-text">I have three locations, each used to need a dedicated phone receptionist. With RoseAI I save about $6,000/month in labor — and the dashboard tells me which store is missing the most orders.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">K</div>
+          <div>
+            <div class="testimonial-name">Kevin Wu</div>
+            <div class="testimonial-role">Surrey · Japanese chain owner</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="testimonial-disclaimer">* Quotes are from pilot customers, used with permission. Results vary by restaurant size and category.</p>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section class="section pricing" id="pricing">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">Pricing</div>
+      <h2 class="section-title">Transparent pricing<em>·</em>cloud elastic answering</h2>
+      <p class="section-sub">All plans include installation, training, and local customer support. Monthly minutes + transparent overage. No hidden fees. Cancel anytime.</p>
+    </div>
+
+    <div class="pricing-toggle-wrap">
+      <div class="pricing-toggle">
+        <button class="toggle-btn active" onclick="togglePricing('monthly')">Monthly</button>
+        <button class="toggle-btn" onclick="togglePricing('yearly')">Yearly <span class="toggle-save">save 15%</span></button>
+      </div>
+    </div>
+
+    <div class="pricing-grid">
+      <!-- Lite -->
+      <div class="price-card">
+        <div class="price-name">Lite</div>
+        <div class="price-tag-line">Family-run shops · 1-month free trial gateway</div>
+        <div>
+          <span class="price-amount">
+            <span class="price-amount-monthly">$99</span>
+            <span class="price-amount-yearly">$1,008</span>
+          </span>
+          <span class="price-period"> / <span class="price-amount-monthly">month</span><span class="price-amount-yearly">year</span></span>
+        </div>
+        <div class="price-detail">
+          CAD · Tax not included<br>
+          <span class="price-amount-monthly">Yearly $1,008/yr (vs $1,188)</span>
+          <span class="price-amount-yearly price-yearly">Save $180/yr vs monthly</span>
+        </div>
+
+        <div class="price-meta">
+          <div class="price-meta-line"><span>Included minutes</span><strong>100 min / month</strong></div>
+          <div class="price-meta-line"><span>Overage</span><strong>$0.90 / min</strong></div>
+        </div>
+
+        <ul class="price-features">
+          <li>English + Mandarin support</li>
+          <li>Smart voice-to-text logging</li>
+          <li>Custom business hours</li>
+          <li>Order SMS notifications</li>
+          <li>Cloud elastic answering · never busy</li>
+        </ul>
+        <a href="#trial-form" class="price-cta">Start 1-Month Free Trial</a>
+      </div>
+
+      <!-- Pro (featured) -->
+      <div class="price-card featured">
+        <div class="price-badge">Most Popular</div>
+        <div class="price-name">Pro</div>
+        <div class="price-tag-line">The go-to choice for mid-size independent restaurants</div>
+        <div>
+          <span class="price-amount">
+            <span class="price-amount-monthly">$349</span>
+            <span class="price-amount-yearly">$3,560</span>
+          </span>
+          <span class="price-period"> / <span class="price-amount-monthly">month</span><span class="price-amount-yearly">year</span></span>
+        </div>
+        <div class="price-detail">
+          CAD · Tax not included<br>
+          <span class="price-amount-monthly">Yearly $3,560/yr (vs $4,188)</span>
+          <span class="price-amount-yearly price-yearly">Save $628/yr vs monthly</span>
+        </div>
+
+        <div class="price-meta">
+          <div class="price-meta-line"><span>Included minutes</span><strong>400 min / month</strong></div>
+          <div class="price-meta-line"><span>Overage</span><strong>$0.70 / min</strong></div>
+        </div>
+
+        <ul class="price-features">
+          <li class="feat-highlight">Mandarin, Cantonese, English, Spanish</li>
+          <li class="feat-highlight">POS integration (Square / Toast / Clover / Lightspeed / Aldelo)</li>
+          <li>AI dietary & modifier recognition</li>
+          <li>&lt;0.8% error rate · refund guarantee</li>
+          <li>Human-agent fallback transfer</li>
+          <li>90-day call recording archive</li>
+          <li>Cloud elastic answering · never busy</li>
+        </ul>
+        <a href="#trial-form" class="price-cta">Start 1-Month Free Trial</a>
+      </div>
+
+      <!-- Elite -->
+      <div class="price-card">
+        <div class="price-name">Elite</div>
+        <div class="price-tag-line">Multi-location · data-driven restaurants</div>
+        <div>
+          <span class="price-amount">
+            <span class="price-amount-monthly">$699</span>
+            <span class="price-amount-yearly">$7,130</span>
+          </span>
+          <span class="price-period"> / <span class="price-amount-monthly">month</span><span class="price-amount-yearly">year</span></span>
+        </div>
+        <div class="price-detail">
+          CAD · Tax not included<br>
+          <span class="price-amount-monthly">Yearly $7,130/yr (vs $8,388)</span>
+          <span class="price-amount-yearly price-yearly">Save $1,258/yr vs monthly</span>
+        </div>
+
+        <div class="price-meta">
+          <div class="price-meta-line"><span>Included minutes</span><strong>1,000 min / month</strong></div>
+          <div class="price-meta-line"><span>Overage</span><strong>$0.60 / min</strong></div>
+        </div>
+
+        <ul class="price-features">
+          <li>All Pro features</li>
+          <li class="feat-highlight">Outbound calls (pickup reminders, etc.)</li>
+          <li class="feat-highlight">Advanced analytics dashboard</li>
+          <li>Open API & integrations</li>
+          <li>Customer profiles & marketing tags</li>
+          <li>4G backup receipt printer (included)</li>
+          <li>Dedicated technical advisor</li>
+        </ul>
+        <a href="#trial-form" class="price-cta">Start 1-Month Free Trial</a>
+      </div>
+    </div>
+
+    <!-- Guarantees -->
+    <div class="pricing-guarantees">
+      <span>1-month free trial</span>
+      <span>30-day money-back</span>
+      <span>Cloud elastic · never busy</span>
+      <span>No setup fee · no deposit</span>
+      <span>Local Vancouver on-site setup</span>
+    </div>
+
+    <!-- Enterprise -->
+    <div class="enterprise-card">
+      <div>
+        <h3>Enterprise</h3>
+        <p>A digital-hub solution for chains with 3+ locations, large hotpot venues, or custom voice scenarios.</p>
+        <ul class="enterprise-features">
+          <li>6,000+ included minutes · overage from $0.50/min</li>
+          <li>Unified multi-store management dashboard</li>
+          <li>Custom voice model training</li>
+          <li>24/7 priority tech response + SLA</li>
+        </ul>
+      </div>
+      <div class="enterprise-price">
+        <div class="enterprise-price-big">$2,500+ / month</div>
+        <div class="enterprise-price-small">Custom pricing · let's talk</div>
+        <a href="#trial-form" class="enterprise-cta">Contact Sales →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section" id="faq">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">FAQ</div>
+      <h2 class="section-title">Top 11 questions<em>from restaurant owners</em></h2>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Do I need to change my phone number? Can I keep my existing line?<span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          No number change needed. We use call forwarding to route calls from your existing line — your business number, Google reviews, and printed menu phone all stay the same. <strong>Setup takes 10 minutes.</strong>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          How are included minutes counted? What happens after I exceed them?<span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          Each call is billed by rounded-up minute from AI pickup to hangup. An average call lasts about 2 minutes. Lite's 100 minutes ≈ 50 calls, Pro's 400 ≈ 200 calls, Elite's 1,000 ≈ 500 calls.<br><br>
+          After included minutes, Lite charges <strong>$0.90/min</strong>, Pro <strong>$0.70/min</strong>, Elite <strong>$0.60/min</strong>, Enterprise <strong>$0.50/min</strong>. You get auto-SMS alerts at <strong>80% / 100% / 120%</strong> usage — fully transparent. You can also set a hard cap that switches to voicemail mode automatically.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          How many calls can the AI handle simultaneously? Could it get busy?<span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          <strong>All plans have no concurrency limit</strong> — RoseAI uses cloud elastic answering, with peak-time calls dynamically distributed across our infrastructure. "Cloud elastic answering — never busy" is our default promise across every plan.<br><br>
+          So even if 5 or 10 calls hit at once on a Friday 7pm, each customer gets answered by AI in 0 seconds — no busy signal.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Can customers tell it's an AI? Will they be put off?<span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          RoseAI uses the latest generation of neural voice — sounds nearly human. Most customers don't realize they're talking to AI until after the call. You can also choose to have the AI introduce itself transparently. Pilot data shows customer acceptance is higher than expected: no interruptions, no being put on hold, no accent friction.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          What if the AI mishears a dish or misses something?<span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          Three-layer safety net: (1) AI repeats the order back for customer confirmation; (2) any uncertainty is tagged "needs review" and sent to the owner's phone; (3) complex situations (complaints, custom large orders) auto-route to a phone number you designate. <strong>We guarantee an error rate below 0.8% — and we cover errors with a refund commitment.</strong>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          How does the 1-month free trial work? Is there a deposit?<span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          Free for 1 month. No deposit. The trial gives you <strong>full Lite-tier features</strong> (English/Mandarin answering, smart logging, SMS order push) + <strong>100 free call minutes</strong>.<br><br>
+          Beyond 100 minutes, calls are billed at <strong>$0.90/min</strong> — same as paid Lite. We require a credit card on file (used only for overage; no deposit). We send a reminder 7 days before the trial ends. After the trial, you'll either auto-continue to Lite at $99/month or you can upgrade to Pro at $349/month yourself. <strong>Zero pressure, cancel anytime.</strong><br><br>
+          Note: Pro-only features (Cantonese, Spanish, POS integration, etc.) are not included in the trial — those require subscribing to Pro directly.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          What's the contract length? Can I cancel anytime?<span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          Lite, Pro, and Elite are all month-to-month — <strong>no minimum commitment</strong>. Cancel in the dashboard anytime and billing stops the next month. Yearly plans get 15% off; unused months are prorated and refunded. Enterprise follows the negotiated contract.<br><br>
+          <strong>Additional commitment:</strong> All plans include a 30-day no-questions-asked refund window — even after paying.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Where is data stored? Is it compliant with Canadian privacy laws?<span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          All call recordings and order data are stored inside Canada (<strong>Toronto AWS region</strong>), fully PIPEDA-compliant and aligned with BC's Personal Information Protection Act. Recordings are retained for 90 days and you can export or delete them anytime from the dashboard. <strong>We do not use your customer data for any third-party training.</strong>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          What if my internet or power goes down?<span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          RoseAI runs in the cloud — independent of your restaurant's local network. Even if your shop loses internet or power, the AI keeps answering calls and logging orders, which sync back when you're online. For local ticket printing, our optional receipt printer has <strong>4G fallback (included in Elite and Enterprise)</strong>.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Which POS systems do you support? I'm on Square / Toast / Clover / Aldelo.<span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          We integrate with <strong>Square, Toast, Clover, Lightspeed, Aldelo Express, Dian Dian</strong>, and more — covering virtually every POS used by Greater Vancouver independent restaurants. If you use a smaller-market POS, we can custom-integrate within 5–10 business days (free for Elite and Enterprise plans). Or you can choose the "SMS push + kitchen printer" setup that requires no POS integration at all.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Beyond phone, what other ways can I reach you?<span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          Call us at <strong>778-325-4966</strong>, message us on WhatsApp (same number), WeChat (<strong>RoseAI_CA</strong>), or email <strong>contactus@roseai.ca</strong>. We have local Vancouver-based customer support in English, Mandarin, and Cantonese.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRIAL FORM ============ -->
+<section class="section form-section" id="trial-form">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">1-Month Free Trial</div>
+      <h2 class="section-title">Leave your info<em>·</em>we'll call within 24 hours</h2>
+      <p class="section-sub">Greater Vancouver local team · 1-on-1 consultation · free on-site demo · no credit card required.</p>
+    </div>
+
+    <form class="form-card" id="trialFormCard" novalidate>
+      <div class="form-content">
+      <input type="text" name="_honey" class="honeypot" tabindex="-1" autocomplete="off" style="display:none">
+      <div class="form-row">
+        <div class="form-field">
+          <label>Your Name <span class="req">*</span></label>
+          <input type="text" name="name" required>
+        </div>
+        <div class="form-field">
+          <label>Restaurant Name <span class="req">*</span></label>
+          <input type="text" name="restaurant" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label>Phone <span class="req">*</span></label>
+          <input type="tel" name="phone" required>
+        </div>
+        <div class="form-field">
+          <label>Email (optional)</label>
+          <input type="email" name="email">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label>Location <span class="req">*</span></label>
+          <select name="region" required>
+            <option value="">Please select</option>
+            <option>Vancouver</option>
+            <option>Richmond</option>
+            <option>Burnaby</option>
+            <option>Surrey</option>
+            <option>Coquitlam</option>
+            <option>Langley</option>
+            <option>North Vancouver</option>
+            <option>Other Greater Vancouver</option>
+            <option>Outside BC</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Restaurant Size <span class="req">*</span></label>
+          <select name="size" required>
+            <option value="">Please select</option>
+            <option>Single location · Small (&lt;50 seats)</option>
+            <option>Single location · Medium (50–150 seats)</option>
+            <option>Single location · Large (&gt;150 seats)</option>
+            <option>2–5 locations</option>
+            <option>5+ locations</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-field full" style="margin-bottom:18px;">
+        <label>What would you like to learn more about? (optional)</label>
+        <textarea name="notes" rows="3"></textarea>
+      </div>
+      <button type="submit" class="form-submit" id="submitBtn">
+        <span class="label-default">Start 1-Month Free Trial →</span>
+        <span class="spinner" style="display:none;width:18px;height:18px;border:2px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin 0.7s linear infinite;"></span>
+      </button>
+      <p class="form-disclaimer">
+        By submitting, you agree the RoseAI team may contact you by phone or email.<br>
+        We never share your info with third parties · PIPEDA-compliant
+      </p>
+      </div>
+
+      <div class="form-status error" id="formError" style="display:none;margin-top:24px;padding:20px 24px;border-radius:14px;font-size:15px;line-height:1.6;background:rgba(194,65,12,0.1);border:1px solid rgba(194,65,12,0.4);color:#e88a72;">
+        <strong style="display:block;margin-bottom:4px;font-size:16px;color:var(--ink);">Submission failed</strong>
+        Looks like a network hiccup. Please call <a href="tel:7783254966" style="color:var(--orange);text-decoration:underline;">778-325-4966</a> or WhatsApp us instead.
+      </div>
+
+      <div class="form-status success" id="formSuccess" style="display:none;margin-top:24px;padding:20px 24px;border-radius:14px;font-size:15px;line-height:1.6;background:rgba(13,77,58,0.08);border:1px solid rgba(13,77,58,0.3);color:var(--green-dark);">
+        <strong style="display:block;margin-bottom:4px;font-size:16px;color:var(--green-dark);">Request received!</strong>
+        We'll be in touch within 24 hours to walk through your setup.<br>
+        In a hurry? Call <a href="tel:7783254966" style="color:var(--green-dark);text-decoration:underline;">778-325-4966</a> or message us on <a href="https://wa.me/17783254966" style="color:var(--green-dark);text-decoration:underline;">WhatsApp</a>.
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ============ BOTTOM CTA ============ -->
+<section class="cta-band">
+  <div class="container">
+    <h2>One month later, the data will tell you if RoseAI is worth it</h2>
+    <p>Free trial · no credit card deposit · local on-site installation and training included.<br>Book a 15-minute demo to see what your restaurant is missing every month.</p>
+    <div class="cta-band-buttons">
+      <a href="tel:7783254966" class="btn btn-primary">Call Now: 778-325-4966</a>
+      <a href="mailto:contactus@roseai.ca?subject=Book%20a%20RoseAI%20Demo" class="btn btn-secondary">Book a Demo</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="/assets/logo.png" alt="RoseAI">
+          <span>RoseAI</span>
+        </div>
+        <p class="footer-tagline">
+          Let service return to what matters — leave the busywork to RoseAI.<br><br>
+          Greater Vancouver local team, serving Vancouver, Richmond, Burnaby, Surrey, Coquitlam, Langley, and North Vancouver.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h5>Product</h5>
+        <ul>
+          <li><a href="#features">Why RoseAI</a></li>
+          <li><a href="#workflow">How It Works</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <ul>
+          <li><a href="tel:7783254966">778-325-4966</a></li>
+          <li><a href="mailto:contactus@roseai.ca">contactus@roseai.ca</a></li>
+          <li><a href="https://wa.me/17783254966" target="_blank">WhatsApp (same)</a></li>
+          <li>WeChat: RoseAI_CA</li>
+          <li><a href="/zh/">中文版 →</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Promise</h5>
+        <ul>
+          <li>PIPEDA Compliant</li>
+          <li>Canadian Data Hosting</li>
+          <li>30-Day Money Back</li>
+          <li>Made in BC</li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-wechat">
+        <span class="wechat-label">Scan to add on WeChat</span>
+        <img src="/assets/wechat-qr.png" alt="RoseAI WeChat QR" onerror="this.src='/assets/wechat-qr-placeholder.png'">
+        <span class="wechat-id">WeChat ID: RoseAI_CA</span>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 RoseAI Technology Services Ltd. All rights reserved.</span>
+      <span>Cloud Elastic · Never Busy</span>
+      <span>Local Vancouver Service</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  item.classList.toggle('open');
+}
+
+function togglePricing(mode) {
+  const section = document.querySelector('.pricing');
+  const buttons = document.querySelectorAll('.pricing-toggle .toggle-btn');
+  if (mode === 'yearly') {
+    section.classList.add('yearly');
+    buttons[0].classList.remove('active');
+    buttons[1].classList.add('active');
+  } else {
+    section.classList.remove('yearly');
+    buttons[0].classList.add('active');
+    buttons[1].classList.remove('active');
+  }
+}
+</script>
+<script src="/assets/js/site.js"></script>
 </body>
 </html>

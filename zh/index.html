@@ -1,642 +1,1267 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RoseAI | 温哥华餐厅 AI 智能语音接待系统 · 0 秒接听、自动出单</title>
-    <meta name="description" content="RoseAI 专为大温餐饮业打造的 AI 智能电话接待系统：中、英、粤、西多语自动识别，0 秒接听、自动出单同步 POS，数据存储于加拿大本地，符合 PIPEDA 规范。1 个月免费试用。">
-    <meta property="og:title" content="RoseAI | 温哥华餐厅 AI 智能语音接待系统">
-    <meta property="og:description" content="0 秒接听、自动出单、多语识别。1 个月免费试用，本地团队服务。">
-    <meta property="og:type" content="website">
-    <meta name="theme-color" content="#09251A">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoseAI | 温哥华餐厅 AI 智能语音接待系统 · 云端弹性接听</title>
+<meta name="description" content="RoseAI 专为大温餐饮业打造的 AI 智能电话接待系统：中、英、粤、西多语自动识别,0 秒接听、自动出单同步 POS。云端弹性接听·永不占线。1 个月免费试用,数据存储于加拿大本地,符合 PIPEDA 规范。">
+<meta property="og:title" content="RoseAI | 温哥华餐厅 AI 智能语音接待系统">
+<meta property="og:description" content="0 秒接听、自动出单、多语识别、云端弹性接听·永不占线。1 个月免费试用,本地团队服务。">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0D4D3A">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root {
+  --green-dark: #0D4D3A;
+  --green: #1D6B50;
+  --green-light: #E8F0EC;
+  --orange: #C2410C;
+  --orange-light: #EA580C;
+  --gold: #B8830E;
+  --cream: #FFFDF7;
+  --cream-tint: #FAF5EC;
+  --ink: #1A1A1A;
+  --grey: #5A5A5A;
+  --grey-light: #C9D6CB;
+  --light: #F3F6F3;
+  --white: #FFFFFF;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.12);
+  --radius: 8px;
+  --radius-lg: 16px;
+}
 
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "RoseAI 餐厅智能语音接待系统",
-        "applicationCategory": "BusinessApplication",
-        "operatingSystem": "Web",
-        "offers": {
-            "@type": "AggregateOffer",
-            "priceCurrency": "CAD",
-            "lowPrice": "99",
-            "highPrice": "299"
-        },
-        "areaServed": {
-            "@type": "Place",
-            "name": "Greater Vancouver, British Columbia, Canada"
-        }
-    }
-    </script>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  color: var(--ink);
+  background: var(--cream);
+  line-height: 1.65;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: var(--green); text-decoration: none; }
+a:hover { color: var(--orange); }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
-    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
-    <link rel="stylesheet" href="../assets/css/site.css">
+/* ---------- NAV ---------- */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,253,247,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--grey-light);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 24px; max-width: 1200px; margin: 0 auto;
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; }
+.nav-logo img { height: 32px; }
+.nav-logo span { font-weight: 700; color: var(--green-dark); font-size: 18px; }
+.nav-links { display: flex; gap: 24px; align-items: center; font-size: 14.5px; }
+.nav-links a { color: var(--ink); }
+.nav-links a:hover { color: var(--orange); }
+.nav-lang { color: var(--grey); font-size: 13px; }
+.nav-lang a.active { color: var(--green-dark); font-weight: 700; }
+.nav-cta {
+  background: var(--orange); color: var(--white) !important;
+  padding: 9px 18px; border-radius: 6px; font-weight: 600;
+  transition: background 0.2s;
+}
+.nav-cta:hover { background: var(--orange-light); color: var(--white) !important; }
+@media (max-width: 880px) { .nav-links { display: none; } }
+
+/* ---------- HERO ---------- */
+.hero {
+  background: linear-gradient(180deg, var(--cream) 0%, var(--green-light) 100%);
+  padding: 60px 0 80px;
+  position: relative; overflow: hidden;
+}
+.hero-grid {
+  display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; align-items: center;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--white); color: var(--green-dark);
+  padding: 6px 14px; border-radius: 50px; font-size: 13px; font-weight: 600;
+  border: 1px solid var(--grey-light); margin-bottom: 22px;
+}
+.hero-badge::before { content: "●"; color: var(--orange); }
+.hero h1 {
+  font-size: 52px; line-height: 1.15; font-weight: 800;
+  color: var(--green-dark); margin-bottom: 22px; letter-spacing: -0.5px;
+}
+.hero h1 em { font-style: normal; color: var(--orange); }
+.hero p.lead {
+  font-size: 18.5px; color: var(--grey); margin-bottom: 28px;
+  max-width: 540px;
+}
+.hero-tags {
+  display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px; font-size: 13.5px;
+}
+.hero-tag {
+  background: var(--white); color: var(--green-dark);
+  padding: 6px 12px; border-radius: 6px; border: 1px solid var(--grey-light);
+}
+.hero-tag.highlight { background: var(--green-dark); color: var(--white); border-color: var(--green-dark); }
+.hero-cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 26px; border-radius: 8px; font-size: 15.5px; font-weight: 600;
+  border: 2px solid transparent; transition: all 0.2s; cursor: pointer;
+}
+.btn-primary {
+  background: var(--orange); color: var(--white);
+}
+.btn-primary:hover { background: var(--orange-light); color: var(--white); transform: translateY(-1px); }
+.btn-secondary {
+  background: var(--white); color: var(--green-dark);
+  border-color: var(--green-dark);
+}
+.btn-secondary:hover { background: var(--green-dark); color: var(--white); }
+
+/* Hero demo widget */
+.demo-card {
+  background: var(--white); border-radius: var(--radius-lg);
+  padding: 28px; box-shadow: var(--shadow-lg);
+  border: 1px solid var(--grey-light);
+}
+.demo-header {
+  display: flex; align-items: center; gap: 10px; font-size: 13px;
+  color: var(--grey); margin-bottom: 18px;
+  padding-bottom: 14px; border-bottom: 1px solid var(--grey-light);
+}
+.demo-pulse {
+  width: 8px; height: 8px; background: var(--orange);
+  border-radius: 50%; animation: pulse 1.6s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.3); }
+}
+.demo-msg { padding: 10px 14px; border-radius: 10px; margin-bottom: 10px; font-size: 14.5px; line-height: 1.5; }
+.demo-msg.ai { background: var(--green-light); color: var(--green-dark); }
+.demo-msg.user { background: var(--cream-tint); color: var(--ink); margin-left: 22px; }
+.demo-order {
+  margin-top: 18px; padding: 14px; background: var(--green-dark); color: var(--white);
+  border-radius: 10px; font-size: 13.5px;
+}
+.demo-order strong { display: block; margin-bottom: 6px; font-size: 14px; }
+.demo-order ul { list-style: none; }
+.demo-order li::before { content: "·"; margin-right: 6px; color: var(--orange-light); }
+.demo-order .order-id { float: right; opacity: 0.7; font-weight: 400; font-size: 12px; }
+
+@media (max-width: 880px) {
+  .hero { padding: 36px 0 50px; }
+  .hero-grid { grid-template-columns: 1fr; gap: 36px; }
+  .hero h1 { font-size: 36px; }
+  .hero p.lead { font-size: 16px; }
+}
+
+/* ---------- STATS ---------- */
+.stats {
+  background: var(--white); padding: 60px 0;
+  border-bottom: 1px solid var(--grey-light);
+}
+.stats-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px;
+}
+.stat { text-align: center; }
+.stat-num {
+  font-size: 56px; font-weight: 800; color: var(--orange);
+  margin-bottom: 8px; letter-spacing: -1px;
+}
+.stat-label { font-size: 14.5px; color: var(--ink); font-weight: 600; margin-bottom: 4px; }
+.stat-sub { font-size: 12.5px; color: var(--grey); }
+@media (max-width: 720px) {
+  .stats-grid { grid-template-columns: 1fr; gap: 30px; }
+  .stat-num { font-size: 44px; }
+}
+
+/* ---------- POS LOGOS ---------- */
+.pos-strip {
+  padding: 40px 0; background: var(--cream-tint); border-bottom: 1px solid var(--grey-light);
+  text-align: center;
+}
+.pos-strip h3 { font-size: 15px; color: var(--grey); font-weight: 600; margin-bottom: 20px; }
+.pos-logos {
+  display: flex; gap: 38px; justify-content: center; flex-wrap: wrap;
+  font-size: 17px; font-weight: 700; color: var(--green-dark); opacity: 0.7;
+}
+
+/* ---------- SECTION GENERIC ---------- */
+.section { padding: 80px 0; }
+.section-head { text-align: center; max-width: 720px; margin: 0 auto 56px; }
+.section-eyebrow {
+  font-size: 13px; color: var(--orange); font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px;
+}
+.section-title {
+  font-size: 38px; font-weight: 800; color: var(--green-dark);
+  line-height: 1.25; letter-spacing: -0.5px;
+}
+.section-title em { font-style: normal; color: var(--orange); }
+.section-sub { font-size: 17px; color: var(--grey); margin-top: 14px; }
+@media (max-width: 720px) {
+  .section { padding: 56px 0; }
+  .section-title { font-size: 28px; }
+  .section-sub { font-size: 15px; }
+}
+
+/* ---------- COMPARISON ---------- */
+.compare-table {
+  background: var(--white); border-radius: var(--radius-lg);
+  overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--grey-light);
+}
+.compare-row {
+  display: grid; grid-template-columns: 1.3fr 1.5fr 1.5fr;
+  padding: 18px 24px; border-bottom: 1px solid var(--grey-light);
+  align-items: center; font-size: 15px;
+}
+.compare-row:last-child { border-bottom: none; }
+.compare-row.head {
+  background: var(--green-dark); color: var(--white); font-weight: 700; font-size: 15.5px;
+}
+.compare-row.head .compare-rose { color: var(--cream-tint); }
+.compare-row.head .compare-rose::before { content: "★ "; color: var(--gold); }
+.compare-row.alt { background: var(--light); }
+.compare-key { font-weight: 600; color: var(--green-dark); }
+.compare-traditional { color: var(--grey); }
+.compare-rose { color: var(--green-dark); font-weight: 500; }
+@media (max-width: 720px) {
+  .compare-row { grid-template-columns: 1fr; gap: 8px; padding: 16px 18px; }
+  .compare-row.head { display: none; }
+  .compare-key::after { content: ""; }
+  .compare-key { font-size: 13px; color: var(--orange); margin-bottom: 4px; }
+  .compare-traditional::before { content: "传统: "; font-weight: 600; color: var(--grey); }
+  .compare-rose::before { content: "RoseAI: "; font-weight: 600; color: var(--green-dark); }
+}
+
+/* ---------- WORKFLOW ---------- */
+.workflow-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+}
+.flow-step {
+  background: var(--white); padding: 28px 22px; border-radius: var(--radius-lg);
+  border: 1px solid var(--grey-light); position: relative;
+}
+.flow-step-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; background: var(--green-dark); color: var(--white);
+  border-radius: 50%; font-weight: 700; margin-bottom: 16px;
+}
+.flow-step h4 { font-size: 16.5px; color: var(--green-dark); margin-bottom: 8px; }
+.flow-step p { font-size: 14px; color: var(--grey); }
+.flow-arrow {
+  position: absolute; top: 50%; right: -16px; transform: translateY(-50%);
+  font-size: 20px; color: var(--orange); font-weight: 700;
+}
+.flow-step:last-child .flow-arrow { display: none; }
+@media (max-width: 880px) {
+  .workflow-grid { grid-template-columns: repeat(2, 1fr); }
+  .flow-arrow { display: none; }
+}
+@media (max-width: 480px) { .workflow-grid { grid-template-columns: 1fr; } }
+
+/* ---------- FLOW CARDS (4 features) ---------- */
+.feature-cards {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+}
+.feature-card {
+  background: var(--white); padding: 30px 24px; border-radius: var(--radius-lg);
+  border: 1px solid var(--grey-light); transition: transform 0.2s, box-shadow 0.2s;
+}
+.feature-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.feature-icon {
+  font-size: 28px; margin-bottom: 14px;
+}
+.feature-card h4 { font-size: 17px; color: var(--green-dark); margin-bottom: 10px; }
+.feature-card p { font-size: 14px; color: var(--grey); line-height: 1.65; }
+@media (max-width: 880px) { .feature-cards { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .feature-cards { grid-template-columns: 1fr; } }
+
+/* ---------- TESTIMONIALS ---------- */
+.testimonials-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+}
+.testimonial {
+  background: var(--white); padding: 32px 28px; border-radius: var(--radius-lg);
+  border: 1px solid var(--grey-light); position: relative;
+}
+.testimonial::before {
+  content: "“"; position: absolute; top: 0; left: 18px; font-size: 64px;
+  color: var(--orange); opacity: 0.25; font-family: Georgia, serif; line-height: 1;
+}
+.testimonial-text {
+  font-size: 15.5px; color: var(--ink); line-height: 1.75;
+  margin: 18px 0 22px; position: relative; z-index: 1;
+}
+.testimonial-author {
+  display: flex; align-items: center; gap: 14px; padding-top: 16px;
+  border-top: 1px solid var(--grey-light);
+}
+.testimonial-avatar {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--green-dark); color: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 17px;
+}
+.testimonial-name { font-weight: 700; color: var(--green-dark); font-size: 15px; }
+.testimonial-role { font-size: 13px; color: var(--grey); }
+.testimonial-disclaimer {
+  text-align: center; font-size: 12.5px; color: var(--grey);
+  margin-top: 28px; font-style: italic;
+}
+@media (max-width: 880px) { .testimonials-grid { grid-template-columns: 1fr; } }
+
+/* ---------- PRICING ---------- */
+.pricing { background: var(--cream-tint); }
+.pricing-toggle {
+  display: inline-flex; background: var(--white); border-radius: 50px;
+  padding: 4px; margin: 0 auto 50px; border: 1px solid var(--grey-light);
+  position: relative;
+}
+.pricing-toggle-wrap { text-align: center; }
+.toggle-btn {
+  padding: 10px 24px; border-radius: 50px; font-weight: 600; font-size: 14px;
+  cursor: pointer; background: transparent; border: none; color: var(--grey);
+  transition: all 0.2s;
+}
+.toggle-btn.active { background: var(--green-dark); color: var(--white); }
+.toggle-save { font-size: 12px; color: var(--orange); margin-left: 6px; font-weight: 700; }
+.toggle-btn.active .toggle-save { color: var(--cream-tint); }
+
+.pricing-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 32px;
+}
+.price-card {
+  background: var(--white); border-radius: var(--radius-lg); padding: 36px 30px;
+  border: 1px solid var(--grey-light); position: relative; display: flex; flex-direction: column;
+}
+.price-card.featured {
+  border: 2px solid var(--orange); transform: scale(1.03); z-index: 1;
+  box-shadow: 0 12px 36px rgba(194, 65, 12, 0.15);
+}
+.price-badge {
+  position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+  background: var(--orange); color: var(--white); padding: 5px 16px;
+  border-radius: 20px; font-size: 12.5px; font-weight: 700;
+}
+.price-name { font-size: 22px; color: var(--green-dark); font-weight: 800; margin-bottom: 4px; }
+.price-tag-line { font-size: 13.5px; color: var(--grey); margin-bottom: 22px; }
+.price-amount {
+  font-size: 44px; font-weight: 800; color: var(--green-dark);
+  letter-spacing: -1px; line-height: 1;
+}
+.price-amount-monthly { display: inline; }
+.price-amount-yearly { display: none; }
+.pricing.yearly .price-amount-monthly { display: none; }
+.pricing.yearly .price-amount-yearly { display: inline; }
+.price-period { font-size: 15px; color: var(--grey); font-weight: 500; }
+.price-detail { font-size: 12.5px; color: var(--grey); margin-top: 6px; min-height: 36px; }
+.price-yearly { color: var(--orange); font-weight: 600; }
+
+.price-meta {
+  margin: 20px 0; padding: 14px 16px; background: var(--green-light); border-radius: 10px;
+  font-size: 13.5px; line-height: 1.65;
+}
+.price-meta-line { display: flex; justify-content: space-between; }
+.price-meta-line strong { color: var(--green-dark); }
+
+.price-features {
+  list-style: none; margin: 0 0 28px 0; flex: 1;
+}
+.price-features li {
+  padding: 8px 0; font-size: 14.5px; color: var(--ink);
+  display: flex; gap: 10px; align-items: flex-start;
+}
+.price-features li::before {
+  content: "✓"; color: var(--green); font-weight: 700; flex-shrink: 0;
+}
+.price-features li.feat-highlight { color: var(--green-dark); font-weight: 600; }
+.price-features li.feat-highlight::before { color: var(--orange); }
+
+.price-cta {
+  display: block; padding: 13px; text-align: center; border-radius: 8px;
+  font-weight: 700; font-size: 15px; transition: all 0.2s;
+  background: var(--green-dark); color: var(--white);
+}
+.price-cta:hover { background: var(--green); color: var(--white); }
+.price-card.featured .price-cta { background: var(--orange); }
+.price-card.featured .price-cta:hover { background: var(--orange-light); color: var(--white); }
+
+.pricing-guarantees {
+  display: flex; gap: 28px; justify-content: center; flex-wrap: wrap;
+  padding: 24px; background: var(--white); border-radius: var(--radius);
+  border: 1px solid var(--grey-light); font-size: 13.5px; color: var(--grey);
+}
+.pricing-guarantees span::before { content: "✓ "; color: var(--green); font-weight: 700; }
+
+.enterprise-card {
+  background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 100%);
+  color: var(--white); border-radius: var(--radius-lg); padding: 44px 48px; margin-top: 28px;
+  display: grid; grid-template-columns: 1.3fr 1fr; gap: 36px; align-items: center;
+}
+.enterprise-card h3 { font-size: 26px; margin-bottom: 12px; }
+.enterprise-card p { font-size: 15px; opacity: 0.92; margin-bottom: 20px; }
+.enterprise-features { list-style: none; }
+.enterprise-features li { padding: 5px 0; font-size: 14px; opacity: 0.95; }
+.enterprise-features li::before { content: "✦ "; color: var(--gold); }
+.enterprise-cta {
+  background: var(--orange); color: var(--white) !important;
+  padding: 14px 28px; border-radius: 8px; font-weight: 700; font-size: 15px;
+  display: inline-block; margin-top: 16px;
+}
+.enterprise-cta:hover { background: var(--orange-light); color: var(--white) !important; }
+.enterprise-price { text-align: center; }
+.enterprise-price-big {
+  font-size: 28px; font-weight: 800; margin-bottom: 4px;
+}
+.enterprise-price-small { font-size: 13.5px; opacity: 0.85; }
+
+@media (max-width: 880px) {
+  .pricing-grid { grid-template-columns: 1fr; gap: 28px; }
+  .price-card.featured { transform: none; }
+  .enterprise-card { grid-template-columns: 1fr; padding: 32px 28px; text-align: center; }
+}
+
+/* ---------- FAQ ---------- */
+.faq-list { max-width: 860px; margin: 0 auto; }
+.faq-item {
+  background: var(--white); border-radius: var(--radius); margin-bottom: 14px;
+  border: 1px solid var(--grey-light); overflow: hidden;
+}
+.faq-question {
+  width: 100%; padding: 22px 26px; text-align: left; cursor: pointer;
+  background: none; border: none; font-size: 16px; font-weight: 600;
+  color: var(--green-dark); display: flex; justify-content: space-between; align-items: center;
+  font-family: inherit;
+}
+.faq-toggle {
+  width: 24px; height: 24px; border-radius: 50%; background: var(--green-light);
+  color: var(--green-dark); display: flex; align-items: center; justify-content: center;
+  font-weight: 700; transition: transform 0.2s; flex-shrink: 0; margin-left: 14px;
+}
+.faq-item.open .faq-toggle { transform: rotate(45deg); background: var(--orange); color: var(--white); }
+.faq-answer {
+  display: none; padding: 0 26px 22px;
+  font-size: 14.5px; line-height: 1.75; color: var(--ink);
+}
+.faq-item.open .faq-answer { display: block; }
+.faq-answer strong { color: var(--green-dark); }
+
+/* ---------- FORM ---------- */
+.form-section { background: linear-gradient(180deg, var(--green-light) 0%, var(--cream) 100%); }
+.form-card {
+  max-width: 720px; margin: 0 auto;
+  background: var(--white); padding: 44px 48px; border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg); border: 1px solid var(--grey-light);
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; }
+.form-field { display: flex; flex-direction: column; }
+.form-field.full { grid-column: 1 / -1; }
+.form-field label {
+  font-size: 13.5px; color: var(--green-dark); font-weight: 600;
+  margin-bottom: 6px;
+}
+.form-field label .req { color: var(--orange); }
+.form-field input, .form-field select, .form-field textarea {
+  padding: 12px 14px; border: 1px solid var(--grey-light); border-radius: 6px;
+  font-size: 15px; font-family: inherit; color: var(--ink);
+  background: var(--white); transition: border-color 0.2s;
+}
+.form-field input:focus, .form-field select:focus, .form-field textarea:focus {
+  outline: none; border-color: var(--green-dark);
+}
+.form-submit {
+  width: 100%; padding: 16px; background: var(--orange); color: var(--white);
+  border: none; border-radius: 8px; font-size: 16px; font-weight: 700;
+  cursor: pointer; transition: background 0.2s; margin-top: 8px;
+}
+.form-submit:hover { background: var(--orange-light); }
+.form-disclaimer {
+  font-size: 12.5px; color: var(--grey); margin-top: 16px; text-align: center;
+}
+@media (max-width: 720px) { .form-row { grid-template-columns: 1fr; } .form-card { padding: 30px 22px; } }
+
+/* ---------- BOTTOM CTA ---------- */
+.cta-band {
+  background: var(--green-dark); color: var(--white); padding: 64px 0; text-align: center;
+}
+.cta-band h2 { font-size: 32px; margin-bottom: 12px; font-weight: 800; }
+.cta-band p { font-size: 16px; opacity: 0.9; margin-bottom: 32px; max-width: 640px; margin-left: auto; margin-right: auto; }
+.cta-band-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.cta-band .btn-secondary {
+  background: transparent; color: var(--white); border-color: var(--white);
+}
+.cta-band .btn-secondary:hover { background: var(--white); color: var(--green-dark); }
+
+/* ---------- FOOTER ---------- */
+.footer {
+  background: var(--ink); color: var(--white); padding: 56px 0 28px;
+}
+.footer-grid {
+  display: grid; grid-template-columns: 1.7fr 0.8fr 1fr 0.8fr 1fr; gap: 28px; margin-bottom: 36px;
+}
+.footer-brand { color: var(--white); }
+.footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+.footer-logo img { height: 32px; filter: brightness(0) invert(1); }
+.footer-logo span { font-weight: 700; font-size: 18px; }
+.footer-tagline { font-size: 14px; opacity: 0.7; line-height: 1.7; }
+.footer-col h5 {
+  font-size: 13px; text-transform: uppercase; letter-spacing: 1px;
+  color: var(--gold); margin-bottom: 14px; font-weight: 700;
+}
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 8px; font-size: 14px; }
+.footer-col a { color: var(--cream-tint); opacity: 0.75; }
+.footer-col a:hover { opacity: 1; color: var(--orange-light); }
+.footer-bottom {
+  padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 12.5px; color: rgba(255,255,255,0.55); flex-wrap: wrap; gap: 12px;
+}
+.footer-bottom span::before { content: "·"; margin: 0 8px; opacity: 0.4; }
+.footer-bottom span:first-child::before { content: ""; margin: 0; }
+@media (max-width: 880px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-wechat { align-items: flex-start; } }
+
+/* Promise strip (Cloud elastic answering banner) */
+.promise-strip {
+  background: var(--green-dark); color: var(--white); padding: 18px 0; text-align: center;
+}
+.promise-strip-inner {
+  display: flex; gap: 36px; justify-content: center; flex-wrap: wrap;
+  font-size: 14px; font-weight: 600;
+}
+.promise-strip-inner span::before { content: "● "; color: var(--orange-light); margin-right: 2px; }
+</style>
 </head>
 <body>
 
-    <header>
-        <div class="container">
-            <a href="#" class="logo"><img src="../assets/logo.png" alt="RoseAI" class="logo-img"></a>
-            <nav>
-                <a href="#features" class="nav-link">优势对比</a>
-                <a href="#workflow" class="nav-link">工作流程</a>
-                <a href="#testimonials" class="nav-link">客户案例</a>
-                <a href="#pricing" class="nav-link">价格套餐</a>
-                <a href="faq.html" class="nav-link">常见问题</a>
-                <span class="lang-switch">
-                    <a href="#" class="active">中</a> / <a href="../en/">EN</a>
-                </span>
-                <a href="#trial-form" class="btn-nav">申请试用</a>
-            </nav>
-        </div>
-    </header>
-
-    <!-- ===== HERO ===== -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-grid">
-                <div>
-                    <div class="hero-tag">
-                        <span class="dot"></span>
-                        本地团队 · 服务大温餐饮业
-                    </div>
-                    <h1>让餐厅永远<br><span>不再漏接</span>一通电话</h1>
-                    <p class="lead">RoseAI 为加拿大餐厅打造的 AI 智能语音接待系统。中、英、粤、西多语自动识别，0 秒接听、自动出单同步至 POS。</p>
-
-                    <div class="hero-trust">
-                        <span><i class="fa-solid fa-shield-halved"></i> 数据存储于加拿大本地</span>
-                        <span><i class="fa-solid fa-check-double"></i> PIPEDA 合规</span>
-                        <span><i class="fa-solid fa-clock"></i> 1 个月免费试用</span>
-                        <span><i class="fa-brands fa-whatsapp"></i> WhatsApp: 778-325-4966</span>
-                    </div>
-
-                    <div class="cta-row">
-                        <a href="#trial-form" class="btn-primary">
-                            <i class="fa-solid fa-calendar-check"></i> 申请 1 个月免费试用
-                        </a>
-                        <a href="#pricing" class="btn-secondary">查看价格方案</a>
-                    </div>
-                </div>
-
-                <!-- Phone Mockup Demo -->
-                <div class="phone-mockup">
-                    <div class="phone-screen">
-                        <div class="phone-header">
-                            <span><i class="fa-solid fa-phone"></i> 来电 · 13:42</span>
-                            <span class="live">实时接听中</span>
-                        </div>
-                        <div class="bubble ai">您好，这里是华兴茶餐厅，请问要点餐还是订座？</div>
-                        <div class="bubble user">我要两份避风塘炒蟹，一份要少辣，外送到 Garden City。</div>
-                        <div class="bubble ai">好的，避风塘炒蟹两份，其中一份少辣，配送地址 Garden City，请问门牌号？</div>
-                        <div class="bubble user">8460 号，3 单元。</div>
-                        <div class="bubble ai">已记录，预计送达 14:25。订单已发送至后厨。</div>
-
-                        <div class="order-card">
-                            <div class="title">
-                                <span><i class="fa-solid fa-receipt"></i> 订单 #2046</span>
-                                <span>13:43</span>
-                            </div>
-                            <div class="line">· 避风塘炒蟹 × 2（其中 1 份少辣）</div>
-                            <div class="line">· 外送 · 8460 Garden City Rd · Unit 3</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== IMPACT STATS ===== -->
-    <section class="impact-section">
-        <div class="impact-grid">
-            <div class="impact-card">
-                <h2>43%</h2>
-                <p class="label">行业忙时漏接率</p>
-                <span class="src">RoseAI 2025 大温餐厅试点观测</span>
-            </div>
-            <div class="impact-card">
-                <h2>$76K</h2>
-                <p class="label">挽回预估年营收</p>
-                <span class="src">基于中型餐厅 ATV $32 × 漏接量测算</span>
-            </div>
-            <div class="impact-card">
-                <h2>100%</h2>
-                <p class="label">电话接听转化率</p>
-                <span class="src">RoseAI 7×24 全天候接听</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== INTEGRATIONS ===== -->
-    <section class="integration-strip">
-        <div class="container">
-            <h3>已对接主流 POS 与外卖平台</h3>
-            <div class="integration-grid">
-                <div><i class="fa-solid fa-cube"></i>Square</div>
-                <div><i class="fa-solid fa-fire"></i>Toast</div>
-                <div><i class="fa-solid fa-leaf"></i>Clover</div>
-                <div><i class="fa-solid fa-bowl-food"></i>点点点单</div>
-                <div><i class="fa-brands fa-whatsapp"></i>WhatsApp</div>
-                <div><i class="fa-solid fa-comment"></i>微信</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== COMPARISON ===== -->
-    <section id="features" class="section-padding">
-        <div class="container">
-            <div class="title-center">
-                <span class="kicker">为什么选择 RoseAI</span>
-                <h2>把繁琐留给 AI，<em>把服务还给客人</em></h2>
-                <p class="sub">同样一通电话，传统方式 vs RoseAI 的差距一目了然</p>
-            </div>
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th class="col-topic">对比项目</th>
-                            <th class="col-human">传统人工接待</th>
-                            <th class="ai-highlight col-ai">RoseAI 智能接待</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>响应速度</td>
-                            <td>视前台忙碌度，常有占线</td>
-                            <td class="ai-highlight"><i class="fa-solid fa-bolt"></i>0 秒响应，永不占线</td>
-                        </tr>
-                        <tr>
-                            <td>语言支持</td>
-                            <td>通常仅支持 1–2 种语言</td>
-                            <td class="ai-highlight"><i class="fa-solid fa-globe"></i>中（普/粤）、英、西多语自动识别</td>
-                        </tr>
-                        <tr>
-                            <td>订单准确性</td>
-                            <td>手写笔记易错，沟通成本高</td>
-                            <td class="ai-highlight"><i class="fa-solid fa-check-double"></i>AI 自动提取忌口、备注并出单</td>
-                        </tr>
-                        <tr>
-                            <td>工作时长</td>
-                            <td>受排班限制，非营业时间流失</td>
-                            <td class="ai-highlight"><i class="fa-solid fa-clock"></i>7×24 小时全天候无休</td>
-                        </tr>
-                        <tr>
-                            <td>人力成本</td>
-                            <td>每位前台月成本 $3,200+（含福利）</td>
-                            <td class="ai-highlight"><i class="fa-solid fa-coins"></i>低至 $99 / 月，无人力管理</td>
-                        </tr>
-                        <tr>
-                            <td>数据沉淀</td>
-                            <td>电话内容无记录，难以复盘</td>
-                            <td class="ai-highlight"><i class="fa-solid fa-chart-line"></i>每通电话可回放、分析、做营销</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== WORKFLOW ===== -->
-    <section id="workflow" class="workflow-section section-padding">
-        <div class="container">
-            <div class="title-center">
-                <span class="kicker">工作流程</span>
-                <h2>从来电到出单 · <em>全程 30 秒</em></h2>
-                <p class="sub">一通完整闭环的订单，AI 端到端无需人工干预</p>
-            </div>
-
-            <div class="workflow">
-                <div class="workflow-visual">
-                    <div class="flow-node">
-                        <div class="icon"><i class="fa-solid fa-phone-volume"></i></div>
-                        <div class="text"><strong>客户来电</strong><span>电话铃响 0 秒，AI 自动接起</span></div>
-                    </div>
-                    <div class="flow-arrow"><i class="fa-solid fa-chevron-down"></i></div>
-                    <div class="flow-node">
-                        <div class="icon"><i class="fa-solid fa-language"></i></div>
-                        <div class="text"><strong>多语识别 + 语义提取</strong><span>识别菜品、数量、忌口、地址</span></div>
-                    </div>
-                    <div class="flow-arrow"><i class="fa-solid fa-chevron-down"></i></div>
-                    <div class="flow-node">
-                        <div class="icon"><i class="fa-solid fa-receipt"></i></div>
-                        <div class="text"><strong>订单生成</strong><span>实时推送至 POS / 后厨打印机</span></div>
-                    </div>
-                    <div class="flow-arrow"><i class="fa-solid fa-chevron-down"></i></div>
-                    <div class="flow-node">
-                        <div class="icon"><i class="fa-solid fa-chart-pie"></i></div>
-                        <div class="text"><strong>数据回流</strong><span>通话录音、订单、客户号码归档</span></div>
-                    </div>
-                </div>
-
-                <div class="workflow-steps">
-                    <h2>数字化订单闭环</h2>
-                    <p>不用换号、不用换设备 —— RoseAI 与现有电话号码绑定，餐厅几乎零迁移成本。</p>
-
-                    <div class="step">
-                        <h4>智能应答</h4>
-                        <p>AI 识别客户意图，精准处理订餐、留座、咨询、配送查询等需求。</p>
-                    </div>
-                    <div class="step">
-                        <h4>语义提取</h4>
-                        <p>自动识别菜品、数量、特殊备注（如「少盐」「花生过敏」「不要香菜」）。</p>
-                    </div>
-                    <div class="step">
-                        <h4>自动出单</h4>
-                        <p>订单同步至 Square / Toast / Clover / 点点等主流 POS，或直接打印至后厨小票机。</p>
-                    </div>
-                    <div class="step">
-                        <h4>人工兜底</h4>
-                        <p>AI 不确定时，自动转接餐厅手机或留下回拨号码，不放过任何一笔生意。</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== TESTIMONIALS ===== -->
-    <section id="testimonials" class="section-padding">
-        <div class="container">
-            <div class="title-center">
-                <span class="kicker">客户案例</span>
-                <h2>大温餐厅老板<em>怎么说</em></h2>
-                <p class="sub">来自 Richmond、Burnaby、Surrey 的真实试点客户</p>
-            </div>
-
-            <div class="testimonial-grid">
-                <div class="testimonial-card">
-                    <div class="quote-mark">"</div>
-                    <p class="quote">以前周五晚上根本接不完电话，现在 RoseAI 全包了。上线第一个月外卖单量涨了快 28%，最关键的是再也不会漏接。</p>
-                    <div class="author">
-                        <div class="avatar">陈</div>
-                        <div class="meta">
-                            <strong>陈先生</strong>
-                            <span>Richmond · 粤式茶餐厅老板</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="quote-mark">"</div>
-                    <p class="quote">客人能直接用普通话或粤语下单，AI 听得懂"少冰半糖"这种细节，比新员工还准。后厨打印的单子干净规整，吵架少了一大半。</p>
-                    <div class="author">
-                        <div class="avatar">林</div>
-                        <div class="meta">
-                            <strong>Linda 林</strong>
-                            <span>Burnaby · 川菜馆经营者</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="quote-mark">"</div>
-                    <p class="quote">我有三家分店，以前每家都要排前台轮班。换 RoseAI 后我每月省下大约 $6,000 人力成本，还能用后台数据看哪家店漏单最多。</p>
-                    <div class="author">
-                        <div class="avatar">K</div>
-                        <div class="meta">
-                            <strong>Kevin Wu</strong>
-                            <span>Surrey · 连锁日料品牌</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <p class="testimonial-note">* 上述为试点期客户反馈，已获授权使用。具体效果因餐厅规模与业态而异。</p>
-        </div>
-    </section>
-
-    <!-- ===== PRICING ===== -->
-    <section id="pricing" class="section-padding pricing-section">
-        <div class="container">
-            <div class="title-center">
-                <span class="kicker">价格方案</span>
-                <h2>透明定价 · <em>1 个月免费试用</em></h2>
-                <p class="sub">所有套餐均含安装、培训、本地客服。无隐藏费用，可随时取消。</p>
-
-                <div class="toggle-wrap">
-                    <div class="pricing-toggle" id="pricing-toggle">
-                        <button class="active" data-period="monthly">月付</button>
-                        <button data-period="yearly">年付<span class="save-tag">省 15%</span></button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pricing-grid">
-                <div class="price-card">
-                    <h3>基础版 Lite</h3>
-                    <div class="cost">$<span class="price-num" data-monthly="99" data-yearly="84">99</span><span class="cost-unit">/月</span></div>
-                    <span class="cost-cad">CAD · 不含 GST/PST</span>
-                    <div class="cost-yearly">年付 $1,008 / 年（原价 $1,188）</div>
-                    <span class="concurrency">1 路并发接听</span>
-                    <ul>
-                        <li><i class="fa-solid fa-check"></i> 中、英双语支持</li>
-                        <li><i class="fa-solid fa-check"></i> 智能语音转文字记录</li>
-                        <li><i class="fa-solid fa-check"></i> 营业时间自定义配置</li>
-                        <li><i class="fa-solid fa-check"></i> 基础订单短信推送</li>
-                    </ul>
-                    <a href="#trial-form" class="btn-card">开始 1 个月试用</a>
-                </div>
-
-                <div class="price-card featured">
-                    <div class="badge">最受欢迎</div>
-                    <h3>专业版 Pro</h3>
-                    <div class="cost">$<span class="price-num" data-monthly="199" data-yearly="169">199</span><span class="cost-unit">/月</span></div>
-                    <span class="cost-cad">CAD · 不含 GST/PST</span>
-                    <div class="cost-yearly">年付 $2,028 / 年（原价 $2,388）</div>
-                    <span class="concurrency">2 路并发接听</span>
-                    <ul>
-                        <li><i class="fa-solid fa-check"></i> <strong>中（普/粤）、英、西多语</strong></li>
-                        <li><i class="fa-solid fa-check"></i> <strong>订单自动同步主流 POS</strong></li>
-                        <li><i class="fa-solid fa-check"></i> AI 智能忌口/备注识别</li>
-                        <li><i class="fa-solid fa-check"></i> 高峰期性能加速</li>
-                        <li><i class="fa-solid fa-check"></i> 人工兜底转接</li>
-                    </ul>
-                    <a href="#trial-form" class="btn-card">开始 1 个月试用</a>
-                </div>
-
-                <div class="price-card">
-                    <h3>高级版 Elite</h3>
-                    <div class="cost">$<span class="price-num" data-monthly="299" data-yearly="254">299</span><span class="cost-unit">/月</span></div>
-                    <span class="cost-cad">CAD · 不含 GST/PST</span>
-                    <div class="cost-yearly">年付 $3,048 / 年（原价 $3,588）</div>
-                    <span class="concurrency">4 路并发接听</span>
-                    <ul>
-                        <li><i class="fa-solid fa-check"></i> 所有 Pro 版功能</li>
-                        <li><i class="fa-solid fa-check"></i> <strong>高级数据分析报表</strong></li>
-                        <li><i class="fa-solid fa-check"></i> API 接口开放集成</li>
-                        <li><i class="fa-solid fa-check"></i> 客户画像 & 营销标签</li>
-                        <li><i class="fa-solid fa-check"></i> 专属技术顾问</li>
-                    </ul>
-                    <a href="#trial-form" class="btn-card">开始 1 个月试用</a>
-                </div>
-            </div>
-
-            <p class="pricing-disclaimer">
-                <i class="fa-solid fa-shield-check"></i> 1 个月无理由退款 &nbsp;·&nbsp;
-                <i class="fa-solid fa-money-bill-wave"></i> 无安装费、无设备押金 &nbsp;·&nbsp;
-                <i class="fa-solid fa-rotate-left"></i> 支持月度灵活取消 &nbsp;·&nbsp;
-                <i class="fa-solid fa-map-pin"></i> 大温本地团队上门安装
-            </p>
-
-            <div class="enterprise-section">
-                <div class="enterprise-content">
-                    <div class="enterprise-text">
-                        <h2>旗舰版 Enterprise</h2>
-                        <p>为 3 家以上连锁品牌、火锅大店、定制语音场景打造的数字化中枢方案。</p>
-                        <div class="enterprise-grid">
-                            <div class="ent-item"><i class="fa-solid fa-layer-group"></i> 自定义路数无限并发</div>
-                            <div class="ent-item"><i class="fa-solid fa-network-wired"></i> 多店连锁统一管理后台</div>
-                            <div class="ent-item"><i class="fa-solid fa-microchip"></i> 专属语音模型训练调优</div>
-                            <div class="ent-item"><i class="fa-solid fa-headset"></i> 24/7 顶级技术专家响应</div>
-                        </div>
-                    </div>
-                    <div class="enterprise-cta">
-                        <div class="price-label">按需定价</div>
-                        <div class="price-value">CUSTOM</div>
-                        <a href="#contact" class="btn-primary btn-compact">
-                            <i class="fa-solid fa-user-tie"></i> 联系大客户经理
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== FAQ ===== -->
-    <section id="faq" class="faq-section section-padding">
-        <div class="container">
-            <div class="title-center">
-                <span class="kicker">常见问题</span>
-                <h2>老板们问得最多的<em>10 个问题</em></h2>
-            </div>
-
-            <div class="faq-list">
-                <details class="faq-item">
-                    <summary>需要换电话号码吗？现有号码能不能继续用？</summary>
-                    <div class="faq-content">完全不需要换号。我们通过呼叫转移（Call Forwarding）的方式接入您现有的电话线路，餐厅的老号码、Google 评论、菜单上印的电话都不需要改动。10 分钟即可完成配置。</div>
-                </details>
-
-                <details class="faq-item">
-                    <summary>客人能听出来是 AI 吗？他们会不会反感？</summary>
-                    <div class="faq-content">RoseAI 采用最新一代神经语音技术，自然度接近真人，绝大多数客户在通话结束前不会察觉。我们也支持开场白主动告知"我是 AI 助手"，许多餐厅试点反馈：客户接受度反而比预期高，因为不会被打断、不会被冷落、不会有口音障碍。</div>
-                </details>
-
-                <details class="faq-item">
-                    <summary>如果 AI 听错菜名或没听清怎么办？</summary>
-                    <div class="faq-content">三层兜底机制：①AI 会主动复述订单让客户确认；②不确定的内容会标"待复核"推送给老板手机；③遇到复杂问题（如投诉、定制大单）会自动转接到您指定的手机号码。我们承诺：错单率低于 0.8%，并提供错单赔付。</div>
-                </details>
-
-                <details class="faq-item">
-                    <summary>合同期多久？能不能随时取消？</summary>
-                    <div class="faq-content">Lite / Pro / Elite 三个套餐均为月付，无最低合约期，随时可在后台取消，下月起停止扣费。年付方案享 15% 折扣，未使用月份按比例退款。旗舰版根据合同条款。</div>
-                </details>
-
-                <details class="faq-item">
-                    <summary>数据存储在哪里？符合加拿大隐私法规吗？</summary>
-                    <div class="faq-content">所有通话录音与订单数据存储于加拿大境内（多伦多 AWS 区域），完全符合 PIPEDA 隐私法规与 BC 省个人信息保护条例。录音保留 90 天可调取，老板可随时在后台一键导出或永久删除。我们不会将客户数据用于任何第三方训练。</div>
-                </details>
-
-                <details class="faq-item">
-                    <summary>网络断了或断电怎么办？</summary>
-                    <div class="faq-content">RoseAI 运行在云端，与餐厅本地网络无关。即使餐厅断网断电，电话依然能被 AI 接听并记录订单，等餐厅恢复营业后自动同步。如餐厅需要本地打印小票，配套的小票机本身有 4G 兜底（Elite 与 Enterprise 套餐默认包含）。</div>
-                </details>
-
-                <details class="faq-item">
-                    <summary>支持哪些 POS 系统？我用的是 Square / Toast / Clover。</summary>
-                    <div class="faq-content">目前已对接 Square、Toast、Clover、点点点单、Lightspeed 等主流 POS。如您使用的是较小众的系统，我们可以在 5–10 个工作日内完成定制对接（Elite / Enterprise 套餐免费）。也可以选择"短信推送 + 后厨打印"方案，无需任何 POS 集成。</div>
-                </details>
-
-                <details class="faq-item">
-                    <summary>价格含税吗？要不要交安装费？</summary>
-                    <div class="faq-content">所列价格均为 CAD，不含 GST/PST。无任何安装费、无设备押金、无开通费。如需配套小票打印机，硬件成本约 CAD $180（一次性，可自购或租用）。</div>
-                </details>
-
-                <details class="faq-item">
-                    <summary>1 个月试用具体怎么用？要不要押金？</summary>
-                    <div class="faq-content">免费试用 1 个月，无需任何押金或信用卡预授权。试用期内享受 Pro 版完整功能，包括多语接听、自动出单、POS 集成。试用期结束前 48 小时我们会主动联系您，是否继续完全由您决定，零压力。</div>
-                </details>
-
-                <details class="faq-item">
-                    <summary>除了电话，还能不能用其他方式联系你们？</summary>
-                    <div class="faq-content">当然可以。除了拨打 778-325-4966，您也可以通过微信、WhatsApp、邮件预约。中文、英文、粤语都有本地客服支持。详见页面底部「联系方式」。</div>
-                </details>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== TRIAL FORM ===== -->
-    <section id="trial-form" class="trial-form-section">
-        <div class="container">
-            <div class="trial-form-wrap">
-                <div class="trial-form-card" id="trialFormCard">
-                    <div class="form-content">
-                        <div class="form-header">
-                            <span class="kicker">1 个月免费试用</span>
-                            <h2>留下信息 · <em>24 小时内回电</em></h2>
-                            <p>大温本地团队 1 对 1 沟通您的餐厅情况，免费上门 Demo，零信用卡承诺。</p>
-                        </div>
-
-                        <form id="trialForm" autocomplete="on" novalidate>
-                            <input type="text" name="_honey" class="honeypot" tabindex="-1" autocomplete="off">
-
-                            <div class="form-row">
-                                <div class="form-field">
-                                    <label for="name">您的称呼<span class="req">*</span></label>
-                                    <input type="text" id="name" name="姓名" required placeholder="例如：王老板 / Mr. Wong">
-                                </div>
-                                <div class="form-field">
-                                    <label for="restaurant">餐厅名称<span class="req">*</span></label>
-                                    <input type="text" id="restaurant" name="餐厅名称" required placeholder="例如：金满楼海鲜酒家">
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-field">
-                                    <label for="phone">联系电话<span class="req">*</span></label>
-                                    <input type="tel" id="phone" name="联系电话" required placeholder="例如：604-xxx-xxxx" pattern="[\d\s\-\+\(\)]{7,}">
-                                </div>
-                                <div class="form-field">
-                                    <label for="email">邮箱（可选）</label>
-                                    <input type="email" id="email" name="邮箱" placeholder="example@gmail.com">
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-field">
-                                    <label for="city">餐厅所在区域<span class="req">*</span></label>
-                                    <select id="city" name="所在区域" required>
-                                        <option value="" disabled selected>请选择</option>
-                                        <option value="Vancouver">Vancouver 温哥华</option>
-                                        <option value="Richmond">Richmond 列治文</option>
-                                        <option value="Burnaby">Burnaby 本拿比</option>
-                                        <option value="Surrey">Surrey 素里</option>
-                                        <option value="Coquitlam">Coquitlam 高贵林</option>
-                                        <option value="Langley">Langley 兰里</option>
-                                        <option value="North Vancouver">North Vancouver 北温</option>
-                                        <option value="其他大温区域">其他大温区域</option>
-                                        <option value="BC 省外">BC 省外</option>
-                                    </select>
-                                </div>
-                                <div class="form-field">
-                                    <label for="size">餐厅规模<span class="req">*</span></label>
-                                    <select id="size" name="餐厅规模" required>
-                                        <option value="" disabled selected>请选择</option>
-                                        <option value="单店 / 小型 (&lt;50 座位)">单店 / 小型 (&lt;50 座位)</option>
-                                        <option value="单店 / 中型 (50-150 座位)">单店 / 中型 (50–150 座位)</option>
-                                        <option value="单店 / 大型 (&gt;150 座位)">单店 / 大型 (&gt;150 座位)</option>
-                                        <option value="2-5 家连锁">2–5 家连锁</option>
-                                        <option value="5 家以上连锁">5 家以上连锁</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-field full">
-                                <label for="notes">想了解的内容（可选）</label>
-                                <textarea id="notes" name="备注" placeholder="例如：现有 POS 系统是 Square，主要想解决高峰期漏接电话和外卖订单备注错误的问题..."></textarea>
-                            </div>
-
-                            <button type="submit" class="form-submit" id="submitBtn">
-                                <span class="label-default">
-                                    <i class="fa-solid fa-paper-plane"></i> 申请 1 个月免费试用
-                                </span>
-                                <span class="spinner"></span>
-                            </button>
-
-                            <p class="form-disclaimer">
-                                提交即代表您同意 RoseAI 团队通过电话或邮件与您联系。<br>
-                                我们绝不分享您的信息给任何第三方 · <a href="faq.html">PIPEDA 合规</a>
-                            </p>
-                        </form>
-
-                        <div class="form-status error" id="formError">
-                            <strong>提交失败</strong>
-                            网络异常。请直接拨打 <a href="tel:7783254966" class="link-error">778-325-4966</a> 或微信 RoseAI_CA 联系我们。
-                        </div>
-                    </div>
-
-                    <div class="form-status success" id="formSuccess">
-                        <strong><i class="fa-solid fa-circle-check"></i> 申请提交成功！</strong>
-                        我们已收到您的信息，<strong class="text-success">24 小时内会有专人致电</strong>跟您沟通。<br>
-                        着急的话可以直接拨打 <a href="tel:7783254966" class="link-success">778-325-4966</a>，或加微信 <strong class="text-cream">RoseAI_CA</strong>。
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== FINAL CTA ===== -->
-    <section id="contact" class="final-cta">
-        <div class="container">
-            <h2>1 个月后，让数据告诉您<br><span>RoseAI 值不值</span></h2>
-            <p>免费试用 · 无需信用卡 · 大温本地团队上门安装与培训。<br>预约 15 分钟 Demo，看看您的餐厅每个月在漏接什么。</p>
-
-            <div class="cta-row cta-row-center">
-                <a href="tel:7783254966" class="btn-primary">
-                    <i class="fa-solid fa-phone"></i> 立即致电 778-325-4966
-                </a>
-                <a href="mailto:contactus@roseai.ca?subject=预约 RoseAI Demo" class="btn-secondary">
-                    <i class="fa-solid fa-envelope"></i> 预约 Demo
-                </a>
-            </div>
-
-            <div class="contact-channels">
-                <a href="https://wa.me/17783254966" class="channel"><i class="fa-brands fa-whatsapp"></i> WhatsApp: 778-325-4966</a>
-                <a href="mailto:contactus@roseai.ca" class="channel"><i class="fa-solid fa-envelope"></i> contactus@roseai.ca</a>
-            </div>
-
-            <div style="text-align:center; margin-top: 24px;">
-                <img src="../assets/wechat-qr.png" alt="微信二维码" style="width: 150px; height: 150px; border-radius: 14px; border: 1px solid var(--border);">
-                <p style="font-size: 13px; color: var(--muted); margin-top: 10px;"><i class="fa-brands fa-weixin" style="color: var(--primary-green-bright); margin-right: 6px;"></i>微信扫码添加 · RoseAI_CA</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== FOOTER ===== -->
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div>
-                    <a href="#" class="logo"><img src="../assets/logo.png" alt="RoseAI" class="logo-img"></a>
-                    <p class="footer-intro">让服务回归本质，将繁琐交给 RoseAI。</p>
-                    <p>大温本地团队，服务 Vancouver, Richmond, Burnaby, Surrey, Coquitlam, Langley, North Vancouver 全域。</p>
-                </div>
-                <div>
-                    <h4>产品</h4>
-                    <a href="#features">功能对比</a>
-                    <a href="#workflow">工作流程</a>
-                    <a href="#pricing">价格方案</a>
-                    <a href="faq.html">常见问题</a>
-                </div>
-                <div>
-                    <h4>联系</h4>
-                    <a href="tel:7783254966">778-325-4966</a>
-                    <a href="mailto:contactus@roseai.ca">contactus@roseai.ca</a>
-                    <a href="https://wa.me/17783254966">WhatsApp</a>
-                    <a href="#">微信：RoseAI_CA</a>
-                    <a href="../en/" class="footer-lang-link">English Version -></a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <div>© 2026 RoseAI Technology Services Ltd. 保留所有权利。</div>
-                <div class="badges">
-                    <span><i class="fa-solid fa-shield-halved"></i> PIPEDA 合规</span>
-                    <span><i class="fa-solid fa-server"></i> 加拿大本地存储</span>
-                    <span><i class="fa-solid fa-leaf"></i> Made in BC</span>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- ===== MOBILE STICKY CTA ===== -->
-    <a href="#trial-form" class="mobile-cta">
-        <i class="fa-solid fa-paper-plane"></i> 申请 1 个月免费试用
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <img src="/assets/logo.png" alt="RoseAI">
+      <span>RoseAI</span>
     </a>
+    <div class="nav-links">
+      <a href="#features">优势对比</a>
+      <a href="#workflow">工作流程</a>
+      <a href="#testimonials">客户案例</a>
+      <a href="#pricing">价格套餐</a>
+      <a href="#faq">常见问题</a>
+      <span class="nav-lang"><a class="active" href="/zh/">中</a> / <a href="/en/">EN</a></span>
+      <a href="#trial-form" class="nav-cta">申请试用</a>
+    </div>
+  </div>
+</nav>
 
-    <script src="../assets/js/site.js"></script>
+<!-- ============ PROMISE STRIP ============ -->
+<div class="promise-strip">
+  <div class="container promise-strip-inner">
+    <span>云端弹性接听·永不占线</span>
+    <span>0 秒接听</span>
+    <span>大温本地团队</span>
+    <span>PIPEDA 合规</span>
+  </div>
+</div>
 
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="container hero-grid">
+    <div class="hero-text">
+      <div class="hero-badge">本地团队 · 服务大温餐饮业</div>
+      <h1>让餐厅永远<br><em>不再漏接一通电话</em></h1>
+      <p class="lead">RoseAI 为加拿大餐厅打造的 AI 智能语音接待系统。中、英、粤、西多语自动识别,0 秒接听、自动出单同步至 POS,所有套餐云端弹性接听·永不占线。</p>
+      <div class="hero-tags">
+        <span class="hero-tag highlight">1 个月免费试用</span>
+        <span class="hero-tag">PIPEDA 合规·加拿大本地存储</span>
+        <span class="hero-tag">WhatsApp: 778-325-4966</span>
+      </div>
+      <div class="hero-cta-row">
+        <a href="#trial-form" class="btn btn-primary">申请 1 个月免费试用 →</a>
+        <a href="#pricing" class="btn btn-secondary">查看价格方案</a>
+      </div>
+    </div>
+
+    <!-- Live call demo card -->
+    <div class="demo-card">
+      <div class="demo-header">
+        <span class="demo-pulse"></span>
+        来电 · 13:42 · 实时接听中
+      </div>
+      <div class="demo-msg ai">您好,这里是华兴茶餐厅,请问要点餐还是订座?</div>
+      <div class="demo-msg user">我要两份避风塘炒蟹,一份要少辣,外送到 Garden City。</div>
+      <div class="demo-msg ai">好的,避风塘炒蟹两份,其中一份少辣,配送地址 Garden City,请问门牌号?</div>
+      <div class="demo-msg user">8460 号,3 单元。</div>
+      <div class="demo-msg ai">已记录,预计送达 14:25。订单已发送至后厨。</div>
+      <div class="demo-order">
+        <strong>订单 #2046 <span class="order-id">13:43</span></strong>
+        <ul>
+          <li>避风塘炒蟹 × 2(其中 1 份少辣)</li>
+          <li>外送 · 8460 Garden City Rd · Unit 3</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ STATS ============ -->
+<section class="stats">
+  <div class="container stats-grid">
+    <div class="stat">
+      <div class="stat-num">43%</div>
+      <div class="stat-label">行业忙时漏接率</div>
+      <div class="stat-sub">RoseAI 2025 大温餐厅试点观测</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">$76K</div>
+      <div class="stat-label">挽回预估年营收</div>
+      <div class="stat-sub">基于中型餐厅 ATV $32 × 漏接量测算</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">电话接听转化率</div>
+      <div class="stat-sub">RoseAI 7×24 全天候接听</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ POS LOGOS ============ -->
+<section class="pos-strip">
+  <div class="container">
+    <h3>已对接主流餐饮 POS 与外卖平台</h3>
+    <div class="pos-logos">
+      <span>Square</span>
+      <span>Toast</span>
+      <span>Clover</span>
+      <span>点点点单</span>
+      <span>Lightspeed</span>
+      <span>Aldelo</span>
+      <span>WhatsApp</span>
+      <span>微信</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURES (COMPARE) ============ -->
+<section class="section" id="features">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">为什么选择 RoseAI</div>
+      <h2 class="section-title">把繁琐留给 AI<em>·</em>把服务还给客人</h2>
+      <p class="section-sub">同样一通电话,传统方式 vs RoseAI 的差距一目了然</p>
+    </div>
+
+    <div class="compare-table">
+      <div class="compare-row head">
+        <div>对比项目</div>
+        <div>传统人工接待</div>
+        <div class="compare-rose">RoseAI 智能接待</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-key">响应速度</div>
+        <div class="compare-traditional">视前台忙碌度,常有占线</div>
+        <div class="compare-rose">0 秒响应·云端弹性接听·永不占线</div>
+      </div>
+      <div class="compare-row alt">
+        <div class="compare-key">语言支持</div>
+        <div class="compare-traditional">通常仅支持 1–2 种语言</div>
+        <div class="compare-rose">中(普/粤)、英、西多语自动识别</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-key">订单准确性</div>
+        <div class="compare-traditional">手写笔记易错,沟通成本高</div>
+        <div class="compare-rose">AI 自动提取忌口、备注并出单</div>
+      </div>
+      <div class="compare-row alt">
+        <div class="compare-key">工作时长</div>
+        <div class="compare-traditional">受排班限制,非营业时间流失</div>
+        <div class="compare-rose">7×24 小时全天候无休</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-key">人力成本</div>
+        <div class="compare-traditional">每位前台月成本 $3,200+(含福利)</div>
+        <div class="compare-rose">$99 起 / 月,无人力管理</div>
+      </div>
+      <div class="compare-row alt">
+        <div class="compare-key">数据沉淀</div>
+        <div class="compare-traditional">电话内容无记录,难以复盘</div>
+        <div class="compare-rose">每通电话可回放、分析、做营销</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WORKFLOW ============ -->
+<section class="section" id="workflow" style="background:var(--cream-tint);">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">工作流程</div>
+      <h2 class="section-title">从来电到出单<em>·</em>全程 30 秒</h2>
+      <p class="section-sub">一通完整闭环的订单,AI 端到端无需人工干预</p>
+    </div>
+
+    <div class="workflow-grid">
+      <div class="flow-step">
+        <div class="flow-step-num">1</div>
+        <h4>客户来电</h4>
+        <p>电话铃响 0 秒,AI 自动接起,云端弹性接听</p>
+        <span class="flow-arrow">→</span>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">2</div>
+        <h4>多语识别 + 语义提取</h4>
+        <p>识别菜品、数量、忌口、地址等关键信息</p>
+        <span class="flow-arrow">→</span>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">3</div>
+        <h4>订单生成</h4>
+        <p>实时推送至 POS / 后厨打印机</p>
+        <span class="flow-arrow">→</span>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">4</div>
+        <h4>数据回流</h4>
+        <p>通话录音、订单、客户号码归档</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURE CARDS ============ -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">数字化订单闭环</div>
+      <h2 class="section-title">不用换号<em>·</em>不用换设备</h2>
+      <p class="section-sub">RoseAI 与现有电话号码绑定,餐厅几乎零迁移成本</p>
+    </div>
+
+    <div class="feature-cards">
+      <div class="feature-card">
+        <div class="feature-icon">📞</div>
+        <h4>智能应答</h4>
+        <p>AI 识别客户意图,精准处理订餐、留座、咨询、配送查询等需求。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧠</div>
+        <h4>语义提取</h4>
+        <p>自动识别菜品、数量、特殊备注(如「少盐」「花生过敏」「不要香菜」)。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🖨️</div>
+        <h4>自动出单</h4>
+        <p>订单同步至 Square / Toast / Clover / Lightspeed / Aldelo / 点点等主流 POS,或直接打印至后厨小票机。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🤝</div>
+        <h4>人工兜底</h4>
+        <p>AI 不确定时,自动转接餐厅手机或留下回拨号码,不放过任何一笔生意。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="section" id="testimonials" style="background:var(--cream-tint);">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">客户案例</div>
+      <h2 class="section-title">大温餐厅老板<em>怎么说</em></h2>
+      <p class="section-sub">来自 Richmond、Burnaby、Surrey 的真实试点客户</p>
+    </div>
+
+    <div class="testimonials-grid">
+      <div class="testimonial">
+        <p class="testimonial-text">以前周五晚上根本接不完电话,现在 RoseAI 全包了。上线第一个月外卖单量涨了快 28%,最关键的是再也不会漏接。</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">陈</div>
+          <div>
+            <div class="testimonial-name">陈先生</div>
+            <div class="testimonial-role">Richmond · 粤式茶餐厅老板</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <p class="testimonial-text">客人能直接用普通话或粤语下单,AI 听得懂"少冰半糖"这种细节,比新员工还准。后厨打印的单子干净规整,吵架少了一大半。</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">林</div>
+          <div>
+            <div class="testimonial-name">Linda 林</div>
+            <div class="testimonial-role">Burnaby · 川菜馆经营者</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <p class="testimonial-text">我有三家分店,以前每家都要排前台轮班。换 RoseAI 后我每月省下大约 $6,000 人力成本,还能用后台数据看哪家店漏单最多。</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">K</div>
+          <div>
+            <div class="testimonial-name">Kevin Wu</div>
+            <div class="testimonial-role">Surrey · 连锁日料品牌</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="testimonial-disclaimer">* 上述为试点期客户反馈,已获授权使用。具体效果因餐厅规模与业态而异。</p>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section class="section pricing" id="pricing">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">价格方案</div>
+      <h2 class="section-title">透明定价<em>·</em>云端弹性接听</h2>
+      <p class="section-sub">所有套餐均含安装、培训、本地客服。包月分钟 + 透明超额,无隐藏费用,可随时取消。</p>
+    </div>
+
+    <div class="pricing-toggle-wrap">
+      <div class="pricing-toggle">
+        <button class="toggle-btn active" onclick="togglePricing('monthly')">月付</button>
+        <button class="toggle-btn" onclick="togglePricing('yearly')">年付 <span class="toggle-save">省 15%</span></button>
+      </div>
+    </div>
+
+    <div class="pricing-grid">
+      <!-- Lite -->
+      <div class="price-card">
+        <div class="price-name">基础版 Lite</div>
+        <div class="price-tag-line">家庭式小店 · 1 个月免费试用入口</div>
+        <div>
+          <span class="price-amount">
+            <span class="price-amount-monthly">$99</span>
+            <span class="price-amount-yearly">$1,008</span>
+          </span>
+          <span class="price-period"> / <span class="price-amount-monthly">月</span><span class="price-amount-yearly">年</span></span>
+        </div>
+        <div class="price-detail">
+          CAD · 不含 GST/PST<br>
+          <span class="price-amount-monthly">年付 $1,008 / 年(原价 $1,188)</span>
+          <span class="price-amount-yearly price-yearly">较月付节省 $180/年</span>
+        </div>
+
+        <div class="price-meta">
+          <div class="price-meta-line"><span>包月分钟数</span><strong>100 min / 月</strong></div>
+          <div class="price-meta-line"><span>超额单价</span><strong>$0.90 / 分钟</strong></div>
+        </div>
+
+        <ul class="price-features">
+          <li>中、英双语接听</li>
+          <li>智能语音转文字记录</li>
+          <li>营业时间自定义配置</li>
+          <li>基础订单短信推送</li>
+          <li>云端弹性接听·永不占线</li>
+        </ul>
+        <a href="#trial-form" class="price-cta">开始 1 个月免费试用</a>
+      </div>
+
+      <!-- Pro (featured) -->
+      <div class="price-card featured">
+        <div class="price-badge">最受欢迎</div>
+        <div class="price-name">专业版 Pro</div>
+        <div class="price-tag-line">中型独立餐厅的主力选择</div>
+        <div>
+          <span class="price-amount">
+            <span class="price-amount-monthly">$349</span>
+            <span class="price-amount-yearly">$3,560</span>
+          </span>
+          <span class="price-period"> / <span class="price-amount-monthly">月</span><span class="price-amount-yearly">年</span></span>
+        </div>
+        <div class="price-detail">
+          CAD · 不含 GST/PST<br>
+          <span class="price-amount-monthly">年付 $3,560 / 年(原价 $4,188)</span>
+          <span class="price-amount-yearly price-yearly">较月付节省 $628/年</span>
+        </div>
+
+        <div class="price-meta">
+          <div class="price-meta-line"><span>包月分钟数</span><strong>400 min / 月</strong></div>
+          <div class="price-meta-line"><span>超额单价</span><strong>$0.70 / 分钟</strong></div>
+        </div>
+
+        <ul class="price-features">
+          <li class="feat-highlight">中(普/粤)、英、西 多语</li>
+          <li class="feat-highlight">订单自动同步主流 POS</li>
+          <li>AI 智能忌口/备注识别</li>
+          <li>错单率 &lt;0.8% 赔付承诺</li>
+          <li>人工兜底转接</li>
+          <li>90 天通话录音可调取</li>
+          <li>云端弹性接听·永不占线</li>
+        </ul>
+        <a href="#trial-form" class="price-cta">开始 1 个月免费试用</a>
+      </div>
+
+      <!-- Elite -->
+      <div class="price-card">
+        <div class="price-name">高级版 Elite</div>
+        <div class="price-tag-line">多店运营 · 数据驱动型餐厅</div>
+        <div>
+          <span class="price-amount">
+            <span class="price-amount-monthly">$699</span>
+            <span class="price-amount-yearly">$7,130</span>
+          </span>
+          <span class="price-period"> / <span class="price-amount-monthly">月</span><span class="price-amount-yearly">年</span></span>
+        </div>
+        <div class="price-detail">
+          CAD · 不含 GST/PST<br>
+          <span class="price-amount-monthly">年付 $7,130 / 年(原价 $8,388)</span>
+          <span class="price-amount-yearly price-yearly">较月付节省 $1,258/年</span>
+        </div>
+
+        <div class="price-meta">
+          <div class="price-meta-line"><span>包月分钟数</span><strong>1,000 min / 月</strong></div>
+          <div class="price-meta-line"><span>超额单价</span><strong>$0.60 / 分钟</strong></div>
+        </div>
+
+        <ul class="price-features">
+          <li>所有 Pro 版功能</li>
+          <li class="feat-highlight">主动外呼(取餐提醒等)</li>
+          <li class="feat-highlight">高级数据分析报表</li>
+          <li>API 接口开放集成</li>
+          <li>客户画像 & 营销标签</li>
+          <li>4G 兜底小票机(默认含)</li>
+          <li>专属技术顾问</li>
+        </ul>
+        <a href="#trial-form" class="price-cta">开始 1 个月免费试用</a>
+      </div>
+    </div>
+
+    <!-- Guarantees -->
+    <div class="pricing-guarantees">
+      <span>1 个月免费试用</span>
+      <span>30 天无理由退款</span>
+      <span>云端弹性接听·永不占线</span>
+      <span>无安装费、无设备押金</span>
+      <span>大温本地团队上门安装</span>
+    </div>
+
+    <!-- Enterprise -->
+    <div class="enterprise-card">
+      <div>
+        <h3>旗舰版 Enterprise</h3>
+        <p>为 3 家以上连锁品牌、火锅大店、定制语音场景打造的数字化中枢方案。</p>
+        <ul class="enterprise-features">
+          <li>6,000+ 包月分钟 · 超额 $0.50/分钟起</li>
+          <li>多店连锁统一管理后台</li>
+          <li>专属语音模型训练调优</li>
+          <li>24/7 顶级技术专家响应 + SLA</li>
+        </ul>
+      </div>
+      <div class="enterprise-price">
+        <div class="enterprise-price-big">$2,500+ / 月起</div>
+        <div class="enterprise-price-small">按需定价 · CUSTOM</div>
+        <a href="#trial-form" class="enterprise-cta">联系大客户经理 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section" id="faq">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">常见问题</div>
+      <h2 class="section-title">老板们问得最多的<em>10 个问题</em></h2>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          需要换电话号码吗?现有号码能不能继续用?<span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          完全不需要换号。我们通过呼叫转移(Call Forwarding)的方式接入您现有的电话线路,餐厅的老号码、Google 评论、菜单上印的电话都不需要改动。<strong>10 分钟即可完成配置。</strong>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          包月分钟数是怎么算的?超过分钟数后怎么办?<span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          每通电话从 AI 接起到挂断的总时长按整分钟计费,平均一通电话约 2 分钟。Lite 100 分钟约可接 50 通电话,Pro 400 分钟约 200 通,Elite 1,000 分钟约 500 通。<br><br>
+          超过包含分钟数后,Lite 按 <strong>$0.90/分钟</strong>、Pro <strong>$0.70/分钟</strong>、Elite <strong>$0.60/分钟</strong>、Enterprise <strong>$0.50/分钟</strong> 自动计费。我们会在使用到 <strong>80% / 100% / 120%</strong> 时自动短信提醒,完全透明可控,也可设置硬上限自动转留言模式。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          AI 同时能接多少通电话?会不会出现占线?<span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          <strong>所有套餐均无并发上限</strong>——RoseAI 采用云端弹性接听,瞬时高峰来电由云端动态扩容处理。「云端弹性接听·永不占线」是我们对所有客户的默认保证,无论您订阅哪个套餐。<br><br>
+          这意味着即使周五晚 7 点同时来 5 通甚至 10 通电话,每位客户也都能 0 秒被 AI 接起,不会有任何占线提示音。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          客人能听出来是 AI 吗?他们会不会反感?<span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          RoseAI 采用最新一代神经语音技术,自然度接近真人,绝大多数客户在通话结束前不会察觉。我们也支持开场白主动告知"我是 AI 助手",许多餐厅试点反馈:客户接受度反而比预期高,因为不会被打断、不会被冷落、不会有口音障碍。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          如果 AI 听错菜名或没听清怎么办?<span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          三层兜底机制:①AI 会主动复述订单让客户确认;②不确定的内容会标"待复核"推送给老板手机;③遇到复杂问题(如投诉、定制大单)会自动转接到您指定的手机号码。<strong>我们承诺:错单率低于 0.8%,并提供错单赔付。</strong>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          1 个月免费试用具体怎么用?要不要押金?<span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          免费试用 1 个月,无押金。试用期内享 <strong>Lite 档完整功能</strong>(中英双语接听、智能转文字、短信订单推送)+ <strong>100 分钟通话量免费</strong>。<br><br>
+          100 分钟之外按 <strong>$0.90/分钟</strong> 收费(与正式订阅相同),需要预存信用卡(仅用于超额扣款,无任何押金)。试用结束前 7 天主动短信提醒,期满后自动续 Lite $99/月,或您主动升 Pro $349/月。<strong>零压力、随时可停。</strong><br><br>
+          注:如需 Pro 完整功能(粤语、POS 集成等),需要直接订阅 Pro 版——试用期内不开放 Pro 的差异化功能。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          合同期多久?能不能随时取消?<span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          Lite / Pro / Elite 三个套餐均为月付,<strong>无最低合约期</strong>,随时可在后台取消,下月起停止扣费。年付方案享 15% 折扣,未使用月份按比例退款。旗舰版根据合同条款。<br><br>
+          <strong>额外承诺:</strong>所有套餐均含 30 天无理由退款——即使付费后觉得不合适,30 天内全额退款。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          数据存储在哪里?符合加拿大隐私法规吗?<span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          所有通话录音与订单数据存储于加拿大境内(<strong>多伦多 AWS 区域</strong>),完全符合 PIPEDA 隐私法规与 BC 省个人信息保护条例。录音保留 90 天可调取,老板可随时在后台一键导出或永久删除。我们不会将客户数据用于任何第三方训练。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          网络断了或断电怎么办?<span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          RoseAI 运行在云端,与餐厅本地网络无关。即使餐厅断网断电,电话依然能被 AI 接听并记录订单,等餐厅恢复营业后自动同步。如餐厅需要本地打印小票,配套的小票机本身有 4G 兜底(<strong>Elite 与 Enterprise 套餐默认包含</strong>)。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          支持哪些 POS 系统?我用的是 Square / Toast / Clover / Aldelo。<span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          目前已对接 <strong>Square、Toast、Clover、Lightspeed、Aldelo Express、点点点单</strong> 等主流餐饮 POS,覆盖几乎所有大温独立餐厅在用的系统。如您使用的是较小众的系统,我们可以在 5–10 个工作日内完成定制对接(Elite / Enterprise 套餐免费)。也可以选择"短信推送 + 后厨打印"方案,无需任何 POS 集成。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          除了电话,还能不能用其他方式联系你们?<span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          当然可以。除了拨打 <strong>778-325-4966</strong>,您也可以通过 WhatsApp(同号)、微信(<strong>RoseAI_CA</strong>)、邮件(<strong>contactus@roseai.ca</strong>)预约。中文、英文、粤语都有本地客服支持。详见页面底部「联系方式」。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRIAL FORM ============ -->
+<section class="section form-section" id="trial-form">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">1 个月免费试用</div>
+      <h2 class="section-title">留下信息<em>·</em>24 小时内回电</h2>
+      <p class="section-sub">大温本地团队 1 对 1 沟通您的餐厅情况,免费上门 Demo,零信用卡承诺。</p>
+    </div>
+
+    <form class="form-card" id="trialFormCard" novalidate>
+      <div class="form-content">
+      <input type="text" name="_honey" class="honeypot" tabindex="-1" autocomplete="off" style="display:none">
+      <div class="form-row">
+        <div class="form-field">
+          <label>您的称呼 <span class="req">*</span></label>
+          <input type="text" name="name" required>
+        </div>
+        <div class="form-field">
+          <label>餐厅名称 <span class="req">*</span></label>
+          <input type="text" name="restaurant" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label>联系电话 <span class="req">*</span></label>
+          <input type="tel" name="phone" required>
+        </div>
+        <div class="form-field">
+          <label>邮箱(可选)</label>
+          <input type="email" name="email">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label>餐厅所在区域 <span class="req">*</span></label>
+          <select name="region" required>
+            <option value="">请选择</option>
+            <option>Vancouver 温哥华</option>
+            <option>Richmond 列治文</option>
+            <option>Burnaby 本拿比</option>
+            <option>Surrey 素里</option>
+            <option>Coquitlam 高贵林</option>
+            <option>Langley 兰里</option>
+            <option>North Vancouver 北温</option>
+            <option>其他大温区域</option>
+            <option>BC 省外</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>餐厅规模 <span class="req">*</span></label>
+          <select name="size" required>
+            <option value="">请选择</option>
+            <option>单店 / 小型 (&lt;50 座位)</option>
+            <option>单店 / 中型 (50–150 座位)</option>
+            <option>单店 / 大型 (&gt;150 座位)</option>
+            <option>2–5 家连锁</option>
+            <option>5 家以上连锁</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-field full" style="margin-bottom:18px;">
+        <label>想了解的内容(可选)</label>
+        <textarea name="notes" rows="3"></textarea>
+      </div>
+      <button type="submit" class="form-submit" id="submitBtn">
+        <span class="label-default">申请 1 个月免费试用 →</span>
+        <span class="spinner" style="display:none;width:18px;height:18px;border:2px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin 0.7s linear infinite;"></span>
+      </button>
+      <p class="form-disclaimer">
+        提交即代表您同意 RoseAI 团队通过电话或邮件与您联系。<br>
+        我们绝不分享您的信息给任何第三方 · <a href="#faq">PIPEDA 合规</a>
+      </p>
+      </div>
+
+      <div class="form-status error" id="formError" style="display:none;margin-top:24px;padding:20px 24px;border-radius:14px;font-size:15px;line-height:1.6;background:rgba(194,65,12,0.1);border:1px solid rgba(194,65,12,0.4);color:#e88a72;">
+        <strong style="display:block;margin-bottom:4px;font-size:16px;color:var(--ink);">提交失败</strong>
+        网络异常。请直接拨打 <a href="tel:7783254966" style="color:var(--orange);text-decoration:underline;">778-325-4966</a> 或微信 RoseAI_CA 联系我们。
+      </div>
+
+      <div class="form-status success" id="formSuccess" style="display:none;margin-top:24px;padding:20px 24px;border-radius:14px;font-size:15px;line-height:1.6;background:rgba(13,77,58,0.08);border:1px solid rgba(13,77,58,0.3);color:var(--green-dark);">
+        <strong style="display:block;margin-bottom:4px;font-size:16px;color:var(--green-dark);">申请提交成功!</strong>
+        我们已收到您的信息,24 小时内会有专人致电跟您沟通。<br>
+        着急的话可以直接拨打 <a href="tel:7783254966" style="color:var(--green-dark);text-decoration:underline;">778-325-4966</a>,或加微信 <strong>RoseAI_CA</strong>。
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ============ BOTTOM CTA ============ -->
+<section class="cta-band">
+  <div class="container">
+    <h2>1 个月后,让数据告诉您 RoseAI 值不值</h2>
+    <p>免费试用 · 无需信用卡押金 · 大温本地团队上门安装与培训。<br>预约 15 分钟 Demo,看看您的餐厅每个月在漏接什么。</p>
+    <div class="cta-band-buttons">
+      <a href="tel:7783254966" class="btn btn-primary">立即致电 778-325-4966</a>
+      <a href="mailto:contactus@roseai.ca?subject=预约%20RoseAI%20Demo" class="btn btn-secondary">预约 Demo</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="/assets/logo.png" alt="RoseAI">
+          <span>RoseAI</span>
+        </div>
+        <p class="footer-tagline">
+          让服务回归本质,将繁琐交给 RoseAI。<br><br>
+          大温本地团队,服务 Vancouver, Richmond, Burnaby, Surrey, Coquitlam, Langley, North Vancouver 全域。
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h5>产品</h5>
+        <ul>
+          <li><a href="#features">功能对比</a></li>
+          <li><a href="#workflow">工作流程</a></li>
+          <li><a href="#pricing">价格方案</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>联系</h5>
+        <ul>
+          <li><a href="tel:7783254966">778-325-4966</a></li>
+          <li><a href="mailto:contactus@roseai.ca">contactus@roseai.ca</a></li>
+          <li><a href="https://wa.me/17783254966" target="_blank">WhatsApp 同号</a></li>
+          <li>微信:RoseAI_CA</li>
+          <li><a href="/en/">English →</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>承诺</h5>
+        <ul>
+          <li>PIPEDA 合规</li>
+          <li>加拿大本地存储</li>
+          <li>30 天退款保证</li>
+          <li>Made in BC</li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-wechat">
+        <span class="wechat-label">扫码加微信</span>
+        <img src="/assets/wechat-qr.png" alt="RoseAI 微信二维码" onerror="this.src='/assets/wechat-qr-placeholder.png'">
+        <span class="wechat-id">微信号:RoseAI_CA</span>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 RoseAI Technology Services Ltd. 保留所有权利</span>
+      <span>云端弹性接听·永不占线</span>
+      <span>大温本地服务</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// FAQ accordion
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  item.classList.toggle('open');
+}
+
+// Pricing monthly/yearly toggle
+function togglePricing(mode) {
+  const section = document.querySelector('.pricing');
+  const buttons = document.querySelectorAll('.pricing-toggle .toggle-btn');
+  if (mode === 'yearly') {
+    section.classList.add('yearly');
+    buttons[0].classList.remove('active');
+    buttons[1].classList.add('active');
+  } else {
+    section.classList.remove('yearly');
+    buttons[0].classList.add('active');
+    buttons[1].classList.remove('active');
+  }
+}
+</script>
+<script src="/assets/js/site.js"></script>
 </body>
 </html>

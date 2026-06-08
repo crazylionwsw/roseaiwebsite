@@ -48,27 +48,27 @@
         var submittedAt = data[strings.timeLabel] || '';
         var sourcePage = data[strings.sourceLabel] || '';
 
-        // Map form field values to display labels
+        // Map form field values to display labels (support both old and new field names)
         var fields;
         if (isChinese) {
             fields = [
-                { label: '称呼', value: data['姓名'] || '' },
-                { label: '餐厅名称', value: data['餐厅名称'] || '' },
-                { label: '联系电话', value: data['联系电话'] || '' },
-                { label: '邮箱', value: data['邮箱'] || '' },
-                { label: '所在区域', value: data['所在区域'] || '' },
-                { label: '餐厅规模', value: data['餐厅规模'] || '' },
-                { label: '备注', value: data['备注'] || '' }
+                { label: '称呼', value: data['姓名'] || data['name'] || '' },
+                { label: '餐厅名称', value: data['餐厅名称'] || data['restaurant'] || '' },
+                { label: '联系电话', value: data['联系电话'] || data['phone'] || '' },
+                { label: '邮箱', value: data['邮箱'] || data['email'] || '' },
+                { label: '所在区域', value: data['所在区域'] || data['region'] || '' },
+                { label: '餐厅规模', value: data['餐厅规模'] || data['size'] || '' },
+                { label: '备注', value: data['备注'] || data['notes'] || '' }
             ];
         } else {
             fields = [
-                { label: 'Name', value: data['Name'] || '' },
-                { label: 'Restaurant', value: data['Restaurant'] || '' },
-                { label: 'Phone', value: data['Phone'] || '' },
-                { label: 'Email', value: data['Email'] || '' },
-                { label: 'City / Region', value: data['City'] || '' },
-                { label: 'Restaurant Size', value: data['Size'] || '' },
-                { label: 'Notes', value: data['Notes'] || '' }
+                { label: 'Name', value: data['Name'] || data['name'] || '' },
+                { label: 'Restaurant', value: data['Restaurant'] || data['restaurant'] || '' },
+                { label: 'Phone', value: data['Phone'] || data['phone'] || '' },
+                { label: 'Email', value: data['Email'] || data['email'] || '' },
+                { label: 'City / Region', value: data['City'] || data['region'] || '' },
+                { label: 'Restaurant Size', value: data['Size'] || data['size'] || '' },
+                { label: 'Notes', value: data['Notes'] || data['notes'] || '' }
             ];
         }
 
@@ -139,7 +139,7 @@
         formData.forEach(function (v, k) { data[k] = v; });
 
         // Build email subject
-        var restaurantName = data['Restaurant'] || data['餐厅名称'] || 'Unknown';
+        var restaurantName = data['Restaurant'] || data['餐厅名称'] || data['restaurant'] || 'Unknown';
         var subject = isZh
             ? '🌹 新试用申请 · ' + restaurantName
             : '🌹 New Trial Request · ' + restaurantName;
