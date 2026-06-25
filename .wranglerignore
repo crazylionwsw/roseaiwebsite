@@ -1,9 +1,9 @@
 .env*
-.git/**
+.git/
 .gitignore
-.wrangler/**
-functions/**
-scripts/**
-node_modules/**
+.wrangler/
+functions/
+scripts/
+node_modules/
 README.md
-gdrive-docs/**
+gdrive-docs/
