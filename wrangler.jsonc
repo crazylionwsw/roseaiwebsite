@@ -13,5 +13,11 @@
   },
   "compatibility_flags": [
     "nodejs_compat"
+  ],
+  "routes": [
+    {
+      "pattern": "www.roseai.ca/api/chat",
+      "zone_name": "roseai.ca"
+    }
   ]
 }
