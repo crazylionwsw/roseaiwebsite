@@ -97,32 +97,32 @@ function loadDocuments() {
   return docs;
 }
 
-// ---- Generate embeddings via DeepSeek API ----
-async function generateEmbeddings(texts, apiKey) {
+// ---- Generate embeddings via Cloudflare Workers AI ----
+async function generateEmbeddings(texts, apiToken, accountId) {
   const allEmbeddings = [];
 
   for (let i = 0; i < texts.length; i += EMBED_BATCH) {
     const batch = texts.slice(i, i + EMBED_BATCH);
-    const res = await fetch('https://api.deepseek.com/v1/embeddings', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + apiKey,
-      },
-      body: JSON.stringify({
-        model: 'deepseek-embedding',
-        input: batch,
-      }),
-    });
+    const res = await fetch(
+      `https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/run/@cf/baai/bge-base-en-v1.5`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + apiToken,
+        },
+        body: JSON.stringify({ text: batch }),
+      }
+    );
 
     if (!res.ok) {
       const err = await res.text();
-      throw new Error('Embedding API error: ' + res.status + ' ' + err);
+      throw new Error('Cloudflare AI embedding error: ' + res.status + ' ' + err);
     }
 
-    const data = await res.json();
-    for (const item of data.data) {
-      allEmbeddings[item.index + i] = item.embedding;
+    const result = await res.json();
+    for (let j = 0; j < result.data.length; j++) {
+      allEmbeddings[i + j] = result.data[j];
     }
 
     console.log('  Embedded ' + Math.min(i + EMBED_BATCH, texts.length) + '/' + texts.length);
@@ -191,8 +191,10 @@ function pushToLocal(chunks, embeddings) {
 
 // ---- Main ----
 async function main() {
-  const apiKey = process.env.DEEPSEEK_API_KEY;
-  if (!apiKey) throw new Error('Missing DEEPSEEK_API_KEY');
+  const cfToken = process.env.CLOUDFLARE_API_TOKEN;
+  const cfAccountId = process.env.CLOUDFLARE_ACCOUNT_ID;
+  if (!cfToken) throw new Error('Missing CLOUDFLARE_API_TOKEN (needed for Workers AI embedding)');
+  if (!cfAccountId) throw new Error('Missing CLOUDFLARE_ACCOUNT_ID');
 
   const backend = process.env.VECTOR_DB_BACKEND || 'upstash';
   console.log('Vector DB backend: ' + backend);
@@ -215,9 +217,9 @@ async function main() {
   console.log('  Created ' + allChunks.length + ' chunks');
 
   // 3. Generate embeddings
-  console.log('\n3. Generating embeddings via DeepSeek...');
+  console.log('\n3. Generating embeddings via Cloudflare AI (@cf/baai/bge-base-en-v1.5)...');
   const texts = allChunks.map((c) => c.text);
-  const embeddings = await generateEmbeddings(texts, apiKey);
+  const embeddings = await generateEmbeddings(texts, cfToken, cfAccountId);
 
   // 4. Push to backend
   console.log('\n4. Pushing to vector DB (' + backend + ')...');

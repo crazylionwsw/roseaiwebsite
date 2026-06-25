@@ -4,7 +4,8 @@
 
 var DEEPSEEK_BASE = 'https://api.deepseek.com/v1';
 var CHAT_MODEL = 'deepseek-chat';
-var EMBED_MODEL = 'deepseek-embedding';
+var EMBED_MODEL = '@cf/baai/bge-base-en-v1.5';
+var EMBED_DIMS = 768;
 var MAX_HISTORY = 10;
 var TOP_K = 5;
 var MAX_MESSAGE_LEN = 2000;
@@ -121,18 +122,9 @@ async function fetchWebContent(url) {
   }
 }
 
-async function embed(text, apiKey) {
-  var resp = await fetch(DEEPSEEK_BASE + '/embeddings', {
-    method: 'POST',
-    headers: { 'Authorization': 'Bearer ' + apiKey, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ model: EMBED_MODEL, input: text }),
-  });
-  if (!resp.ok) {
-    var err = await resp.text();
-    throw new Error('Embedding API: ' + resp.status + ' ' + err);
-  }
-  var data = await resp.json();
-  return data.data[0].embedding;
+async function embed(text, env) {
+  var result = await env.AI.run(EMBED_MODEL, { text: [text] });
+  return result.data[0];
 }
 
 async function queryUpstash(vec, url, token) {
@@ -234,7 +226,7 @@ export default {
       var contextItems = [];
       if (env.VECTOR_DB_URL && env.VECTOR_DB_TOKEN) {
         try {
-          var qVec = await embed(message, apiKey);
+          var qVec = await embed(message, env);
           var results = await queryUpstash(qVec, env.VECTOR_DB_URL, env.VECTOR_DB_TOKEN);
           contextItems = (results.result || []).map(function (r) { return r.metadata; }).filter(Boolean);
         } catch (err) {
