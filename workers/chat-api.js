@@ -8,7 +8,7 @@ var EMBED_MODEL = 'deepseek-embedding';
 var MAX_HISTORY = 10;
 var TOP_K = 5;
 var MAX_MESSAGE_LEN = 2000;
-var FAQ_URLS = { en: 'https://www.roseai.ca/en/faq.html', zh: 'https://www.roseai.ca/zh/faq.html' };
+var FAQ_URLS = { en: 'https://www.roseai.ca/en/faq', zh: 'https://www.roseai.ca/zh/faq' };
 
 function cors() {
   return {
@@ -32,14 +32,14 @@ function detectLang(text) {
 function buildSystemPrompt(contextItems, lang) {
   var ctx = '';
   if (contextItems.length) {
-    ctx = '\n\nRelevant knowledge base:\n' + contextItems.map(function (c, i) {
+    ctx = '\n\n=== Knowledge Base ===\n' + contextItems.map(function (c, i) {
       return '[' + (i + 1) + '] ' + (c.text || c.content || c.title || '');
     }).join('\n');
   }
   if (lang === 'zh') {
-    return '你是 RoseAI 助手，请用中文回答。回答问题要简洁准确。' + (ctx ? '\n\n请基于以下知识库回答（如知识库无相关信息则自行回答）：' + ctx : '');
+    return '你是 RoseAI 网站的智能助手，请用中文回答。优先使用下方知识库内容回答问题。如果知识库中有相关信息，严格基于知识库回答。如果知识库中无相关信息，可以用自己的知识回答。' + (ctx ? '\n\n' + ctx : '');
   }
-  return 'You are RoseAI assistant. Answer concisely and accurately.' + (ctx ? '\n\nBase your answer on the following knowledge base (if no relevant info, answer on your own):' + ctx : '');
+  return 'You are the RoseAI website assistant. Answer concisely. When the knowledge base below contains relevant information, base your answer strictly on it. When no relevant info exists in the knowledge base, you may answer using your own knowledge.' + (ctx ? '\n\n' + ctx : '');
 }
 
 function htmlToText(html) {
@@ -63,8 +63,8 @@ function htmlToText(html) {
 function extractFaqPairs(html) {
   var pairs = [];
   var qs = [], as = [];
-  var re1 = /<summary>([\s\S]*?)<\/summary>/gi;
-  var re2 = /<div class="faq-content">([\s\S]*?)<\/div>/gi;
+  var re1 = /<summary>(?:<span>.*?<\/span>)?([\s\S]*?)<\/summary>/gi;
+  var re2 = /<div\s+class="faq-content">([\s\S]*?)<\/div>/gi;
   var m;
   while ((m = re1.exec(html)) !== null) qs.push(htmlToText(m[1]));
   while ((m = re2.exec(html)) !== null) as.push(htmlToText(m[1]));
