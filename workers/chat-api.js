@@ -30,16 +30,28 @@ function detectLang(text) {
 }
 
 function buildSystemPrompt(contextItems, lang) {
-  var ctx = '';
-  if (contextItems.length) {
-    ctx = '\n\n=== Knowledge Base ===\n' + contextItems.map(function (c, i) {
-      return '[' + (i + 1) + '] ' + (c.text || c.content || c.title || '');
-    }).join('\n');
+  var faqBlock = '';
+  var otherCtx = [];
+  for (var i = 0; i < contextItems.length; i++) {
+    var txt = contextItems[i].text || contextItems[i].content || contextItems[i].title || '';
+    if (txt.indexOf('Q: ') === 0) {
+      faqBlock += '\n' + txt;
+    } else {
+      otherCtx.push(txt);
+    }
   }
   if (lang === 'zh') {
-    return '你是 RoseAI 网站的智能助手，请用中文回答。优先使用下方知识库内容回答问题。如果知识库中有相关信息，严格基于知识库回答。如果知识库中无相关信息，可以用自己的知识回答。' + (ctx ? '\n\n' + ctx : '');
+    var prompt = '你是一个客服助手。以下网站FAQ内容必须严格作为回答依据。请用中文回答。\n';
+    if (faqBlock) prompt += '\n===== 官方 FAQ（必须优先使用）=====\n' + faqBlock + '\n==============================\n';
+    if (otherCtx.length) prompt += '\n其他参考信息：\n' + otherCtx.join('\n---\n');
+    prompt += '\n\n注意：你的回答必须基于FAQ内容，不要编造FAQ中不存在的信息。如果FAQ没有覆盖用户问题，礼貌告知用户联系客服。';
+    return prompt;
   }
-  return 'You are the RoseAI website assistant. Answer concisely. When the knowledge base below contains relevant information, base your answer strictly on it. When no relevant info exists in the knowledge base, you may answer using your own knowledge.' + (ctx ? '\n\n' + ctx : '');
+  var prompt = 'You are a customer support assistant. The following FAQ content from the official website is the authoritative source for answers. Answer concisely.';
+  if (faqBlock) prompt += '\n\n===== OFFICIAL FAQ (must use this first) =====\n' + faqBlock + '\n========================================\n';
+  if (otherCtx.length) prompt += '\nReference:\n' + otherCtx.join('\n---\n');
+  prompt += '\n\nIMPORTANT: Base your answer strictly on the FAQ above. If the question is not covered by the FAQ, politely tell the user to contact customer support.';
+  return prompt;
 }
 
 function htmlToText(html) {
@@ -78,8 +90,14 @@ async function fetchFaqContent(lang) {
   var url = lang === 'zh' ? FAQ_URLS.zh : FAQ_URLS.en;
   try {
     var resp = await fetch(url, { headers: { 'User-Agent': 'RoseAI/1.0' } });
-    if (!resp.ok) return [];
-    return extractFaqPairs(await resp.text());
+    if (!resp.ok) {
+      console.error('FAQ fetch status:', resp.status, 'for', url);
+      return [];
+    }
+    var html = await resp.text();
+    var pairs = extractFaqPairs(html);
+    console.error('FAQ fetched:', pairs.length, 'pairs from', url);
+    return pairs;
   } catch (err) {
     console.error('FAQ fetch failed:', err.message);
     return [];
@@ -199,15 +217,15 @@ export default {
 
       // Always fetch FAQ content for reference
       var faqPairs = await fetchFaqContent(userLang);
-      if (faqPairs.length) {
-        webContext.push('=== FAQ ===\n' + faqPairs.join('\n\n'));
+      for (var fi = 0; fi < faqPairs.length; fi++) {
+        webContext.push({ text: faqPairs[fi] });
       }
 
       // Fetch content from URLs in user message
       var urls = detectUrls(message);
       for (var ui = 0; ui < urls.length; ui++) {
         var wc = await fetchWebContent(urls[ui]);
-        if (wc) webContext.push('=== Content from ' + urls[ui] + ' ===\n' + wc);
+        if (wc) webContext.push({ text: '=== Content from ' + urls[ui] + ' ===\n' + wc });
       }
 
       // Retrieve vector DB context
@@ -223,7 +241,7 @@ export default {
       }
 
       // Merge web content into context
-      contextItems = contextItems.concat(webContext.map(function (c) { return { text: c }; }));
+      contextItems = contextItems.concat(webContext);
 
       var systemPrompt = buildSystemPrompt(contextItems, userLang);
       var chatMessages = [{ role: 'system', content: systemPrompt }];
