@@ -8,7 +8,6 @@ var EMBED_MODEL = 'deepseek-embedding';
 var MAX_HISTORY = 10;
 var TOP_K = 5;
 var MAX_MESSAGE_LEN = 2000;
-var FAQ_URLS = { en: 'https://www.roseai.ca/en/faq', zh: 'https://www.roseai.ca/zh/faq' };
 
 function cors() {
   return {
@@ -86,10 +85,11 @@ function extractFaqPairs(html) {
   return pairs;
 }
 
-async function fetchFaqContent(lang) {
-  var url = lang === 'zh' ? FAQ_URLS.zh : FAQ_URLS.en;
+async function fetchFaqContent(lang, assets) {
+  var url = lang === 'zh' ? 'zh/faq' : 'en/faq';
   try {
-    var resp = await fetch(url, { headers: { 'User-Agent': 'RoseAI/1.0' } });
+    var req = new Request('https://placeholder/' + url, { headers: { 'User-Agent': 'RoseAI/1.0' } });
+    var resp = await assets.fetch(req);
     if (!resp.ok) {
       console.error('FAQ fetch status:', resp.status, 'for', url);
       return [];
@@ -188,15 +188,6 @@ export default {
       return env.ASSETS.fetch(request);
     }
 
-    // Debug: test FAQ fetch
-    if (url.pathname === '/api/faq-test') {
-      var lang = url.searchParams.get('lang') === 'zh' ? 'zh' : 'en';
-      var pairs = await fetchFaqContent(lang);
-      return new Response(JSON.stringify({ count: pairs.length, pairs: pairs }, null, 2), {
-        headers: Object.assign(cors(), { 'Content-Type': 'application/json' }),
-      });
-    }
-
     if (request.method === 'OPTIONS') {
       return new Response(null, { headers: cors() });
     }
@@ -225,7 +216,7 @@ export default {
       var webContext = [];
 
       // Always fetch FAQ content for reference
-      var faqPairs = await fetchFaqContent(userLang);
+      var faqPairs = await fetchFaqContent(userLang, env.ASSETS);
       for (var fi = 0; fi < faqPairs.length; fi++) {
         webContext.push({ text: faqPairs[fi] });
       }
