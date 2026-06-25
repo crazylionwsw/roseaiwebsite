@@ -24,10 +24,10 @@
     }
 
     // ===== Trial form submission (Resend) =====
-    var form = document.getElementById('trialForm');
+    var form = document.getElementById('trialFormCard');
     if (!form) return;
 
-    var card = document.getElementById('trialFormCard');
+    var card = form;
     var submitBtn = document.getElementById('submitBtn');
     var errorBox = document.getElementById('formError');
 

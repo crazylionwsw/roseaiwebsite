@@ -10,6 +10,7 @@
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#0D4D3A">
 
+<link rel="stylesheet" href="/assets/css/chat-widget.css">
 <style>
 :root {
   --green-dark: #0D4D3A;
@@ -825,7 +826,7 @@ a:hover { color: var(--orange); }
     </div>
 
     <div class="pricing-toggle-wrap">
-      <div class="pricing-toggle">
+      <div class="pricing-toggle" id="pricing-toggle">
         <button class="toggle-btn active" onclick="togglePricing('monthly')">月付</button>
         <button class="toggle-btn" onclick="togglePricing('yearly')">年付 <span class="toggle-save">省 15%</span></button>
       </div>
@@ -1355,5 +1356,6 @@ function togglePricing(mode) {
 }
 </script>
 <script src="/assets/js/site.js"></script>
+<script src="/assets/js/chat-widget.js"></script>
 </body>
 </html>
