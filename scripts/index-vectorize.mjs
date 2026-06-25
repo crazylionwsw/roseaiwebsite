@@ -22,10 +22,9 @@ import { resolve, extname } from 'path';
 const ROOT = resolve(import.meta.dirname, '..');
 const DOCS_DIR = resolve(ROOT, 'gdrive-docs');
 const OUTPUT = resolve(ROOT, 'api', 'knowledge-base.json');
-const CHUNK_SIZE = 300;        // max chars per chunk
-const CHUNK_OVERLAP = 50;      // overlap between chunks
-const EMBED_BATCH = 32;        // batch size for embedding API
-const TOP_K_DEFAULT = 5;
+const CHUNK_SIZE = 500;        // max chars per chunk
+const CHUNK_OVERLAP = 80;      // overlap between chunks
+const EMBED_BATCH = 16;        // batch size for embedding API (avoid rate limits)
 
 // ---- Utility: Split document into chunks ----
 function chunkDocument(text, source) {
@@ -141,19 +140,11 @@ async function pushToUpstash(chunks, embeddings) {
     throw new Error('VECTOR_DB_URL and VECTOR_DB_TOKEN required for upstash backend');
   }
 
-  // Delete all existing vectors first (reset)
-  console.log('  Resetting Upstash index...');
-  try {
-    await fetch(url, {
-      method: 'DELETE',
-      headers: { Authorization: 'Bearer ' + token },
-    });
-  } catch (e) {
-    console.warn('  Reset warning (index may be new):', e.message);
-  }
+  const apiUrl = url.replace(/\/$/, '');
 
   // Upsert in batches
-  const batchSize = 32;
+  const batchSize = 16;
+  let indexed = 0;
   for (let i = 0; i < chunks.length; i += batchSize) {
     const vectors = [];
     for (let j = i; j < Math.min(i + batchSize, chunks.length); j++) {
@@ -161,14 +152,13 @@ async function pushToUpstash(chunks, embeddings) {
         id: chunks[j].id,
         vector: embeddings[j],
         metadata: {
-          text: chunks[j].text.substring(0, 1000), // Upstash metadata limit
+          text: chunks[j].text.substring(0, 1000),
           source: chunks[j].source,
-          section: chunks[j].metadata?.section || '',
         },
       });
     }
 
-    const res = await fetch(url + '/upsert', {
+    const res = await fetch(apiUrl + '/upsert', {
       method: 'POST',
       headers: {
         Authorization: 'Bearer ' + token,
@@ -182,7 +172,8 @@ async function pushToUpstash(chunks, embeddings) {
       throw new Error('Upstash upsert error: ' + res.status + ' ' + err);
     }
 
-    console.log('  Indexed ' + Math.min(i + batchSize, chunks.length) + '/' + chunks.length);
+    indexed += vectors.length;
+    console.log('  Indexed ' + indexed + '/' + chunks.length);
   }
 }
 
@@ -203,7 +194,7 @@ async function main() {
   const apiKey = process.env.DEEPSEEK_API_KEY;
   if (!apiKey) throw new Error('Missing DEEPSEEK_API_KEY');
 
-  const backend = process.env.VECTOR_DB_BACKEND || 'local';
+  const backend = process.env.VECTOR_DB_BACKEND || 'upstash';
   console.log('Vector DB backend: ' + backend);
 
   // 1. Load documents

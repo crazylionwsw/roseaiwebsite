@@ -30,27 +30,28 @@ function detectLang(text) {
 
 function buildSystemPrompt(contextItems, lang) {
   var faqBlock = '';
+  var kbBlock = '';
   var otherCtx = [];
   for (var i = 0; i < contextItems.length; i++) {
     var txt = contextItems[i].text || contextItems[i].content || contextItems[i].title || '';
-    if (txt.indexOf('Q: ') === 0) {
-      faqBlock += '\n' + txt;
-    } else {
-      otherCtx.push(txt);
-    }
+    if (txt.indexOf('Q: ') === 0) faqBlock += '\n' + txt;
+    else if (txt.indexOf('=== Content from') === 0 || txt.indexOf('=== FAQ') === 0) otherCtx.push(txt);
+    else kbBlock += '\n' + txt;
   }
   if (lang === 'zh') {
-    var prompt = '你是一个客服助手。以下网站FAQ内容必须严格作为回答依据。请用中文回答。\n';
-    if (faqBlock) prompt += '\n===== 官方 FAQ（必须优先使用）=====\n' + faqBlock + '\n==============================\n';
-    if (otherCtx.length) prompt += '\n其他参考信息：\n' + otherCtx.join('\n---\n');
-    prompt += '\n\n注意：你的回答必须基于FAQ内容，不要编造FAQ中不存在的信息。如果FAQ没有覆盖用户问题，礼貌告知用户联系客服。';
-    return prompt;
+    var parts = ['你是一个客服助手，请用中文回答。回答时按以下优先级使用参考信息：'];
+    if (faqBlock) parts.push('\n【官方 FAQ — 最高优先级】' + faqBlock);
+    if (kbBlock) parts.push('\n【知识库 — 次高优先级】' + kbBlock);
+    if (otherCtx.length) parts.push('\n【其他参考】' + otherCtx.join('\n---\n'));
+    parts.push('\n回答要求：优先使用FAQ和知识库信息。如果问题超出FAQ和知识库范围，用你自己的知识回答。');
+    return parts.join('');
   }
-  var prompt = 'You are a customer support assistant. The following FAQ content from the official website is the authoritative source for answers. Answer concisely.';
-  if (faqBlock) prompt += '\n\n===== OFFICIAL FAQ (must use this first) =====\n' + faqBlock + '\n========================================\n';
-  if (otherCtx.length) prompt += '\nReference:\n' + otherCtx.join('\n---\n');
-  prompt += '\n\nIMPORTANT: Base your answer strictly on the FAQ above. If the question is not covered by the FAQ, politely tell the user to contact customer support.';
-  return prompt;
+  var parts = ['You are a customer support assistant. Answer concisely. Use references in priority order:'];
+  if (faqBlock) parts.push('\n[OFFICIAL FAQ — Highest Priority]' + faqBlock);
+  if (kbBlock) parts.push('\n[KNOWLEDGE BASE — High Priority]' + kbBlock);
+  if (otherCtx.length) parts.push('\n[Other References]' + otherCtx.join('\n---\n'));
+  parts.push('\nAnswer using FAQ and knowledge base when relevant. If the question is outside both, use your own knowledge.');
+  return parts.join('');
 }
 
 function htmlToText(html) {
@@ -135,7 +136,8 @@ async function embed(text, apiKey) {
 }
 
 async function queryUpstash(vec, url, token) {
-  var resp = await fetch(url, {
+  var apiUrl = url.replace(/\/$/, '');
+  var resp = await fetch(apiUrl + '/query', {
     method: 'POST',
     headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
     body: JSON.stringify({
