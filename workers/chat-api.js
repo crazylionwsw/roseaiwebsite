@@ -8,6 +8,7 @@ var EMBED_MODEL = 'deepseek-embedding';
 var MAX_HISTORY = 10;
 var TOP_K = 5;
 var MAX_MESSAGE_LEN = 2000;
+var FAQ_URLS = { en: 'https://www.roseai.ca/en/faq.html', zh: 'https://www.roseai.ca/zh/faq.html' };
 
 function cors() {
   return {
@@ -39,6 +40,66 @@ function buildSystemPrompt(contextItems, lang) {
     return '你是 RoseAI 助手，请用中文回答。回答问题要简洁准确。' + (ctx ? '\n\n请基于以下知识库回答（如知识库无相关信息则自行回答）：' + ctx : '');
   }
   return 'You are RoseAI assistant. Answer concisely and accurately.' + (ctx ? '\n\nBase your answer on the following knowledge base (if no relevant info, answer on your own):' + ctx : '');
+}
+
+function htmlToText(html) {
+  html = html.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '');
+  html = html.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '');
+  html = html.replace(/<br\s*\/?>/gi, '\n');
+  html = html.replace(/<\/p>/gi, '\n');
+  html = html.replace(/<\/div>/gi, '\n');
+  html = html.replace(/<\/li>/gi, '\n');
+  html = html.replace(/<[^>]+>/g, '');
+  html = html.replace(/&amp;/g, '&');
+  html = html.replace(/&lt;/g, '<');
+  html = html.replace(/&gt;/g, '>');
+  html = html.replace(/&quot;/g, '"');
+  html = html.replace(/&#39;/g, "'");
+  html = html.replace(/&nbsp;/g, ' ');
+  html = html.replace(/\s+/g, ' ').trim();
+  return html;
+}
+
+function extractFaqPairs(html) {
+  var pairs = [];
+  var qs = [], as = [];
+  var re1 = /<summary>([\s\S]*?)<\/summary>/gi;
+  var re2 = /<div class="faq-content">([\s\S]*?)<\/div>/gi;
+  var m;
+  while ((m = re1.exec(html)) !== null) qs.push(htmlToText(m[1]));
+  while ((m = re2.exec(html)) !== null) as.push(htmlToText(m[1]));
+  for (var i = 0; i < qs.length && i < as.length; i++) {
+    pairs.push('Q: ' + qs[i] + '\nA: ' + as[i]);
+  }
+  return pairs;
+}
+
+async function fetchFaqContent(lang) {
+  var url = lang === 'zh' ? FAQ_URLS.zh : FAQ_URLS.en;
+  try {
+    var resp = await fetch(url, { headers: { 'User-Agent': 'RoseAI/1.0' } });
+    if (!resp.ok) return [];
+    return extractFaqPairs(await resp.text());
+  } catch (err) {
+    console.error('FAQ fetch failed:', err.message);
+    return [];
+  }
+}
+
+function detectUrls(text) {
+  return text.match(/https?:\/\/[^\s]+/g) || [];
+}
+
+async function fetchWebContent(url) {
+  try {
+    var resp = await fetch(url, { headers: { 'User-Agent': 'RoseAI/1.0' } });
+    if (!resp.ok) return null;
+    var text = htmlToText(await resp.text());
+    return text.length > 4000 ? text.slice(0, 4000) + '...' : text;
+  } catch (err) {
+    console.error('Web fetch failed:', err.message);
+    return null;
+  }
 }
 
 async function embed(text, apiKey) {
@@ -133,6 +194,22 @@ export default {
 
       var userLang = lang || detectLang(message);
 
+      // Fetch web content context (FAQ + user URLs)
+      var webContext = [];
+
+      // Always fetch FAQ content for reference
+      var faqPairs = await fetchFaqContent(userLang);
+      if (faqPairs.length) {
+        webContext.push('=== FAQ ===\n' + faqPairs.join('\n\n'));
+      }
+
+      // Fetch content from URLs in user message
+      var urls = detectUrls(message);
+      for (var ui = 0; ui < urls.length; ui++) {
+        var wc = await fetchWebContent(urls[ui]);
+        if (wc) webContext.push('=== Content from ' + urls[ui] + ' ===\n' + wc);
+      }
+
       // Retrieve vector DB context
       var contextItems = [];
       if (env.VECTOR_DB_URL && env.VECTOR_DB_TOKEN) {
@@ -144,6 +221,9 @@ export default {
           console.error('Vector query failed:', err.message);
         }
       }
+
+      // Merge web content into context
+      contextItems = contextItems.concat(webContext.map(function (c) { return { text: c }; }));
 
       var systemPrompt = buildSystemPrompt(contextItems, userLang);
       var chatMessages = [{ role: 'system', content: systemPrompt }];
