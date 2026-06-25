@@ -97,9 +97,9 @@ export default {
     var url = new URL(request.url);
 
     // Block access to sensitive paths
-    var blocked = ['.git', '.wrangler', 'functions/', 'scripts/', 'node_modules'];
+    var blocked = ['/.git', '/.wrangler', '/functions/', '/scripts/', '/node_modules/', '/api/knowledge-base.json'];
     for (var i = 0; i < blocked.length; i++) {
-      if (url.pathname.startsWith('/' + blocked[i]) || url.pathname.includes(blocked[i])) {
+      if (url.pathname.startsWith(blocked[i])) {
         return new Response('Not Found', { status: 404 });
       }
     }
