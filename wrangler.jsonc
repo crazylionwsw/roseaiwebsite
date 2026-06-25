@@ -5,8 +5,10 @@
   "observability": {
     "enabled": true
   },
+  "main": "workers/chat-api.js",
   "assets": {
-    "directory": "."
+    "directory": ".",
+    "binding": "ASSETS"
   },
   "compatibility_flags": [
     "nodejs_compat"

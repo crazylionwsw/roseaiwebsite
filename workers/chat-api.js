@@ -94,6 +94,13 @@ async function chatCompletion(messages, apiKey) {
 
 export default {
   async fetch(request, env, ctx) {
+    var url = new URL(request.url);
+
+    // For non-/api/* paths, serve static assets
+    if (!url.pathname.startsWith('/api/')) {
+      return env.ASSETS.fetch(request);
+    }
+
     if (request.method === 'OPTIONS') {
       return new Response(null, { headers: cors() });
     }

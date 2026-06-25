@@ -1,0 +1,8 @@
+.env*
+.git*
+.gitignore
+.wrangler*
+functions/
+scripts/
+node_modules/
+README.md
