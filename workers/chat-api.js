@@ -170,7 +170,7 @@ export default {
     var url = new URL(request.url);
 
     // Block access to sensitive paths
-    var blocked = ['/.git', '/.wrangler', '/functions/', '/scripts/', '/node_modules/', '/api/knowledge-base.json'];
+    var blocked = ['/.git', '/.wrangler', '/functions/', '/scripts/', '/node_modules/', '/api/knowledge-base.json', '/gdrive-docs/'];
     for (var i = 0; i < blocked.length; i++) {
       if (url.pathname.startsWith(blocked[i])) {
         return new Response('Not Found', { status: 404 });
