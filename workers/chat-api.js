@@ -188,6 +188,15 @@ export default {
       return env.ASSETS.fetch(request);
     }
 
+    // Debug: test FAQ fetch
+    if (url.pathname === '/api/faq-test') {
+      var lang = url.searchParams.get('lang') === 'zh' ? 'zh' : 'en';
+      var pairs = await fetchFaqContent(lang);
+      return new Response(JSON.stringify({ count: pairs.length, pairs: pairs }, null, 2), {
+        headers: Object.assign(cors(), { 'Content-Type': 'application/json' }),
+      });
+    }
+
     if (request.method === 'OPTIONS') {
       return new Response(null, { headers: cors() });
     }
