@@ -96,6 +96,14 @@ export default {
   async fetch(request, env, ctx) {
     var url = new URL(request.url);
 
+    // Block access to sensitive paths
+    var blocked = ['.git', '.wrangler', 'functions/', 'scripts/', 'node_modules'];
+    for (var i = 0; i < blocked.length; i++) {
+      if (url.pathname.startsWith('/' + blocked[i]) || url.pathname.includes(blocked[i])) {
+        return new Response('Not Found', { status: 404 });
+      }
+    }
+
     // For non-/api/* paths, serve static assets
     if (!url.pathname.startsWith('/api/')) {
       return env.ASSETS.fetch(request);
