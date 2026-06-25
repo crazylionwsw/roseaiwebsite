@@ -15,6 +15,7 @@
  */
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
+import { execSync } from 'child_process';
 import { resolve } from 'path';
 
 // Use simpler REST API approach instead of heavy googleapis package
@@ -114,9 +115,7 @@ async function listFiles(accessToken, folderId) {
 }
 
 async function downloadFile(accessToken, fileId, mimeType) {
-  const url = mimeType === 'application/pdf'
-    ? `https://www.googleapis.com/drive/v3/files/${fileId}/export?mimeType=text/plain`
-    : `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`;
+  const url = `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`;
 
   const res = await fetch(url, {
     headers: { Authorization: 'Bearer ' + accessToken },
@@ -127,8 +126,19 @@ async function downloadFile(accessToken, fileId, mimeType) {
     throw new Error('Download error for ' + fileId + ': ' + res.status);
   }
 
+  if (mimeType === 'application/pdf') {
+    const buf = await res.arrayBuffer();
+    const tmp = '/tmp/roseai-pdf-' + fileId + '.pdf';
+    writeFileSync(tmp, Buffer.from(buf));
+    const text = execSync('pdftotext -layout "' + tmp + '" -', { encoding: 'utf-8' });
+    execSync('rm -f "' + tmp + '"');
+    return text;
+  }
+
   return await res.text();
 }
+
+
 
 function sanitizeName(name) {
   return name.replace(/[^a-zA-Z0-9\u4e00-\u9fff_\-. ]/g, '_');

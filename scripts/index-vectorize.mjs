@@ -120,9 +120,13 @@ async function generateEmbeddings(texts, apiToken, accountId) {
       throw new Error('Cloudflare AI embedding error: ' + res.status + ' ' + err);
     }
 
-    const result = await res.json();
-    for (let j = 0; j < result.data.length; j++) {
-      allEmbeddings[i + j] = result.data[j];
+    const apiResult = await res.json();
+    const embData = apiResult.result?.data || apiResult.result;
+    if (!embData || !Array.isArray(embData)) {
+      throw new Error('Unexpected embedding response: ' + JSON.stringify(apiResult).substring(0, 200));
+    }
+    for (let j = 0; j < embData.length; j++) {
+      allEmbeddings[i + j] = embData[j];
     }
 
     console.log('  Embedded ' + Math.min(i + EMBED_BATCH, texts.length) + '/' + texts.length);
