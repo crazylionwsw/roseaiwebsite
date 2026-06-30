@@ -7,11 +7,20 @@
   var isZh = pageLang === 'zh-cn' || pageLang === 'zh';
   var isHant = pageLang === 'zh-hk' || pageLang === 'zh-tw';
 
-  var WELCOME_MSG = isZh
+  var WELCOME_MSG = isHant
+    ? '您好！我是 RoseAI 智能助手，可以回答關於產品功能、價格方案、POS 對接、免費試用等問題。請問有什麼可以幫您？'
+    : isZh
     ? '您好！我是 RoseAI 智能助手，可以回答关于产品功能、价格套餐、POS 对接、免费试用等问题。请问有什么可以帮您？'
     : 'Hi! I\'m the RoseAI assistant. Ask me about pricing, features, POS integration, the free trial, and more. How can I help?';
 
-  var QUICK_CHIPS = isZh
+  var QUICK_CHIPS = isHant
+    ? [
+        { label: '💰 價格方案', text: '有哪些價格方案？' },
+        { label: '📞 免費試用', text: '怎麼免費試用？' },
+        { label: '🔌 POS 對接', text: '支援哪些 POS 系統？' },
+        { label: '🌐 多語言', text: '支援哪些語言？' },
+      ]
+    : isZh
     ? [
         { label: '💰 价格方案', text: '有哪些价格套餐？' },
         { label: '📞 免费试用', text: '怎么免费试用？' },
@@ -25,8 +34,10 @@
         { label: '🌐 Languages', text: 'What languages do you support?' },
       ];
 
-  var PLACEHOLDER = isZh ? '输入消息…' : 'Type a message…';
-  var CONTACT_MSG = isZh
+  var PLACEHOLDER = isHant ? '輸入訊息…' : isZh ? '输入消息…' : 'Type a message…';
+  var CONTACT_MSG = isHant
+    ? '系統繁忙，請撥打 **778-325-4966** 或加微信 **RoseAI_CA** 聯繫人工客服'
+    : isZh
     ? '系统繁忙，请拨打 **778-325-4966** 或加微信 **RoseAI_CA** 联系人工客服'
     : 'Service busy — please call **778-325-4966** or WeChat **RoseAI_CA** for human support';
 
@@ -50,8 +61,8 @@
       '<div class="chat-header">' +
         '<div class="chat-header-icon">🤖</div>' +
         '<div class="chat-header-info">' +
-          '<div class="chat-header-title">RoseAI ' + (isZh ? '助手' : 'Assistant') + '</div>' +
-          '<div class="chat-header-status"><span class="pulse"></span>' + (isZh ? '在线' : 'Online') + '</div>' +
+          '<div class="chat-header-title">RoseAI ' + (isHant || isZh ? '助手' : 'Assistant') + '</div>' +
+          '<div class="chat-header-status"><span class="pulse"></span>' + (isHant ? '在線' : isZh ? '在线' : 'Online') + '</div>' +
         '</div>' +
         '<button class="chat-header-close" id="chatClose" aria-label="Close">✕</button>' +
       '</div>' +
