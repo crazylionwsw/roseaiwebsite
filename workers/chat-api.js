@@ -88,7 +88,7 @@ function extractFaqPairs(html) {
 }
 
 async function fetchFaqContent(lang, assets) {
-  var url = lang === 'zh' ? 'zh/faq' : 'en/faq';
+  var url = lang === 'zh' ? 'zh/faq' : lang === 'hant' ? 'zh-hant/faq' : 'en/faq';
   try {
     var req = new Request('https://placeholder/' + url, { headers: { 'User-Agent': 'RoseAI/1.0' } });
     var resp = await assets.fetch(req);

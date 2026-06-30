@@ -1,21 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-HK">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RoseAI | AI Voice Receptionist for Restaurants · Cloud Elastic Answering, Never Busy</title>
-<meta name="description" content="RoseAI is an AI voice receptionist built for Greater Vancouver restaurants. Multilingual (Mandarin, Cantonese, English, Spanish), 0-second answering, auto-syncs orders to POS. All plans include cloud elastic answering — never busy. 1-month free trial, data hosted in Canada, PIPEDA compliant.">
-<meta property="og:title" content="RoseAI | AI Voice Receptionist for Restaurants">
-<meta property="og:description" content="0-second answering, auto order sync, multilingual support, cloud elastic answering — never busy. 1-month free trial, local Greater Vancouver team.">
+<title>RoseAI | 溫哥華餐廳 AI 智能語音接待系統 · 雲端彈性接聽</title>
+<meta name="description" content="RoseAI 專爲大溫餐飲業打造的 AI 智能電話接待系統：中、英、粵、西多語自動識別,0 秒接聽、自動出單同步 POS。雲端彈性接聽·永不佔線。1 個月免費試用,數據存儲於加拿大本地,符合 PIPEDA 規範。">
+<meta property="og:title" content="RoseAI | 溫哥華餐廳 AI 智能語音接待系統">
+<meta property="og:description" content="0 秒接聽、自動出單、多語識別、雲端彈性接聽·永不佔線。1 個月免費試用,本地團隊服務。">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#0D4D3A">
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <link rel="apple-touch-icon" href="/assets/logo.png">
-    <meta property="og:image" content="/assets/logo.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="/assets/logo.png">
 
 <link rel="stylesheet" href="/assets/css/chat-widget.css">
 <style>
@@ -43,7 +36,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
-  font-family: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   color: var(--ink);
   background: var(--cream);
   line-height: 1.65;
@@ -242,8 +235,9 @@ a:hover { color: var(--orange); }
 @media (max-width: 720px) {
   .compare-row { grid-template-columns: 1fr; gap: 8px; padding: 16px 18px; }
   .compare-row.head { display: none; }
+  .compare-key::after { content: ""; }
   .compare-key { font-size: 13px; color: var(--orange); margin-bottom: 4px; }
-  .compare-traditional::before { content: "Traditional: "; font-weight: 600; color: var(--grey); }
+  .compare-traditional::before { content: "傳統: "; font-weight: 600; color: var(--grey); }
   .compare-rose::before { content: "RoseAI: "; font-weight: 600; color: var(--green-dark); }
 }
 
@@ -335,7 +329,7 @@ a:hover { color: var(--orange); }
 .toggle-btn {
   padding: 10px 24px; border-radius: 50px; font-weight: 600; font-size: 14px;
   cursor: pointer; background: transparent; border: none; color: var(--grey);
-  transition: all 0.2s; font-family: inherit;
+  transition: all 0.2s;
 }
 .toggle-btn.active { background: var(--green-dark); color: var(--white); }
 .toggle-save { font-size: 12px; color: var(--orange); margin-left: 6px; font-weight: 700; }
@@ -487,7 +481,6 @@ a:hover { color: var(--orange); }
   width: 100%; padding: 16px; background: var(--orange); color: var(--white);
   border: none; border-radius: 8px; font-size: 16px; font-weight: 700;
   cursor: pointer; transition: background 0.2s; margin-top: 8px;
-  font-family: inherit;
 }
 .form-submit:hover { background: var(--orange-light); }
 .form-disclaimer {
@@ -536,23 +529,7 @@ a:hover { color: var(--orange); }
 .footer-bottom span:first-child::before { content: ""; margin: 0; }
 @media (max-width: 880px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-wechat { align-items: flex-start; } }
 
-
-.footer-wechat {
-  display: flex; flex-direction: column; align-items: flex-start; gap: 10px;
-  padding-top: 8px;
-}
-.footer-wechat img {
-  width: 120px; height: 120px; border-radius: 8px;
-  background: var(--white); padding: 6px;
-}
-.footer-wechat .wechat-label {
-  font-size: 12px; color: var(--gold); font-weight: 600;
-  text-transform: uppercase; letter-spacing: 1px;
-}
-.footer-wechat .wechat-id { font-size: 13px; color: var(--cream-tint); opacity: 0.9; }
-@media (max-width: 880px) { .footer-wechat { align-items: center; } }
-
-/* Promise strip */
+/* Promise strip (Cloud elastic answering banner) */
 .promise-strip {
   background: var(--green-dark); color: var(--white); padding: 18px 0; text-align: center;
 }
@@ -568,19 +545,19 @@ a:hover { color: var(--orange); }
 <!-- ============ NAV ============ -->
 <nav class="nav">
   <div class="nav-inner">
-    <a href="/en/" class="nav-logo">
+    <a href="#" class="nav-logo">
       <img src="/assets/logo.png" alt="RoseAI">
       <span>RoseAI</span>
     </a>
     <div class="nav-links">
-      <a href="#features">Why RoseAI</a>
-      <a href="#workflow">How It Works</a>
-      <a href="#testimonials">Customers</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#stack">Stack</a>
-      <a href="#faq">FAQ</a>
-      <span class="nav-lang"><a href="/zh/">简体</a> / <a href="/zh-hant/">繁體</a> / <a class="active" href="/en/">EN</a></span>
-      <a href="#trial-form" class="nav-cta">Start Free Trial</a>
+      <a href="#features">優勢對比</a>
+      <a href="#workflow">工作流程</a>
+      <a href="#testimonials">客戶案例</a>
+      <a href="#pricing">價格套餐</a>
+      <a href="#stack">Stack 全棧</a>
+      <a href="#faq">常見問題</a>
+      <span class="nav-lang"><a href="/zh/">简体</a> / <a class="active" href="/zh-hant/">繁體</a> / <a href="/en/">EN</a></span>
+      <a href="#trial-form" class="nav-cta">申請試用</a>
     </div>
   </div>
 </nav>
@@ -588,10 +565,10 @@ a:hover { color: var(--orange); }
 <!-- ============ PROMISE STRIP ============ -->
 <div class="promise-strip">
   <div class="container promise-strip-inner">
-    <span>Cloud Elastic Answering · Never Busy</span>
-    <span>0-Second Answer</span>
-    <span>Local Vancouver Team</span>
-    <span>PIPEDA Compliant</span>
+    <span>雲端彈性接聽·永不佔線</span>
+    <span>0 秒接聽</span>
+    <span>大溫本地團隊</span>
+    <span>PIPEDA 合規</span>
   </div>
 </div>
 
@@ -599,17 +576,17 @@ a:hover { color: var(--orange); }
 <header class="hero">
   <div class="container hero-grid">
     <div class="hero-text">
-      <div class="hero-badge">Local Team · Serving Greater Vancouver Restaurants</div>
-      <h1>Your restaurant will<br><em>never miss a call again</em></h1>
-      <p class="lead">RoseAI is an AI voice receptionist built for Canadian restaurants. Multilingual auto-detection across Mandarin, Cantonese, English, and Spanish. 0-second answering, orders auto-synced to your POS. All plans include cloud elastic answering — never busy.</p>
+      <div class="hero-badge">本地團隊 · 服務大溫餐飲業</div>
+      <h1>讓餐廳永遠<br><em>不再漏接一通電話</em></h1>
+      <p class="lead">RoseAI 爲加拿大餐廳打造的 AI 智能語音接待系統。中、英、粵、西多語自動識別,0 秒接聽、自動出單同步至 POS,所有套餐雲端彈性接聽·永不佔線。</p>
       <div class="hero-tags">
-        <span class="hero-tag highlight">1-Month Free Trial</span>
-        <span class="hero-tag">PIPEDA Compliant · Canadian Data Hosting</span>
+        <span class="hero-tag highlight">1 個月免費試用</span>
+        <span class="hero-tag">PIPEDA 合規·加拿大本地存儲</span>
         <span class="hero-tag">WhatsApp: 778-325-4966</span>
       </div>
       <div class="hero-cta-row">
-        <a href="#trial-form" class="btn btn-primary">Start 1-Month Free Trial →</a>
-        <a href="#pricing" class="btn btn-secondary">See Pricing</a>
+        <a href="#trial-form" class="btn btn-primary">申請 1 個月免費試用 →</a>
+        <a href="#pricing" class="btn btn-secondary">查看價格方案</a>
       </div>
     </div>
 
@@ -617,18 +594,18 @@ a:hover { color: var(--orange); }
     <div class="demo-card">
       <div class="demo-header">
         <span class="demo-pulse"></span>
-        Incoming Call · 1:42 PM · Live
+        來電 · 13:42 · 實時接聽中
       </div>
-      <div class="demo-msg ai">Hi, this is Garden Bistro. Are you calling to place an order or make a reservation?</div>
-      <div class="demo-msg user">I'd like two pad thai, one with no peanuts. Delivery to Richmond.</div>
-      <div class="demo-msg ai">Two pad thai — one with no peanuts — for delivery to Richmond. May I have the street address?</div>
-      <div class="demo-msg user">8460 Garden City Road, Unit 3.</div>
-      <div class="demo-msg ai">Got it. ETA is 2:25 PM. Order sent to the kitchen.</div>
+      <div class="demo-msg ai">您好,這裏是華興茶餐廳,請問要點餐還是訂座?</div>
+      <div class="demo-msg user">我要兩份避風塘炒蟹,一份要少辣,外送到 Garden City。</div>
+      <div class="demo-msg ai">好的,避風塘炒蟹兩份,其中一份少辣,配送地址 Garden City,請問門牌號?</div>
+      <div class="demo-msg user">8460 號,3 單元。</div>
+      <div class="demo-msg ai">已記錄,預計送達 14:25。訂單已發送至後廚。</div>
       <div class="demo-order">
-        <strong>Order #2046 <span class="order-id">1:43 PM</span></strong>
+        <strong>訂單 #2046 <span class="order-id">13:43</span></strong>
         <ul>
-          <li>Pad Thai × 2 (1 with no peanuts)</li>
-          <li>Delivery · 8460 Garden City Rd · Unit 3</li>
+          <li>避風塘炒蟹 × 2(其中 1 份少辣)</li>
+          <li>外送 · 8460 Garden City Rd · Unit 3</li>
         </ul>
       </div>
     </div>
@@ -640,18 +617,18 @@ a:hover { color: var(--orange); }
   <div class="container stats-grid">
     <div class="stat">
       <div class="stat-num">43%</div>
-      <div class="stat-label">Industry peak-hour miss rate</div>
-      <div class="stat-sub">RoseAI 2025 Greater Vancouver pilot data</div>
+      <div class="stat-label">行業忙時漏接率</div>
+      <div class="stat-sub">RoseAI 2025 大溫餐廳試點觀測</div>
     </div>
     <div class="stat">
       <div class="stat-num">$76K</div>
-      <div class="stat-label">Recovered revenue per year</div>
-      <div class="stat-sub">Based on mid-size restaurant, ATV $32 × missed calls</div>
+      <div class="stat-label">挽回預估年營收</div>
+      <div class="stat-sub">基於中型餐廳 ATV $32 × 漏接量測算</div>
     </div>
     <div class="stat">
       <div class="stat-num">100%</div>
-      <div class="stat-label">Call-answering coverage</div>
-      <div class="stat-sub">RoseAI answers 24/7, no exceptions</div>
+      <div class="stat-label">電話接聽轉化率</div>
+      <div class="stat-sub">RoseAI 7×24 全天候接聽</div>
     </div>
   </div>
 </section>
@@ -659,16 +636,16 @@ a:hover { color: var(--orange); }
 <!-- ============ POS LOGOS ============ -->
 <section class="pos-strip">
   <div class="container">
-    <h3>Integrated with all major restaurant POS & delivery platforms</h3>
+    <h3>已對接主流餐飲 POS 與外賣平臺</h3>
     <div class="pos-logos">
       <span>Square</span>
       <span>Toast</span>
       <span>Clover</span>
-      <span>Dian Dian</span>
+      <span>點點點單</span>
       <span>Lightspeed</span>
       <span>Aldelo</span>
       <span>WhatsApp</span>
-      <span>WeChat</span>
+      <span>微信</span>
     </div>
   </div>
 </section>
@@ -677,46 +654,46 @@ a:hover { color: var(--orange); }
 <section class="section" id="features">
   <div class="container">
     <div class="section-head">
-      <div class="section-eyebrow">Why RoseAI</div>
-      <h2 class="section-title">Let AI handle the phones<em>·</em>You focus on the guests</h2>
-      <p class="section-sub">The same incoming call — traditional handling vs. RoseAI</p>
+      <div class="section-eyebrow">爲什麼選擇 RoseAI</div>
+      <h2 class="section-title">把繁瑣留給 AI<em>·</em>把服務還給客人</h2>
+      <p class="section-sub">同樣一通電話,傳統方式 vs RoseAI 的差距一目瞭然</p>
     </div>
 
     <div class="compare-table">
       <div class="compare-row head">
-        <div>Comparison</div>
-        <div>Traditional Reception</div>
-        <div class="compare-rose">RoseAI Smart Reception</div>
+        <div>對比項目</div>
+        <div>傳統人工接待</div>
+        <div class="compare-rose">RoseAI 智能接待</div>
       </div>
       <div class="compare-row">
-        <div class="compare-key">Response Speed</div>
-        <div class="compare-traditional">Depends on front-of-house workload; line gets busy</div>
-        <div class="compare-rose">0-second response · cloud elastic · never busy</div>
+        <div class="compare-key">響應速度</div>
+        <div class="compare-traditional">視前臺忙碌度,常有佔線</div>
+        <div class="compare-rose">0 秒響應·雲端彈性接聽·永不佔線</div>
       </div>
       <div class="compare-row alt">
-        <div class="compare-key">Language Support</div>
-        <div class="compare-traditional">Typically 1–2 languages only</div>
-        <div class="compare-rose">Mandarin, Cantonese, English, Spanish — auto-detected</div>
+        <div class="compare-key">語言支持</div>
+        <div class="compare-traditional">通常僅支持 1–2 種語言</div>
+        <div class="compare-rose">中(普/粵)、英、西多語自動識別</div>
       </div>
       <div class="compare-row">
-        <div class="compare-key">Order Accuracy</div>
-        <div class="compare-traditional">Handwritten notes prone to error</div>
-        <div class="compare-rose">AI extracts dietary notes, modifiers and prints automatically</div>
+        <div class="compare-key">訂單準確性</div>
+        <div class="compare-traditional">手寫筆記易錯,溝通成本高</div>
+        <div class="compare-rose">AI 自動提取忌口、備註並出單</div>
       </div>
       <div class="compare-row alt">
-        <div class="compare-key">Operating Hours</div>
-        <div class="compare-traditional">Limited by staff schedule; off-hours calls lost</div>
-        <div class="compare-rose">24/7 nonstop coverage</div>
+        <div class="compare-key">工作時長</div>
+        <div class="compare-traditional">受排班限制,非營業時間流失</div>
+        <div class="compare-rose">7×24 小時全天候無休</div>
       </div>
       <div class="compare-row">
-        <div class="compare-key">Labor Cost</div>
-        <div class="compare-traditional">Each receptionist costs $3,200+/month (incl. benefits)</div>
-        <div class="compare-rose">From $99/month — no HR overhead</div>
+        <div class="compare-key">人力成本</div>
+        <div class="compare-traditional">每位前臺月成本 $3,200+(含福利)</div>
+        <div class="compare-rose">$99 起 / 月,無人力管理</div>
       </div>
       <div class="compare-row alt">
-        <div class="compare-key">Data & Analytics</div>
-        <div class="compare-traditional">No record of calls; impossible to review</div>
-        <div class="compare-rose">Every call replayable, analyzable, usable for marketing</div>
+        <div class="compare-key">數據沉澱</div>
+        <div class="compare-traditional">電話內容無記錄,難以覆盤</div>
+        <div class="compare-rose">每通電話可回放、分析、做營銷</div>
       </div>
     </div>
   </div>
@@ -726,34 +703,34 @@ a:hover { color: var(--orange); }
 <section class="section" id="workflow" style="background:var(--cream-tint);">
   <div class="container">
     <div class="section-head">
-      <div class="section-eyebrow">How It Works</div>
-      <h2 class="section-title">From call to kitchen<em>·</em>30 seconds end-to-end</h2>
-      <p class="section-sub">A complete order loop — fully handled by AI, no human intervention required</p>
+      <div class="section-eyebrow">工作流程</div>
+      <h2 class="section-title">從來電到出單<em>·</em>全程 30 秒</h2>
+      <p class="section-sub">一通完整閉環的訂單,AI 端到端無需人工干預</p>
     </div>
 
     <div class="workflow-grid">
       <div class="flow-step">
         <div class="flow-step-num">1</div>
-        <h4>Incoming Call</h4>
-        <p>Phone rings 0 seconds — AI picks up via cloud elastic answering</p>
+        <h4>客戶來電</h4>
+        <p>電話鈴響 0 秒,AI 自動接起,雲端彈性接聽</p>
         <span class="flow-arrow">→</span>
       </div>
       <div class="flow-step">
         <div class="flow-step-num">2</div>
-        <h4>Multilingual + Semantic Parsing</h4>
-        <p>Identifies dishes, quantities, dietary notes, delivery info</p>
+        <h4>多語識別 + 語義提取</h4>
+        <p>識別菜品、數量、忌口、地址等關鍵信息</p>
         <span class="flow-arrow">→</span>
       </div>
       <div class="flow-step">
         <div class="flow-step-num">3</div>
-        <h4>Order Created</h4>
-        <p>Pushed in real-time to POS or kitchen printer</p>
+        <h4>訂單生成</h4>
+        <p>實時推送至 POS / 後廚打印機</p>
         <span class="flow-arrow">→</span>
       </div>
       <div class="flow-step">
         <div class="flow-step-num">4</div>
-        <h4>Data Pipeline</h4>
-        <p>Call recording, order, and caller number archived</p>
+        <h4>數據迴流</h4>
+        <p>通話錄音、訂單、客戶號碼歸檔</p>
       </div>
     </div>
   </div>
@@ -763,31 +740,31 @@ a:hover { color: var(--orange); }
 <section class="section">
   <div class="container">
     <div class="section-head">
-      <div class="section-eyebrow">Digital Order Loop</div>
-      <h2 class="section-title">No new number<em>·</em>No new hardware</h2>
-      <p class="section-sub">RoseAI binds to your existing phone number — near-zero migration cost</p>
+      <div class="section-eyebrow">數字化訂單閉環</div>
+      <h2 class="section-title">不用換號<em>·</em>不用換設備</h2>
+      <p class="section-sub">RoseAI 與現有電話號碼綁定,餐廳幾乎零遷移成本</p>
     </div>
 
     <div class="feature-cards">
       <div class="feature-card">
         <div class="feature-icon">📞</div>
-        <h4>Smart Answering</h4>
-        <p>AI understands customer intent — orders, reservations, inquiries, delivery status — all handled.</p>
+        <h4>智能應答</h4>
+        <p>AI 識別客戶意圖,精準處理訂餐、留座、諮詢、配送查詢等需求。</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">🧠</div>
-        <h4>Semantic Extraction</h4>
-        <p>Auto-detects dishes, quantities, and special notes ("low salt", "peanut allergy", "no cilantro").</p>
+        <h4>語義提取</h4>
+        <p>自動識別菜品、數量、特殊備註(如「少鹽」「花生過敏」「不要香菜」)。</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">🖨️</div>
-        <h4>Auto Order Sync</h4>
-        <p>Orders sync to Square / Toast / Clover / Lightspeed / Aldelo / Dian Dian POS, or print directly to a kitchen printer.</p>
+        <h4>自動出單</h4>
+        <p>訂單同步至 Square / Toast / Clover / Lightspeed / Aldelo / 點點等主流 POS,或直接打印至後廚小票機。</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">🤝</div>
-        <h4>Human Fallback</h4>
-        <p>When AI isn't sure, it auto-routes to the owner's mobile or records a callback — never lose a sale.</p>
+        <h4>人工兜底</h4>
+        <p>AI 不確定時,自動轉接餐廳手機或留下回撥號碼,不放過任何一筆生意。</p>
       </div>
     </div>
   </div>
@@ -797,45 +774,45 @@ a:hover { color: var(--orange); }
 <section class="section" id="testimonials" style="background:var(--cream-tint);">
   <div class="container">
     <div class="section-head">
-      <div class="section-eyebrow">Customer Stories</div>
-      <h2 class="section-title">What restaurant owners<em>are saying</em></h2>
-      <p class="section-sub">Real pilot customers from Richmond, Burnaby, and Surrey</p>
+      <div class="section-eyebrow">客戶案例</div>
+      <h2 class="section-title">大溫餐廳老闆<em>怎麼說</em></h2>
+      <p class="section-sub">來自 Richmond、Burnaby、Surrey 的真實試點客戶</p>
     </div>
 
     <div class="testimonials-grid">
       <div class="testimonial">
-        <p class="testimonial-text">We used to be completely overwhelmed on Friday nights. Now RoseAI handles everything. Delivery orders went up nearly 28% in the first month — and most importantly, we don't miss calls anymore.</p>
+        <p class="testimonial-text">以前週五晚上根本接不完電話,現在 RoseAI 全包了。上線第一個月外賣單量漲了快 28%,最關鍵的是再也不會漏接。</p>
         <div class="testimonial-author">
-          <div class="testimonial-avatar">C</div>
+          <div class="testimonial-avatar">陳</div>
           <div>
-            <div class="testimonial-name">Mr. Chen</div>
-            <div class="testimonial-role">Richmond · Cantonese-style café owner</div>
+            <div class="testimonial-name">陳先生</div>
+            <div class="testimonial-role">Richmond · 粵式茶餐廳老闆</div>
           </div>
         </div>
       </div>
       <div class="testimonial">
-        <p class="testimonial-text">Customers can order directly in Mandarin or Cantonese — the AI catches details like "half ice, half sugar" more accurately than a new hire. Kitchen tickets are clean and consistent, and arguments dropped by more than half.</p>
+        <p class="testimonial-text">客人能直接用普通話或粵語下單,AI 聽得懂"少冰半糖"這種細節,比新員工還準。後廚打印的單子乾淨規整,吵架少了一大半。</p>
         <div class="testimonial-author">
-          <div class="testimonial-avatar">L</div>
+          <div class="testimonial-avatar">林</div>
           <div>
-            <div class="testimonial-name">Linda Lin</div>
-            <div class="testimonial-role">Burnaby · Sichuan restaurant operator</div>
+            <div class="testimonial-name">Linda 林</div>
+            <div class="testimonial-role">Burnaby · 川菜館經營者</div>
           </div>
         </div>
       </div>
       <div class="testimonial">
-        <p class="testimonial-text">I have three locations, each used to need a dedicated phone receptionist. With RoseAI I save about $6,000/month in labor — and the dashboard tells me which store is missing the most orders.</p>
+        <p class="testimonial-text">我有三家分店,以前每家都要排前臺輪班。換 RoseAI 後我每月省下大約 $6,000 人力成本,還能用後臺數據看哪家店漏單最多。</p>
         <div class="testimonial-author">
           <div class="testimonial-avatar">K</div>
           <div>
             <div class="testimonial-name">Kevin Wu</div>
-            <div class="testimonial-role">Surrey · Japanese chain owner</div>
+            <div class="testimonial-role">Surrey · 連鎖日料品牌</div>
           </div>
         </div>
       </div>
     </div>
 
-    <p class="testimonial-disclaimer">* Quotes are from pilot customers, used with permission. Results vary by restaurant size and category.</p>
+    <p class="testimonial-disclaimer">* 上述爲試點期客戶反饋,已獲授權使用。具體效果因餐廳規模與業態而異。</p>
   </div>
 </section>
 
@@ -843,239 +820,238 @@ a:hover { color: var(--orange); }
 <section class="section pricing" id="pricing">
   <div class="container">
     <div class="section-head">
-      <div class="section-eyebrow">Pricing</div>
-      <h2 class="section-title">Transparent pricing<em>·</em>cloud elastic answering</h2>
-      <p class="section-sub">All plans include installation, training, and local customer support. Monthly minutes + transparent overage. No hidden fees. Cancel anytime.</p>
+      <div class="section-eyebrow">價格方案</div>
+      <h2 class="section-title">透明定價<em>·</em>雲端彈性接聽</h2>
+      <p class="section-sub">所有套餐均含安裝、培訓、本地客服。包月分鐘 + 透明超額,無隱藏費用,可隨時取消。</p>
     </div>
 
     <div class="pricing-toggle-wrap">
       <div class="pricing-toggle" id="pricing-toggle">
-        <button class="toggle-btn active" onclick="togglePricing('monthly')">Monthly</button>
-        <button class="toggle-btn" onclick="togglePricing('yearly')">Yearly <span class="toggle-save">save 15%</span></button>
+        <button class="toggle-btn active" onclick="togglePricing('monthly')">月付</button>
+        <button class="toggle-btn" onclick="togglePricing('yearly')">年付 <span class="toggle-save">省 15%</span></button>
       </div>
     </div>
 
     <div class="pricing-grid">
       <!-- Lite -->
       <div class="price-card">
-        <div class="price-name">Lite</div>
-        <div class="price-tag-line">Family-run shops · 1-month free trial gateway</div>
+        <div class="price-name">基礎版 Lite</div>
+        <div class="price-tag-line">家庭式小店 · 1 個月免費試用入口</div>
         <div>
           <span class="price-amount">
             <span class="price-amount-monthly">$99</span>
             <span class="price-amount-yearly">$1,008</span>
           </span>
-          <span class="price-period"> / <span class="price-amount-monthly">month</span><span class="price-amount-yearly">year</span></span>
+          <span class="price-period"> / <span class="price-amount-monthly">月</span><span class="price-amount-yearly">年</span></span>
         </div>
         <div class="price-detail">
-          CAD · Tax not included<br>
-          <span class="price-amount-monthly">Yearly $1,008/yr (vs $1,188)</span>
-          <span class="price-amount-yearly price-yearly">Save $180/yr vs monthly</span>
+          CAD · 不含 GST/PST<br>
+          <span class="price-amount-monthly">年付 $1,008 / 年(原價 $1,188)</span>
+          <span class="price-amount-yearly price-yearly">較月付節省 $180/年</span>
         </div>
 
         <div class="price-meta">
-          <div class="price-meta-line"><span>Included minutes</span><strong>200 min / month</strong></div>
-          <div class="price-meta-line"><span>Overage</span><strong>$0.90 / min</strong></div>
+          <div class="price-meta-line"><span>包月分鐘數</span><strong>200 min / 月</strong></div>
+          <div class="price-meta-line"><span>超額單價</span><strong>$0.90 / 分鐘</strong></div>
         </div>
 
         <ul class="price-features">
-          <li>English + Mandarin support</li>
-          <li>Smart voice-to-text logging</li>
-          <li>Custom business hours</li>
-          <li>Order SMS notifications</li>
-          <li>Cloud elastic answering · never busy</li>
+          <li>中、英雙語接聽</li>
+          <li>智能語音轉文字記錄</li>
+          <li>營業時間自定義配置</li>
+          <li>基礎訂單短信推送</li>
+          <li>雲端彈性接聽·永不佔線</li>
         </ul>
-        <a href="#trial-form" class="price-cta">Start 1-Month Free Trial</a>
+        <a href="#trial-form" class="price-cta">開始 1 個月免費試用</a>
       </div>
 
       <!-- Pro (featured) -->
       <div class="price-card featured">
-        <div class="price-badge">Most Popular</div>
-        <div class="price-name">Pro</div>
-        <div class="price-tag-line">The go-to choice for mid-size independent restaurants</div>
+        <div class="price-badge">最受歡迎</div>
+        <div class="price-name">專業版 Pro</div>
+        <div class="price-tag-line">中型獨立餐廳的主力選擇</div>
         <div>
           <span class="price-amount">
             <span class="price-amount-monthly">$599</span>
             <span class="price-amount-yearly">$6,110</span>
           </span>
-          <span class="price-period"> / <span class="price-amount-monthly">month</span><span class="price-amount-yearly">year</span></span>
+          <span class="price-period"> / <span class="price-amount-monthly">月</span><span class="price-amount-yearly">年</span></span>
         </div>
         <div class="price-detail">
-          CAD · Tax not included<br>
-          <span class="price-amount-monthly">Yearly $6,110/yr (vs $7,188)</span>
-          <span class="price-amount-yearly price-yearly">Save $1,078/yr vs monthly</span>
+          CAD · 不含 GST/PST<br>
+          <span class="price-amount-monthly">年付 $6,110 / 年(原價 $7,188)</span>
+          <span class="price-amount-yearly price-yearly">較月付節省 $1,078/年</span>
         </div>
 
         <div class="price-meta">
-          <div class="price-meta-line"><span>Included minutes</span><strong>900 min / month</strong></div>
-          <div class="price-meta-line"><span>Overage</span><strong>$0.80 / min</strong></div>
+          <div class="price-meta-line"><span>包月分鐘數</span><strong>900 min / 月</strong></div>
+          <div class="price-meta-line"><span>超額單價</span><strong>$0.80 / 分鐘</strong></div>
         </div>
 
         <ul class="price-features">
-          <li class="feat-highlight">Mandarin, Cantonese, English, Spanish</li>
-          <li class="feat-highlight">POS integration (Square / Toast / Clover / Lightspeed / Aldelo)</li>
-          <li>AI dietary & modifier recognition</li>
-          <li>&lt;0.8% error rate · refund guarantee</li>
-          <li>Human-agent fallback transfer</li>
-          <li>90-day call recording archive</li>
-          <li>Cloud elastic answering · never busy</li>
+          <li class="feat-highlight">中(普/粵)、英、西 多語</li>
+          <li class="feat-highlight">訂單自動同步主流 POS</li>
+          <li>AI 智能忌口/備註識別</li>
+          <li>人工兜底轉接</li>
+          <li>90 天通話錄音可調取</li>
+          <li>雲端彈性接聽·永不佔線</li>
         </ul>
-        <a href="#trial-form" class="price-cta">Start 1-Month Free Trial</a>
+        <a href="#trial-form" class="price-cta">開始 1 個月免費試用</a>
       </div>
 
       <!-- Elite -->
       <div class="price-card">
-        <div class="price-name">Elite</div>
-        <div class="price-tag-line">Multi-location · data-driven restaurants</div>
+        <div class="price-name">高級版 Elite</div>
+        <div class="price-tag-line">多店運營 · 數據驅動型餐廳</div>
         <div>
           <span class="price-amount">
             <span class="price-amount-monthly">$1,299</span>
             <span class="price-amount-yearly">$13,250</span>
           </span>
-          <span class="price-period"> / <span class="price-amount-monthly">month</span><span class="price-amount-yearly">year</span></span>
+          <span class="price-period"> / <span class="price-amount-monthly">月</span><span class="price-amount-yearly">年</span></span>
         </div>
         <div class="price-detail">
-          CAD · Tax not included<br>
-          <span class="price-amount-monthly">Yearly $13,250/yr (vs $15,588)</span>
-          <span class="price-amount-yearly price-yearly">Save $2,338/yr vs monthly</span>
+          CAD · 不含 GST/PST<br>
+          <span class="price-amount-monthly">年付 $13,250 / 年(原價 $15,588)</span>
+          <span class="price-amount-yearly price-yearly">較月付節省 $2,338/年</span>
         </div>
 
         <div class="price-meta">
-          <div class="price-meta-line"><span>Included minutes</span><strong>2,000 min / month</strong></div>
-          <div class="price-meta-line"><span>Overage</span><strong>$0.70 / min</strong></div>
+          <div class="price-meta-line"><span>包月分鐘數</span><strong>2,000 min / 月</strong></div>
+          <div class="price-meta-line"><span>超額單價</span><strong>$0.70 / 分鐘</strong></div>
         </div>
 
         <ul class="price-features">
-          <li>All Pro features</li>
-          <li class="feat-highlight">Outbound calls (pickup reminders, etc.)</li>
-          <li class="feat-highlight">Advanced analytics dashboard</li>
-          <li>Open API & integrations</li>
-          <li>Customer profiles & marketing tags</li>
-          <li>4G backup receipt printer (included)</li>
-          <li>Dedicated technical advisor</li>
+          <li>所有 Pro 版功能</li>
+          <li class="feat-highlight">主動外呼(取餐提醒等)</li>
+          <li class="feat-highlight">高級數據分析報表</li>
+          <li>API 接口開放集成</li>
+          <li>客戶畫像 & 營銷標籤</li>
+          <li>4G 兜底小票機(默認含)</li>
+          <li>專屬技術顧問</li>
         </ul>
-        <a href="#trial-form" class="price-cta">Start 1-Month Free Trial</a>
+        <a href="#trial-form" class="price-cta">開始 1 個月免費試用</a>
       </div>
     </div>
 
     <!-- Guarantees -->
     <div class="pricing-guarantees">
-      <span>1-month free trial</span>
-      <span>30-day money-back</span>
-      <span>Cloud elastic · never busy</span>
-      <span>No setup fee · no deposit</span>
-      <span>Local Vancouver on-site setup</span>
+      <span>1 個月免費試用</span>
+      <span>30 天無理由退款</span>
+      <span>雲端彈性接聽·永不佔線</span>
+      <span>無安裝費、無設備押金</span>
+      <span>大溫本地團隊上門安裝</span>
     </div>
 
     <!-- Enterprise -->
     <div class="enterprise-card">
       <div>
-        <h3>Enterprise</h3>
-        <p>A digital-hub solution for chains with 3+ locations, large hotpot venues, or custom voice scenarios.</p>
+        <h3>旗艦版 Enterprise</h3>
+        <p>爲 3 家以上連鎖品牌、火鍋大店、定製語音場景打造的數字化中樞方案。</p>
         <ul class="enterprise-features">
-          <li>5,000 included minutes · overage from $0.60/min</li>
-          <li>Unified multi-store management dashboard</li>
-          <li>Custom voice model training</li>
-          <li>24/7 priority tech response + SLA</li>
+          <li>5,000 包月分鐘 · 超額 $0.60/分鐘起</li>
+          <li>多店連鎖統一管理後臺</li>
+          <li>專屬語音模型訓練調優</li>
+          <li>24/7 頂級技術專家響應 + SLA</li>
         </ul>
       </div>
       <div class="enterprise-price">
-        <div class="enterprise-price-big">$2,999 / month</div>
-        <div class="enterprise-price-small">Custom pricing · let's talk</div>
-        <a href="#trial-form" class="enterprise-cta">Contact Sales →</a>
+        <div class="enterprise-price-big">$2,999 / 月起</div>
+        <div class="enterprise-price-small">按需定價 · CUSTOM</div>
+        <a href="#trial-form" class="enterprise-cta">聯繫大客戶經理 →</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ STACK FULL SOLUTION ============ -->
+<!-- ============ STACK 全棧方案 ============ -->
 <section class="section" id="stack" style="background:linear-gradient(135deg, #0D4D3A 0%, #1D6B50 100%); color:var(--white);">
   <div class="container">
     <div class="section-head" style="text-align:center;">
-      <div style="display:inline-block; background:rgba(234,88,12,0.2); color:#FCA46E; padding:6px 16px; border-radius:20px; font-size:13px; font-weight:600; letter-spacing:1.5px; margin-bottom:16px;">CANADA EXCLUSIVE</div>
-      <h2 style="color:var(--white); font-size:38px; margin-bottom:16px;">RoseAI Stack — All-in-One Restaurant Operations</h2>
-      <p style="color:rgba(255,255,255,0.85); font-size:18px; max-width:760px; margin:0 auto;">AI Voice + Aldelo POS in one solution · One vendor solves both core needs · No other competitor in the market offers POS + AI all-in-one</p>
+      <div style="display:inline-block; background:rgba(234,88,12,0.2); color:#FCA46E; padding:6px 16px; border-radius:20px; font-size:13px; font-weight:600; letter-spacing:1.5px; margin-bottom:16px;">加拿大獨家供給 · CANADA EXCLUSIVE</div>
+      <h2 style="color:var(--white); font-size:38px; margin-bottom:16px;">RoseAI Stack — 全棧餐廳運營方案</h2>
+      <p style="color:rgba(255,255,255,0.85); font-size:18px; max-width:760px; margin:0 auto;">智能語音 + Aldelo POS 一體化 · 一個供應商解決兩個核心需求 · 市場上沒有任何其他競品能提供 POS + AI 一站式方案</p>
     </div>
 
-    <!-- When to use Stack -->
+    <!-- 適用場景 -->
     <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:28px; margin-top:48px; margin-bottom:48px;">
       <div style="background:rgba(255,255,255,0.08); border-radius:14px; padding:32px 28px; backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.12);">
         <div style="font-size:32px; margin-bottom:12px;">🆕</div>
-        <h3 style="color:#FCA46E; font-size:20px; margin-bottom:12px;">Opening a new restaurant</h3>
-        <p style="color:rgba(255,255,255,0.88); font-size:14.5px; line-height:1.65;">Build operations from scratch — get POS + AI phone in a single deployment, skip multi-vendor negotiation and integration overhead.</p>
+        <h3 style="color:#FCA46E; font-size:20px; margin-bottom:12px;">新開餐廳</h3>
+        <p style="color:rgba(255,255,255,0.88); font-size:14.5px; line-height:1.65;">從零搭建餐廳運營,需要 POS 系統 + AI 接電話一站式方案,省去多供應商談判與集成成本。</p>
       </div>
       <div style="background:rgba(255,255,255,0.08); border-radius:14px; padding:32px 28px; backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.12);">
         <div style="font-size:32px; margin-bottom:12px;">🔄</div>
-        <h3 style="color:#FCA46E; font-size:20px; margin-bottom:12px;">Replacing legacy POS</h3>
-        <p style="color:rgba(255,255,255,0.88); font-size:14.5px; line-height:1.65;">Existing POS is dated, lacks features, or has high maintenance cost. Migrate POS and deploy AI Voice in one project.</p>
+        <h3 style="color:#FCA46E; font-size:20px; margin-bottom:12px;">計劃換 POS</h3>
+        <p style="color:rgba(255,255,255,0.88); font-size:14.5px; line-height:1.65;">現有 POS 系統老舊 / 功能不足 / 維護成本高,正在評估升級。一次完成 POS 遷移 + AI 部署。</p>
       </div>
       <div style="background:rgba(255,255,255,0.08); border-radius:14px; padding:32px 28px; backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.12);">
         <div style="font-size:32px; margin-bottom:12px;">📈</div>
-        <h3 style="color:#FCA46E; font-size:20px; margin-bottom:12px;">Scaling to multi-location</h3>
-        <p style="color:rgba(255,255,255,0.88); font-size:14.5px; line-height:1.65;">Expanding from 1 to 3-10 locations — need a unified POS + AI architecture, avoid managing separate tools at each store.</p>
+        <h3 style="color:#FCA46E; font-size:20px; margin-bottom:12px;">多店擴張</h3>
+        <p style="color:rgba(255,255,255,0.88); font-size:14.5px; line-height:1.65;">從 1 家擴展到 3-10 家,需要統一的 POS + AI 體系,避免每家店分別管理多個工具。</p>
       </div>
     </div>
 
-    <!-- Why Stack -->
+    <!-- 全棧方案價值 -->
     <div style="background:rgba(255,253,247,0.06); border-radius:18px; padding:40px 36px; margin-bottom:48px; border:1px solid rgba(255,255,255,0.1);">
-      <h3 style="color:#FCA46E; font-size:22px; margin-bottom:24px; text-align:center;">Why choose Stack</h3>
+      <h3 style="color:#FCA46E; font-size:22px; margin-bottom:24px; text-align:center;">爲什麼選擇 Stack 全棧方案</h3>
       <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:24px;">
         <div style="text-align:center;">
           <div style="font-size:36px; font-weight:700; color:#FCA46E; margin-bottom:8px;">1</div>
-          <h4 style="font-size:15px; color:var(--white); margin-bottom:6px;">One vendor</h4>
-          <p style="font-size:13px; color:rgba(255,255,255,0.75); line-height:1.55;">POS + AI from one supplier — no juggling two service providers</p>
+          <h4 style="font-size:15px; color:var(--white); margin-bottom:6px;">一個供應商</h4>
+          <p style="font-size:13px; color:rgba(255,255,255,0.75); line-height:1.55;">POS + AI 一家搞定,無需對接兩家服務商</p>
         </div>
         <div style="text-align:center;">
           <div style="font-size:36px; font-weight:700; color:#FCA46E; margin-bottom:8px;">2</div>
-          <h4 style="font-size:15px; color:var(--white); margin-bottom:6px;">One contract</h4>
-          <p style="font-size:13px; color:rgba(255,255,255,0.75); line-height:1.55;">Simplified procurement, unified terms and billing</p>
+          <h4 style="font-size:15px; color:var(--white); margin-bottom:6px;">一份合同</h4>
+          <p style="font-size:13px; color:rgba(255,255,255,0.75); line-height:1.55;">簡化採購流程,統一服務條款與計費</p>
         </div>
         <div style="text-align:center;">
           <div style="font-size:36px; font-weight:700; color:#FCA46E; margin-bottom:8px;">3</div>
-          <h4 style="font-size:15px; color:var(--white); margin-bottom:6px;">One training</h4>
-          <p style="font-size:13px; color:rgba(255,255,255,0.75); line-height:1.55;">Staff training once — POS and AI workflow taught together</p>
+          <h4 style="font-size:15px; color:var(--white); margin-bottom:6px;">一套培訓</h4>
+          <p style="font-size:13px; color:rgba(255,255,255,0.75); line-height:1.55;">員工培訓一次到位,POS 與 AI 操作無縫銜接</p>
         </div>
         <div style="text-align:center;">
           <div style="font-size:36px; font-weight:700; color:#FCA46E; margin-bottom:8px;">4</div>
-          <h4 style="font-size:15px; color:var(--white); margin-bottom:6px;">One support team</h4>
-          <p style="font-size:13px; color:rgba(255,255,255,0.75); line-height:1.55;">All issues handled by the same Greater Vancouver team, no finger-pointing</p>
+          <h4 style="font-size:15px; color:var(--white); margin-bottom:6px;">一個支持團隊</h4>
+          <p style="font-size:13px; color:rgba(255,255,255,0.75); line-height:1.55;">所有問題大溫本地團隊上門解決,無推諉</p>
         </div>
       </div>
     </div>
 
-    <!-- Components -->
+    <!-- POS 系統介紹 -->
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:32px; margin-bottom:48px;">
       <div style="background:rgba(255,255,255,0.06); border-radius:14px; padding:32px 28px; border:1px solid rgba(255,255,255,0.1);">
-        <div style="color:#FCA46E; font-size:12px; font-weight:700; letter-spacing:2px; margin-bottom:8px;">POS SYSTEM</div>
-        <h3 style="color:var(--white); font-size:22px; margin-bottom:16px;">Aldelo Express Cloud POS</h3>
-        <p style="color:rgba(255,255,255,0.85); font-size:14.5px; line-height:1.65; margin-bottom:16px;">RoseAI is Aldelo Express's exclusive distributor in Canada. Aldelo serves 100,000+ restaurants globally and is one of the most established names in restaurant POS.</p>
+        <div style="color:#FCA46E; font-size:12px; font-weight:700; letter-spacing:2px; margin-bottom:8px;">POS 系統</div>
+        <h3 style="color:var(--white); font-size:22px; margin-bottom:16px;">Aldelo Express 雲端 POS</h3>
+        <p style="color:rgba(255,255,255,0.85); font-size:14.5px; line-height:1.65; margin-bottom:16px;">RoseAI 是 Aldelo Express 在加拿大的獨家代理。Aldelo 是北美餐飲 POS 老牌廠商,服務全球 100,000+ 餐廳。</p>
         <ul style="list-style:none; padding:0; color:rgba(255,255,255,0.88); font-size:14px; line-height:2;">
-          <li>✓ Cloud-based · no on-site server</li>
-          <li>✓ Bilingual English / Chinese UI</li>
-          <li>✓ Built-in menu / orders / inventory / reports</li>
-          <li>✓ Multi-store unified back office</li>
-          <li>✓ Canadian payment terminal support</li>
+          <li>✓ 雲端架構 · 無需本地服務器</li>
+          <li>✓ 中英文雙語界面</li>
+          <li>✓ 內置菜單 / 訂單 / 庫存 / 報表</li>
+          <li>✓ 多店連鎖統一後臺</li>
+          <li>✓ 支持加拿大主流支付終端</li>
         </ul>
       </div>
       <div style="background:rgba(255,255,255,0.06); border-radius:14px; padding:32px 28px; border:1px solid rgba(255,255,255,0.1);">
-        <div style="color:#FCA46E; font-size:12px; font-weight:700; letter-spacing:2px; margin-bottom:8px;">AI VOICE</div>
-        <h3 style="color:var(--white); font-size:22px; margin-bottom:16px;">RoseAI Voice — Full Feature Set</h3>
-        <p style="color:rgba(255,255,255,0.85); font-size:14.5px; line-height:1.65; margin-bottom:16px;">Stack bundles include Pro-tier or higher RoseAI Voice, deeply integrated with the Aldelo POS.</p>
+        <div style="color:#FCA46E; font-size:12px; font-weight:700; letter-spacing:2px; margin-bottom:8px;">AI 智能語音</div>
+        <h3 style="color:var(--white); font-size:22px; margin-bottom:16px;">RoseAI Voice 完整功能</h3>
+        <p style="color:rgba(255,255,255,0.85); font-size:14.5px; line-height:1.65; margin-bottom:16px;">Stack 套餐含 RoseAI Voice Pro 或更高檔位完整功能,與 Aldelo POS 深度集成。</p>
         <ul style="list-style:none; padding:0; color:rgba(255,255,255,0.88); font-size:14px; line-height:2;">
-          <li>✓ Multi-language: Mandarin / Cantonese / English / Spanish</li>
-          <li>✓ Orders auto-synced to Aldelo POS</li>
-          <li>✓ Smart dietary / preference handling</li>
-          <li>✓ On-site setup & training in Greater Vancouver</li>
-          <li>✓ PIPEDA compliant · data stays in Canada</li>
+          <li>✓ 中(普/粵)、英、西多語種</li>
+          <li>✓ 訂單自動同步至 Aldelo POS</li>
+          <li>✓ AI 智能忌口/備註識別</li>
+          <li>✓ 大溫本地上門安裝培訓</li>
+          <li>✓ PIPEDA 合規 · 加拿大本地存儲</li>
         </ul>
       </div>
     </div>
 
     <!-- CTA -->
     <div style="text-align:center; padding-top:16px;">
-      <p style="color:rgba(255,255,255,0.85); font-size:16px; margin-bottom:24px;">Stack pricing is quoted per project, based on restaurant size, number of locations, and custom requirements.</p>
-      <a href="#trial-form" style="display:inline-block; background:var(--orange-light); color:var(--white); padding:16px 36px; border-radius:8px; font-weight:700; font-size:16px; text-decoration:none; transition:all 0.2s;">Contact Sales →</a>
-      <p style="color:rgba(255,255,255,0.6); font-size:13px; margin-top:16px;">Sales: <strong style="color:#FCA46E;">778-325-4966</strong> · WhatsApp · WeChat: <strong style="color:#FCA46E;">RoseAI_CA</strong></p>
+      <p style="color:rgba(255,255,255,0.85); font-size:16px; margin-bottom:24px;">Stack 全棧方案根據餐廳規模、店面數量、定製需求按方案報價</p>
+      <a href="#trial-form" style="display:inline-block; background:var(--orange-light); color:var(--white); padding:16px 36px; border-radius:8px; font-weight:700; font-size:16px; text-decoration:none; transition:all 0.2s;">聯繫銷售獲取方案 →</a>
+      <p style="color:rgba(255,255,255,0.6); font-size:13px; margin-top:16px;">銷售熱線: <strong style="color:#FCA46E;">778-325-4966</strong> · WhatsApp 同號 · 微信 <strong style="color:#FCA46E;">RoseAI_CA</strong></p>
     </div>
   </div>
 </section>
@@ -1084,112 +1060,112 @@ a:hover { color: var(--orange); }
 <section class="section" id="faq">
   <div class="container">
     <div class="section-head">
-      <div class="section-eyebrow">FAQ</div>
-      <h2 class="section-title">Top 11 questions<em>from restaurant owners</em></h2>
+      <div class="section-eyebrow">常見問題</div>
+      <h2 class="section-title">老闆們問得最多的<em>10 個問題</em></h2>
     </div>
 
     <div class="faq-list">
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)">
-          Do I need to change my phone number? Can I keep my existing line?<span class="faq-toggle">+</span>
+          需要換電話號碼嗎?現有號碼能不能繼續用?<span class="faq-toggle">+</span>
         </button>
         <div class="faq-answer">
-          No number change needed. We use call forwarding to route calls from your existing line — your business number, Google reviews, and printed menu phone all stay the same. <strong>Setup takes 10 minutes.</strong>
+          完全不需要換號。我們通過呼叫轉移(Call Forwarding)的方式接入您現有的電話線路,餐廳的老號碼、Google 評論、菜單上印的電話都不需要改動。<strong>10 分鐘即可完成配置。</strong>
         </div>
       </div>
 
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)">
-          How are included minutes counted? What happens after I exceed them?<span class="faq-toggle">+</span>
+          包月分鐘數是怎麼算的?超過分鐘數後怎麼辦?<span class="faq-toggle">+</span>
         </button>
         <div class="faq-answer">
-          Each call is billed by rounded-up minute from AI pickup to hangup. An average call lasts about 2 minutes. Lite's 200 minutes ≈ 50 calls, Pro's 400 ≈ 200 calls, Elite's 1,000 ≈ 500 calls.<br><br>
-          After included minutes, Lite charges <strong>$0.90/min</strong>, Pro <strong>$0.80/min</strong>, Elite <strong>$0.70/min</strong>, Enterprise <strong>$0.60/min</strong>. You get auto-SMS alerts at <strong>80% / 100% / 120%</strong> usage — fully transparent. You can also set a hard cap that switches to voicemail mode automatically.
+          每通電話從 AI 接起到掛斷的總時長按整分鐘計費,平均一通電話約 2 分鐘。Lite 200 分鐘約可接 50 通電話,Pro 900 分鐘約 200 通,Elite 2,000 分鐘約 500 通。<br><br>
+          超過包含分鐘數後,Lite 按 <strong>$0.90/分鐘</strong>、Pro <strong>$0.80/分鐘</strong>、Elite <strong>$0.70/分鐘</strong>、Enterprise <strong>$0.60/分鐘</strong> 自動計費。我們會在使用到 <strong>80% / 100% / 120%</strong> 時自動短信提醒,完全透明可控,也可設置硬上限自動轉留言模式。
         </div>
       </div>
 
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)">
-          How many calls can the AI handle simultaneously? Could it get busy?<span class="faq-toggle">+</span>
+          AI 同時能接多少通電話?會不會出現佔線?<span class="faq-toggle">+</span>
         </button>
         <div class="faq-answer">
-          <strong>All plans have no concurrency limit</strong> — RoseAI uses cloud elastic answering, with peak-time calls dynamically distributed across our infrastructure. "Cloud elastic answering — never busy" is our default promise across every plan.<br><br>
-          So even if 5 or 10 calls hit at once on a Friday 7pm, each customer gets answered by AI in 0 seconds — no busy signal.
+          <strong>所有套餐均無併發上限</strong>——RoseAI 採用雲端彈性接聽,瞬時高峯來電由雲端動態擴容處理。「雲端彈性接聽·永不佔線」是我們對所有客戶的默認保證,無論您訂閱哪個套餐。<br><br>
+          這意味着即使週五晚 7 點同時來 5 通甚至 10 通電話,每位客戶也都能 0 秒被 AI 接起,不會有任何佔線提示音。
         </div>
       </div>
 
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)">
-          Can customers tell it's an AI? Will they be put off?<span class="faq-toggle">+</span>
+          客人能聽出來是 AI 嗎?他們會不會反感?<span class="faq-toggle">+</span>
         </button>
         <div class="faq-answer">
-          RoseAI uses the latest generation of neural voice — sounds nearly human. Most customers don't realize they're talking to AI until after the call. You can also choose to have the AI introduce itself transparently. Pilot data shows customer acceptance is higher than expected: no interruptions, no being put on hold, no accent friction.
+          RoseAI 採用最新一代神經語音技術,自然度接近真人,絕大多數客戶在通話結束前不會察覺。我們也支持開場白主動告知"我是 AI 助手",許多餐廳試點反饋:客戶接受度反而比預期高,因爲不會被打斷、不會被冷落、不會有口音障礙。
         </div>
       </div>
 
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)">
-          What if the AI mishears a dish or misses something?<span class="faq-toggle">+</span>
+          如果 AI 聽錯菜名或沒聽清怎麼辦?<span class="faq-toggle">+</span>
         </button>
         <div class="faq-answer">
-          Three-layer safety net: (1) AI repeats the order back for customer confirmation; (2) any uncertainty is tagged "needs review" and sent to the owner's phone; (3) complex situations (complaints, custom large orders) auto-route to a phone number you designate. <strong>We guarantee an error rate below 0.8% — and we cover errors with a refund commitment.</strong>
+          三層兜底機制:①AI 會主動複述訂單讓客戶確認;②不確定的內容會標"待複覈"推送給老闆手機;③遇到複雜問題(如投訴、定製大單)會自動轉接到您指定的手機號碼。<strong>我們承諾:AI 錯單率低於 0.8%。</strong>
         </div>
       </div>
 
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)">
-          How does the 1-month free trial work? Is there a deposit?<span class="faq-toggle">+</span>
+          1 個月免費試用具體怎麼用?要不要押金?<span class="faq-toggle">+</span>
         </button>
         <div class="faq-answer">
-          Free for 1 month. No deposit. The trial gives you <strong>full Lite-tier features</strong> (English/Mandarin answering, smart logging, SMS order push) + <strong>100 free call minutes</strong>.<br><br>
-          Beyond 200 minutes, calls are billed at <strong>$0.90/min</strong> — same as paid Lite. We require a credit card on file (used only for overage; no deposit). We send a reminder 7 days before the trial ends. After the trial, you'll either auto-continue to Lite at $99/month or you can upgrade to Pro at $349/month yourself. <strong>Zero pressure, cancel anytime.</strong><br><br>
-          Note: Pro-only features (Cantonese, Spanish, POS integration, etc.) are not included in the trial — those require subscribing to Pro directly.
+          免費試用 1 個月,無押金。試用期內享 <strong>Lite 檔完整功能</strong>(中英雙語接聽、智能轉文字、短信訂單推送)+ <strong>200 分鐘通話量免費</strong>。<br><br>
+          200 分鐘之外按 <strong>$0.90/分鐘</strong> 收費(與正式訂閱相同),需要預存信用卡(僅用於超額扣款,無任何押金)。試用結束前 7 天主動短信提醒,期滿後自動續 Lite $99/月,或您主動升 Pro $599/月。<strong>零壓力、隨時可停。</strong><br><br>
+          注:如需 Pro 完整功能(粵語、POS 集成等),需要直接訂閱 Pro 版——試用期內不開放 Pro 的差異化功能。
         </div>
       </div>
 
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)">
-          What's the contract length? Can I cancel anytime?<span class="faq-toggle">+</span>
+          合同期多久?能不能隨時取消?<span class="faq-toggle">+</span>
         </button>
         <div class="faq-answer">
-          Lite, Pro, and Elite are all month-to-month — <strong>no minimum commitment</strong>. Cancel in the dashboard anytime and billing stops the next month. Yearly plans get 15% off; unused months are prorated and refunded. Enterprise follows the negotiated contract.<br><br>
-          <strong>Additional commitment:</strong> All plans include a 30-day no-questions-asked refund window — even after paying.
+          Lite / Pro / Elite 三個套餐均爲月付,<strong>無最低合約期</strong>,隨時可在後臺取消,下月起停止扣費。年付方案享 15% 折扣,未使用月份按比例退款。旗艦版根據合同條款。<br><br>
+          <strong>額外承諾:</strong>所有套餐均含 30 天無理由退款——即使付費後覺得不合適,30 天內全額退款。
         </div>
       </div>
 
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)">
-          Where is data stored? Is it compliant with Canadian privacy laws?<span class="faq-toggle">+</span>
+          數據存儲在哪裏?符合加拿大隱私法規嗎?<span class="faq-toggle">+</span>
         </button>
         <div class="faq-answer">
-          All call recordings and order data are stored inside Canada (<strong>Toronto AWS region</strong>), fully PIPEDA-compliant and aligned with BC's Personal Information Protection Act. Recordings are retained for 90 days and you can export or delete them anytime from the dashboard. <strong>We do not use your customer data for any third-party training.</strong>
+          所有通話錄音與訂單數據存儲於加拿大境內(<strong>多倫多 AWS 區域</strong>),完全符合 PIPEDA 隱私法規與 BC 省個人信息保護條例。錄音保留 90 天可調取,老闆可隨時在後臺一鍵導出或永久刪除。我們不會將客戶數據用於任何第三方訓練。
         </div>
       </div>
 
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)">
-          What if my internet or power goes down?<span class="faq-toggle">+</span>
+          網絡斷了或斷電怎麼辦?<span class="faq-toggle">+</span>
         </button>
         <div class="faq-answer">
-          RoseAI runs in the cloud — independent of your restaurant's local network. Even if your shop loses internet or power, the AI keeps answering calls and logging orders, which sync back when you're online. For local ticket printing, our optional receipt printer has <strong>4G fallback (included in Elite and Enterprise)</strong>.
+          RoseAI 運行在雲端,與餐廳本地網絡無關。即使餐廳斷網斷電,電話依然能被 AI 接聽並記錄訂單,等餐廳恢復營業後自動同步。如餐廳需要本地打印小票,配套的小票機本身有 4G 兜底(<strong>Elite 與 Enterprise 套餐默認包含</strong>)。
         </div>
       </div>
 
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)">
-          Which POS systems do you support? I'm on Square / Toast / Clover / Aldelo.<span class="faq-toggle">+</span>
+          支持哪些 POS 系統?我用的是 Square / Toast / Clover / Aldelo。<span class="faq-toggle">+</span>
         </button>
         <div class="faq-answer">
-          We integrate with <strong>Square, Toast, Clover, Lightspeed, Aldelo Express, Dian Dian</strong>, and more — covering virtually every POS used by Greater Vancouver independent restaurants. If you use a smaller-market POS, we can custom-integrate within 5–10 business days (free for Elite and Enterprise plans). Or you can choose the "SMS push + kitchen printer" setup that requires no POS integration at all.
+          目前已對接 <strong>Square、Toast、Clover、Lightspeed、Aldelo Express、點點點單</strong> 等主流餐飲 POS,覆蓋幾乎所有大溫獨立餐廳在用的系統。如您使用的是較小衆的系統,我們可以在 5–10 個工作日內完成定製對接(Elite / Enterprise 套餐免費)。也可以選擇"短信推送 + 後廚打印"方案,無需任何 POS 集成。
         </div>
       </div>
 
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)">
-          Beyond phone, what other ways can I reach you?<span class="faq-toggle">+</span>
+          除了電話,還能不能用其他方式聯繫你們?<span class="faq-toggle">+</span>
         </button>
         <div class="faq-answer">
-          Call us at <strong>778-325-4966</strong>, message us on WhatsApp (same number), WeChat (<strong>RoseAI_CA</strong>), or email <strong>contactus@roseai.ca</strong>. We have local Vancouver-based customer support in English, Mandarin, and Cantonese.
+          當然可以。除了撥打 <strong>778-325-4966</strong>,您也可以通過 WhatsApp(同號)、微信(<strong>RoseAI_CA</strong>)、郵件(<strong>contactus@roseai.ca</strong>)預約。中文、英文、粵語都有本地客服支持。詳見頁面底部「聯繫方式」。
         </div>
       </div>
     </div>
@@ -1200,9 +1176,9 @@ a:hover { color: var(--orange); }
 <section class="section form-section" id="trial-form">
   <div class="container">
     <div class="section-head">
-      <div class="section-eyebrow">1-Month Free Trial</div>
-      <h2 class="section-title">Leave your info<em>·</em>we'll call within 24 hours</h2>
-      <p class="section-sub">Greater Vancouver local team · 1-on-1 consultation · free on-site demo · no credit card required.</p>
+      <div class="section-eyebrow">1 個月免費試用</div>
+      <h2 class="section-title">留下信息<em>·</em>24 小時內回電</h2>
+      <p class="section-sub">大溫本地團隊 1 對 1 溝通您的餐廳情況,免費上門 Demo,零信用卡承諾。</p>
     </div>
 
     <form class="form-card" id="trialFormCard" novalidate>
@@ -1210,75 +1186,75 @@ a:hover { color: var(--orange); }
       <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
       <div class="form-row">
         <div class="form-field">
-          <label>Your Name <span class="req">*</span></label>
+          <label>您的稱呼 <span class="req">*</span></label>
           <input type="text" name="name" required>
         </div>
         <div class="form-field">
-          <label>Restaurant Name <span class="req">*</span></label>
+          <label>餐廳名稱 <span class="req">*</span></label>
           <input type="text" name="restaurant" required>
         </div>
       </div>
       <div class="form-row">
         <div class="form-field">
-          <label>Phone <span class="req">*</span></label>
+          <label>聯繫電話 <span class="req">*</span></label>
           <input type="tel" name="phone" required>
         </div>
         <div class="form-field">
-          <label>Email (optional)</label>
+          <label>郵箱(可選)</label>
           <input type="email" name="email">
         </div>
       </div>
       <div class="form-row">
         <div class="form-field">
-          <label>Location <span class="req">*</span></label>
+          <label>餐廳所在區域 <span class="req">*</span></label>
           <select name="region" required>
-            <option value="">Please select</option>
-            <option>Vancouver</option>
-            <option>Richmond</option>
-            <option>Burnaby</option>
-            <option>Surrey</option>
-            <option>Coquitlam</option>
-            <option>Langley</option>
-            <option>North Vancouver</option>
-            <option>Other Greater Vancouver</option>
-            <option>Outside BC</option>
+            <option value="">請選擇</option>
+            <option>Vancouver 溫哥華</option>
+            <option>Richmond 列治文</option>
+            <option>Burnaby 本拿比</option>
+            <option>Surrey 素裏</option>
+            <option>Coquitlam 高貴林</option>
+            <option>Langley 蘭裏</option>
+            <option>North Vancouver 北溫</option>
+            <option>其他大溫區域</option>
+            <option>BC 省外</option>
           </select>
         </div>
         <div class="form-field">
-          <label>Restaurant Size <span class="req">*</span></label>
+          <label>餐廳規模 <span class="req">*</span></label>
           <select name="size" required>
-            <option value="">Please select</option>
-            <option>Single location · Small (&lt;50 seats)</option>
-            <option>Single location · Medium (50–150 seats)</option>
-            <option>Single location · Large (&gt;150 seats)</option>
-            <option>2–5 locations</option>
-            <option>5+ locations</option>
+            <option value="">請選擇</option>
+            <option>單店 / 小型 (&lt;50 座位)</option>
+            <option>單店 / 中型 (50–150 座位)</option>
+            <option>單店 / 大型 (&gt;150 座位)</option>
+            <option>2–5 家連鎖</option>
+            <option>5 家以上連鎖</option>
           </select>
         </div>
       </div>
       <div class="form-field full" style="margin-bottom:18px;">
-        <label>What would you like to learn more about? (optional)</label>
+        <label>想了解的內容(可選)</label>
         <textarea name="notes" rows="3"></textarea>
       </div>
       <button type="submit" class="form-submit" id="submitBtn">
-        <span class="label-default">Start 1-Month Free Trial →</span>
+        <span class="label-default">申請 1 個月免費試用 →</span>
         <span class="spinner" style="display:none;width:18px;height:18px;border:2px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin 0.7s linear infinite;"></span>
       </button>
       <p class="form-disclaimer">
-        By submitting, you agree the RoseAI team may contact you by phone or email.<br>
-        We never share your info with third parties · PIPEDA-compliant
+        提交即代表您同意 RoseAI 團隊通過電話或郵件與您聯繫。<br>
+        我們絕不分享您的信息給任何第三方 · <a href="#faq">PIPEDA 合規</a>
       </p>
       </div>
 
       <div class="form-status error" id="formError" style="display:none;margin-top:24px;padding:20px 24px;border-radius:14px;font-size:15px;line-height:1.6;background:rgba(194,65,12,0.1);border:1px solid rgba(194,65,12,0.4);color:#e88a72;">
-        <strong style="display:block;margin-bottom:4px;font-size:16px;color:var(--ink);">Submission failed</strong>
-        Looks like a network hiccup. Please call <a href="tel:7783254966" style="color:var(--orange);text-decoration:underline;">778-325-4966</a> or WhatsApp us instead.
+        <strong style="display:block;margin-bottom:4px;font-size:16px;color:var(--ink);">提交失敗</strong>
+        網絡異常。請直接撥打 <a href="tel:7783254966" style="color:var(--orange);text-decoration:underline;">778-325-4966</a> 或微信 RoseAI_CA 聯繫我們。
       </div>
 
       <div class="form-status success" id="formSuccess" style="display:none;margin-top:24px;padding:20px 24px;border-radius:14px;font-size:15px;line-height:1.6;background:rgba(13,77,58,0.08);border:1px solid rgba(13,77,58,0.3);color:var(--green-dark);">
-        <strong style="display:block;margin-bottom:4px;font-size:16px;color:var(--green-dark);">Request received!</strong>
-        We'll be in touch within 24 hours to walk through your setup.<br>
-        In a hurry? Call <a href="tel:7783254966" style="color:var(--green-dark);text-decoration:underline;">778-325-4966</a> or message us on <a href="https://wa.me/17783254966" style="color:var(--green-dark);text-decoration:underline;">WhatsApp</a>.
+        <strong style="display:block;margin-bottom:4px;font-size:16px;color:var(--green-dark);">申請提交成功!</strong>
+        我們已收到您的信息,24 小時內會有專人致電跟您溝通。<br>
+        着急的話可以直接撥打 <a href="tel:7783254966" style="color:var(--green-dark);text-decoration:underline;">778-325-4966</a>,或加微信 <strong>RoseAI_CA</strong>。
       </div>
     </form>
   </div>
@@ -1287,11 +1263,11 @@ a:hover { color: var(--orange); }
 <!-- ============ BOTTOM CTA ============ -->
 <section class="cta-band">
   <div class="container">
-    <h2>One month later, the data will tell you if RoseAI is worth it</h2>
-    <p>Free trial · no credit card deposit · local on-site installation and training included.<br>Book a 15-minute demo to see what your restaurant is missing every month.</p>
+    <h2>1 個月後,讓數據告訴您 RoseAI 值不值</h2>
+    <p>免費試用 · 無需信用卡押金 · 大溫本地團隊上門安裝與培訓。<br>預約 15 分鐘 Demo,看看您的餐廳每個月在漏接什麼。</p>
     <div class="cta-band-buttons">
-      <a href="tel:7783254966" class="btn btn-primary">Call Now: 778-325-4966</a>
-      <a href="mailto:contactus@roseai.ca?subject=Book%20a%20RoseAI%20Demo" class="btn btn-secondary">Book a Demo</a>
+      <a href="tel:7783254966" class="btn btn-primary">立即致電 778-325-4966</a>
+      <a href="mailto:contactus@roseai.ca?subject=預約%20RoseAI%20Demo" class="btn btn-secondary">預約 Demo</a>
     </div>
   </div>
 </section>
@@ -1306,64 +1282,66 @@ a:hover { color: var(--orange); }
           <span>RoseAI</span>
         </div>
         <p class="footer-tagline">
-          Let service return to what matters — leave the busywork to RoseAI.<br><br>
-          Greater Vancouver local team, serving Vancouver, Richmond, Burnaby, Surrey, Coquitlam, Langley, and North Vancouver.
+          讓服務迴歸本質,將繁瑣交給 RoseAI。<br><br>
+          大溫本地團隊,服務 Vancouver, Richmond, Burnaby, Surrey, Coquitlam, Langley, North Vancouver 全域。
         </p>
       </div>
 
       <div class="footer-col">
-        <h5>Product</h5>
+        <h5>產品</h5>
         <ul>
-          <li><a href="#features">Why RoseAI</a></li>
-          <li><a href="#workflow">How It Works</a></li>
-          <li><a href="#pricing">Pricing</a></li>
-          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#features">功能對比</a></li>
+          <li><a href="#workflow">工作流程</a></li>
+          <li><a href="#pricing">價格方案</a></li>
+          <li><a href="#faq">常見問題</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
-        <h5>Contact</h5>
+        <h5>聯繫</h5>
         <ul>
           <li><a href="tel:7783254966">778-325-4966</a></li>
           <li><a href="mailto:contactus@roseai.ca">contactus@roseai.ca</a></li>
-          <li><a href="https://wa.me/17783254966" target="_blank">WhatsApp (same)</a></li>
-          <li>WeChat: RoseAI_CA</li>
+          <li><a href="https://wa.me/17783254966" target="_blank">WhatsApp 同號</a></li>
+          <li>微信:RoseAI_CA</li>
+          <li><a href="/en/">English →</a></li>
           <li><a href="/zh/">简体中文 →</a></li>
-          <li><a href="/zh-hant/">繁體中文 →</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
-        <h5>Promise</h5>
+        <h5>承諾</h5>
         <ul>
-          <li>PIPEDA Compliant</li>
-          <li>Canadian Data Hosting</li>
-          <li>30-Day Money Back</li>
+          <li>PIPEDA 合規</li>
+          <li>加拿大本地存儲</li>
+          <li>30 天退款保證</li>
           <li>Made in BC</li>
         </ul>
       </div>
 
       <div class="footer-col footer-wechat">
-        <span class="wechat-label">Scan to add on WeChat</span>
-        <img src="/assets/wechat-qr.png" alt="RoseAI WeChat QR" onerror="this.src='/assets/wechat-qr-placeholder.png'">
-        <span class="wechat-id">WeChat ID: RoseAI_CA</span>
+        <span class="wechat-label">掃碼加微信</span>
+        <img src="/assets/wechat-qr.png" alt="RoseAI 微信二維碼" onerror="this.src='/assets/wechat-qr-placeholder.png'">
+        <span class="wechat-id">微信號:RoseAI_CA</span>
       </div>
     </div>
 
     <div class="footer-bottom">
-      <span>© 2026 RoseAI Technology Services Ltd. All rights reserved.</span>
-      <span>Cloud Elastic · Never Busy</span>
-      <span>Local Vancouver Service</span>
+      <span>© 2026 RoseAI Technology Services Ltd. 保留所有權利</span>
+      <span>雲端彈性接聽·永不佔線</span>
+      <span>大溫本地服務</span>
     </div>
   </div>
 </footer>
 
 <script>
+// FAQ accordion
 function toggleFaq(btn) {
   const item = btn.parentElement;
   item.classList.toggle('open');
 }
 
+// Pricing monthly/yearly toggle
 function togglePricing(mode) {
   const section = document.querySelector('.pricing');
   const buttons = document.querySelectorAll('.pricing-toggle .toggle-btn');

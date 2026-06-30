@@ -3,7 +3,9 @@
   'use strict';
 
   var API_URL = '/api/chat';
-  var isZh = /^zh\b/i.test(document.documentElement.lang || 'en');
+  var pageLang = (document.documentElement.lang || 'en').toLowerCase();
+  var isZh = pageLang === 'zh-cn' || pageLang === 'zh';
+  var isHant = pageLang === 'zh-hk' || pageLang === 'zh-tw';
 
   var WELCOME_MSG = isZh
     ? '您好！我是 RoseAI 智能助手，可以回答关于产品功能、价格套餐、POS 对接、免费试用等问题。请问有什么可以帮您？'
@@ -174,7 +176,7 @@
       body: JSON.stringify({
         message: text,
         history: messages.slice(-10, -1),
-        lang: isZh ? 'zh' : 'en',
+        lang: isHant ? 'hant' : isZh ? 'zh' : 'en',
       }),
     })
     .then(function (res) {
